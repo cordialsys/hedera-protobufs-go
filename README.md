@@ -1,3 +1,6 @@
+This fork contains alternative method for generating go grpc
+files from hedera-protobufs repo.
+
 # Hedera™ Hashgraph Go Protubufs
 
 > Generated protobufs in Go for interacting with Hedera Hashgraph: the official distributed
@@ -8,18 +11,14 @@
 ## Install
 
 ```sh
-$ go get github.com/hashgraph/hedera-protobufs-go
+$ go get github.com/cordialsys/hedera-protobufs-go
 ```
 
 ## Usage
 
 ```go
-import "github.com/hashgraph/hedera-protobufs-go/services"
+import "github.com/cordialsys/hedera-protobufs-go/services"
 ```
-
-## Example
-
-_to be written_
 
 ## Development
 
@@ -27,7 +26,7 @@ When updating the protobufs submodule, the generated code should be updated.
 
 ### Prerequisites
 
--   [Go](https://golang.org/doc/install) v15+
+-   [Go](https://golang.org/doc/install) v25+
 
 -   [Protobuf Compiler](https://developers.google.com/protocol-buffers)
 
@@ -41,22 +40,12 @@ When updating the protobufs submodule, the generated code should be updated.
 ### Build
 
 ```sh
-# update the proto/ directory from hedera-protobufs
-$ git submodule update --init
-
 # generate go code from protobuf definitions
-$ go generate ./...
+$ go run ./internal/cmd/build
 
 # ensure the projects build
 $ go vet ./...
 ```
-
-If you are experiencing generation difficulties:
-
--   Make sure all protobuf files in the proto subproject
-    are at one folder level(no subdirs)
--   Remove protobuf import directory `state/` in the
-    generated `.go` code.
 
 ## License
 

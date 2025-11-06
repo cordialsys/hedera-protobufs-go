@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
@@ -13,180 +12,166 @@ import (
 	"strings"
 )
 
+const (
+	BASE_MODULE    = "github.com/hashgraph/hedera-protobufs-go"
+	COMMON_MODULE  = BASE_MODULE + "/common"
+	PROTO_DIR      = "proto"
+	PROTO_REPO     = "https://github.com/hashgraph/hedera-protobufs"
+	PROTO_REVISION = "8c27786cec93abab974309074feaef9b48a695b7"
+)
+
+// Common module contains proto files that are commonly referenced and could cause cyclic references
+var common []string = []string{
+	"timestamp.proto",
+	"basic_types.proto",
+}
+
+// Proto modules that we can skip
+var modulesToSkip []string = []string{
+	"mirror", // we are not going to call any mirror methods
+}
+
 func main() {
-	// which module are we building
-	moduleName := os.Args[1]
-
 	// get project directory
-
 	// nolint:dogsled
 	_, buildFilename, _, _ := runtime.Caller(0)
 	projectDir := path.Join(buildFilename, "../../../..")
 
 	// remove all existing files
+	removeAllWithExt(projectDir, ".pb.go")
 
-	removeAllWithExt(projectDir, moduleName, ".pb.go")
+	// clone repository
+	cloneRepo(projectDir)
+	defer func() {
+		repoPath := projectDir + "/" + PROTO_DIR
+		if _, err := os.Stat(repoPath); err == nil {
+			err := os.RemoveAll(repoPath)
+			if err != nil {
+				panic(err)
+			}
+		}
+	}()
 
 	// invoke the build command for this module
-
-	switch moduleName {
-	case "services":
-		buildServices(projectDir)
-
-	case "mirror":
-		buildMirror(projectDir)
-
-	case "streams":
-		buildStreams(projectDir)
-
-	case "sdk":
-		buildSdk(projectDir)
-	}
+	buildProto(projectDir)
 }
 
-func buildServices(dir string) {
-	// collect all files from proto/services/_
+func cloneRepo(dir string) {
+	cmdArguments := []string{
+		"clone",
+		PROTO_REPO,
+		"--depth=1",
+		"--revision",
+		PROTO_REVISION,
+		PROTO_DIR,
+	}
+
+	cmd := exec.Command("git", cmdArguments...)
+	cmd.Dir = dir
+
+	mustRunCommand(cmd)
+}
+
+func skipFile(pathFromRoot string) bool {
+	if !strings.HasSuffix(pathFromRoot, ".proto") {
+		return true
+	}
+	for _, m := range modulesToSkip {
+		protoModule := PROTO_DIR + "/" + m
+		if strings.HasPrefix(pathFromRoot, protoModule) {
+			return true
+		}
+	}
+	return false
+}
+
+// Adjust proto files and create protoc command
+func buildProto(dir string) {
+	// collect all proto files
 	var servicesProtoFiles []string
-
-	var servicesModuleDecls []string
-
-	err := filepath.Walk(path.Join(dir, "proto/services"), func(filename string, info fs.FileInfo, err error) error {
-		if !strings.HasSuffix(filename, ".proto") {
+	err := filepath.Walk(path.Join(dir, "proto"), func(filename string, info fs.FileInfo, err error) error {
+		pathFromRoot := strings.TrimPrefix(filename, dir+"/")
+		if skipFile(pathFromRoot) {
 			return nil
 		}
 
-		pathFromRoot := strings.TrimPrefix(filename, dir+"/")
-		pathBase := path.Base(filename)
+		// make sure that each proto file contains "option go_package"
+		err = appendGoModule(pathFromRoot, filename)
+		if err != nil {
+			panic(err)
+		}
+
 		servicesProtoFiles = append(servicesProtoFiles, pathFromRoot)
-
-		// the -M argument generation is what allows us to avoid
-		// requiring "option go_package"
-
-		servicesModuleDecls = append(servicesModuleDecls,
-			fmt.Sprintf("--go_opt=M%v=github.com/hashgraph/hedera-protobufs-go/services", pathBase),
-			fmt.Sprintf("--go-grpc_opt=M%v=github.com/hashgraph/hedera-protobufs-go/services", pathBase),
-		)
-
 		return nil
 	})
 	if err != nil {
 		panic(err)
 	}
 
-	// generate proto files for services code
-
+	// skip base module directiores
+	goOptDir := fmt.Sprintf("--go_opt=module=%s", BASE_MODULE)
+	goGrpcOptDir := fmt.Sprintf("--go-grpc_opt=module=%s", BASE_MODULE)
 	cmdArguments := []string{
-		"--go_out=services/",
-		"--go_opt=paths=source_relative",
-		"--go-grpc_out=services/",
-		"--go-grpc_opt=paths=source_relative",
+		"--go_out=.",
+		goOptDir,
+		"--go-grpc_out=.",
+		goGrpcOptDir,
 		"-Iproto/services",
-	}
-
-	cmdArguments = append(cmdArguments, servicesModuleDecls...)
-	cmdArguments = append(cmdArguments, servicesProtoFiles...)
-
-	cmd := exec.Command("protoc", cmdArguments...)
-	cmd.Dir = dir
-
-	mustRunCommand(cmd)
-	renamePackageDeclGrpcFiles(dir, "proto", "services")
-}
-
-func buildMirror(dir string) {
-	cmd := exec.Command("protoc",
-		"--go_out=./",
-		"--go_opt=Mbasic_types.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go_opt=Mtimestamp.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go_opt=Mconsensus_submit_message.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go_opt=Mmirror/consensus_service.proto=github.com/hashgraph/hedera-protobufs-go/mirror",
-		"--go_opt=Mmirror/mirror_network_service.proto=github.com/hashgraph/hedera-protobufs-go/mirror",
-		"--go_opt=paths=source_relative",
-		"--go-grpc_out=./",
-		"--go-grpc_opt=Mbasic_types.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go-grpc_opt=Mtimestamp.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go-grpc_opt=Mconsensus_submit_message.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go-grpc_opt=Mmirror/consensus_service.proto=github.com/hashgraph/hedera-protobufs-go/mirror",
-		"--go-grpc_opt=Mmirror/mirror_network_service.proto=github.com/hashgraph/hedera-protobufs-go/mirror",
-		"--go-grpc_opt=paths=source_relative",
-		"--proto_path=proto/",
-		"-Iproto/mirror",
-		"-Iproto/services",
-		"proto/mirror/consensus_service.proto",
-		"proto/mirror/mirror_network_service.proto",
-	)
-
-	cmd.Dir = dir
-
-	mustRunCommand(cmd)
-	renamePackageDeclGrpcFiles(dir, "com_hedera_mirror_api_proto", "mirror")
-}
-
-func buildStreams(dir string) {
-	cmd := exec.Command("protoc",
-		"--go_out=streams/",
-		"--go_opt=Mbasic_types.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go_opt=Mtimestamp.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go_opt=Maccount_balance_file.proto=github.com/hashgraph/hedera-protobufs-go/streams",
-		"--go_opt=paths=source_relative",
-		"--go-grpc_out=streams/",
-		"--go-grpc_opt=Mbasic_types.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go-grpc_opt=Mtimestamp.proto=github.com/hashgraph/hedera-protobufs-go/services",
-		"--go-grpc_opt=Maccount_balance_file.proto=github.com/hashgraph/hedera-protobufs-go/streams",
-		"--go-grpc_opt=paths=source_relative",
-		"-Iproto/streams",
-		"-Iproto/services",
-		"proto/streams/account_balance_file.proto",
-	)
-
-	cmd.Dir = dir
-
-	mustRunCommand(cmd)
-}
-
-func buildSdk(dir string) {
-	var servicesProtoFiles []string
-
-	var servicesModuleDecls []string
-
-	err := filepath.Walk(path.Join(dir, "proto/services"), func(filename string, info fs.FileInfo, err error) error {
-		if !strings.HasSuffix(filename, ".proto") {
-			return nil
-		}
-
-		pathFromRoot := strings.TrimPrefix(filename, dir+"/")
-		pathBase := path.Base(filename)
-		servicesProtoFiles = append(servicesProtoFiles, pathFromRoot)
-
-		servicesModuleDecls = append(servicesModuleDecls,
-			fmt.Sprintf("--go_opt=M%v=github.com/hashgraph/hedera-protobufs-go/services", pathBase),
-			fmt.Sprintf("--go-grpc_opt=M%v=github.com/hashgraph/hedera-protobufs-go/services", pathBase),
-		)
-
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	cmdArguments := []string{
-		"--go_out=sdk/",
-		"--go_opt=Mtransaction_list.proto=github.com/hashgraph/hedera-protobufs-go/sdk",
-		"--go_opt=paths=source_relative",
-		"--go-grpc_out=sdk/",
-		"--go-grpc_opt=Mtransaction_list.proto=github.com/hashgraph/hedera-protobufs-go/sdk",
-		"--go-grpc_opt=paths=source_relative",
+		"-Iproto/block",
 		"-Iproto/sdk",
-		"-Iproto/services",
+		"-Iproto/streams",
+		"-Iproto/platform",
+		"-Iproto",
 	}
-
-	cmdArguments = append(cmdArguments, servicesModuleDecls...)
-	cmdArguments = append(cmdArguments, "proto/sdk/transaction_list.proto")
-
+	cmdArguments = append(cmdArguments, servicesProtoFiles...)
 	cmd := exec.Command("protoc", cmdArguments...)
 	cmd.Dir = dir
 
+	// generate proto files
 	mustRunCommand(cmd)
+}
+
+func appendGoModule(pathFromRoot, fullPath string) error {
+	isCommon := false
+	for _, c := range common {
+		isCommon = isCommon || strings.HasSuffix(pathFromRoot, c)
+	}
+	var targetModule string
+	if isCommon {
+		targetModule = COMMON_MODULE
+	} else {
+		targetModule = getRelativeModule(pathFromRoot)
+	}
+
+	return appendModule(fullPath, targetModule)
+}
+
+func getRelativeModule(pathFromRoot string) string {
+	pathParts := strings.Split(pathFromRoot, "/")
+	finalMod := BASE_MODULE
+	for _, submod := range pathParts {
+		if submod == PROTO_DIR || strings.Contains(submod, ".proto") {
+			continue
+		}
+		finalMod = finalMod + "/" + submod
+	}
+
+	return finalMod
+}
+
+func appendModule(fullPath, mod string) error {
+	goOptionPackage := fmt.Sprintf(`option go_package = "%s";`, mod)
+	f, err := os.OpenFile(fullPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return fmt.Errorf("failed to open file for write: %w", err)
+	}
+	defer f.Close()
+
+	if _, err = f.WriteString(goOptionPackage); err != nil {
+		return fmt.Errorf("failed to append goOptionPackage: %w", err)
+	}
+
+	return nil
 }
 
 func mustRunCommand(cmd *exec.Cmd) {
@@ -202,38 +187,13 @@ func mustRunCommand(cmd *exec.Cmd) {
 	}
 }
 
-func removeAllWithExt(dir string, module string, ext string) {
-	err := filepath.Walk(path.Join(dir, module), func(filename string, info fs.FileInfo, err error) error {
+func removeAllWithExt(dir string, ext string) {
+	err := filepath.Walk(dir, func(filename string, info fs.FileInfo, err error) error {
 		if strings.HasSuffix(filename, ext) {
 			err := os.Remove(filename)
 			if err != nil {
 				return err
 			}
-		}
-
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-}
-
-func renamePackageDeclGrpcFiles(dir string, oldPackage string, newPackage string) {
-	err := filepath.Walk(path.Join(dir, newPackage), func(filename string, info fs.FileInfo, err error) error {
-		if strings.HasSuffix(filename, "_grpc.pb.go") {
-			data, err := ioutil.ReadFile(filename)
-			if err != nil {
-				return err
-			}
-
-			contents := string(data)
-			contents = strings.Replace(contents,
-				fmt.Sprintf("package %s", oldPackage),
-				fmt.Sprintf("package %s", newPackage),
-				1,
-			)
-
-			return ioutil.WriteFile(filename, []byte(contents), info.Mode())
 		}
 
 		return nil
