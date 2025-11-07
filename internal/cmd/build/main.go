@@ -26,11 +26,6 @@ var common []string = []string{
 	"basic_types.proto",
 }
 
-// Proto modules that we can skip
-var modulesToSkip []string = []string{
-	"mirror", // we are not going to call any mirror methods
-}
-
 func main() {
 	// get project directory
 	// nolint:dogsled
@@ -73,16 +68,7 @@ func cloneRepo(dir string) {
 }
 
 func skipFile(pathFromRoot string) bool {
-	if !strings.HasSuffix(pathFromRoot, ".proto") {
-		return true
-	}
-	for _, m := range modulesToSkip {
-		protoModule := PROTO_DIR + "/" + m
-		if strings.HasPrefix(pathFromRoot, protoModule) {
-			return true
-		}
-	}
-	return false
+	return !strings.HasSuffix(pathFromRoot, ".proto")
 }
 
 // Adjust proto files and create protoc command
