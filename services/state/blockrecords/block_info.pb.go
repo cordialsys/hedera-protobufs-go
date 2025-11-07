@@ -18,7 +18,7 @@
 package blockrecords
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -182,8 +182,8 @@ const file_state_blockrecords_block_info_proto_rawDesc = "" +
 	"\fblock_hashes\x18\x03 \x01(\fR\vblockHashes\x12Q\n" +
 	"\x1dcons_time_of_last_handled_txn\x18\x04 \x01(\v2\x10.proto.TimestampR\x18consTimeOfLastHandledTxn\x12<\n" +
 	"\x1amigration_records_streamed\x18\x05 \x01(\bR\x18migrationRecordsStreamed\x12W\n" +
-	" first_cons_time_of_current_block\x18\x06 \x01(\v2\x10.proto.TimestampR\x1bfirstConsTimeOfCurrentBlockBl\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/hashgraph/hedera-protobufs-go/services/state/blockrecordsb\x06proto3"
+	" first_cons_time_of_current_block\x18\x06 \x01(\v2\x10.proto.TimestampR\x1bfirstConsTimeOfCurrentBlockBm\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZEgithub.com/cordialsys/hedera-protobufs-go/services/state/blockrecordsb\x06proto3"
 
 var (
 	file_state_blockrecords_block_info_proto_rawDescOnce sync.Once

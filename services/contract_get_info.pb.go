@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -404,8 +404,8 @@ const file_contract_get_info_proto_rawDesc = "" +
 	"\tledger_id\x18\f \x01(\fR\bledgerId\x12C\n" +
 	"\x15auto_renew_account_id\x18\r \x01(\v2\x10.proto.AccountIDR\x12autoRenewAccountId\x12G\n" +
 	" max_automatic_token_associations\x18\x0e \x01(\x05R\x1dmaxAutomaticTokenAssociations\x125\n" +
-	"\fstaking_info\x18\x0f \x01(\v2\x12.proto.StakingInfoR\vstakingInfoBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\fstaking_info\x18\x0f \x01(\v2\x12.proto.StakingInfoR\vstakingInfoBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_contract_get_info_proto_rawDescOnce sync.Once

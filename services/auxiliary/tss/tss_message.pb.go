@@ -148,8 +148,8 @@ const file_auxiliary_tss_tss_message_proto_rawDesc = "" +
 	"\vshare_index\x18\x03 \x01(\x04R\n" +
 	"shareIndex\x12\x1f\n" +
 	"\vtss_message\x18\x04 \x01(\fR\n" +
-	"tssMessageBr\n" +
-	"-com.hedera.hapi.services.auxiliary.tss.legacyP\x01Z?github.com/hashgraph/hedera-protobufs-go/services/auxiliary/tssb\x06proto3"
+	"tssMessageBs\n" +
+	"-com.hedera.hapi.services.auxiliary.tss.legacyP\x01Z@github.com/cordialsys/hedera-protobufs-go/services/auxiliary/tssb\x06proto3"
 
 var (
 	file_auxiliary_tss_tss_message_proto_rawDescOnce sync.Once

@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -98,8 +98,8 @@ const file_consensus_delete_topic_proto_rawDesc = "" +
 	"\n" +
 	"\x1cconsensus_delete_topic.proto\x12\x05proto\x1a\x11basic_types.proto\"O\n" +
 	"#ConsensusDeleteTopicTransactionBody\x12(\n" +
-	"\atopicID\x18\x01 \x01(\v2\x0e.proto.TopicIDR\atopicIDBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\atopicID\x18\x01 \x01(\v2\x0e.proto.TopicIDR\atopicIDBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_consensus_delete_topic_proto_rawDescOnce sync.Once

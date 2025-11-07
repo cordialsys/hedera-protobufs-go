@@ -23,7 +23,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -301,8 +301,8 @@ const file_crypto_get_stakers_proto_rawDesc = "" +
 	"\vproxyStaker\x18\x02 \x03(\v2\x12.proto.ProxyStakerR\vproxyStaker:\x02\x18\x01\"\x7f\n" +
 	"\x18CryptoGetStakersResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x120\n" +
-	"\astakers\x18\x03 \x01(\v2\x16.proto.AllProxyStakersR\astakers:\x02\x18\x01BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\astakers\x18\x03 \x01(\v2\x16.proto.AllProxyStakersR\astakers:\x02\x18\x01BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_get_stakers_proto_rawDescOnce sync.Once

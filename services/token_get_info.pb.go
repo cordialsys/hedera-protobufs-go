@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -711,8 +711,8 @@ const file_token_get_info_proto_rawDesc = "" +
 	".proto.KeyR\vmetadataKey\"u\n" +
 	"\x14TokenGetInfoResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x12.\n" +
-	"\ttokenInfo\x18\x02 \x01(\v2\x10.proto.TokenInfoR\ttokenInfoBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\ttokenInfo\x18\x02 \x01(\v2\x10.proto.TokenInfoR\ttokenInfoBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_token_get_info_proto_rawDescOnce sync.Once

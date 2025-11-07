@@ -122,8 +122,8 @@ const file_transaction_response_proto_rawDesc = "" +
 	"\x1atransaction_response.proto\x12\x05proto\x1a\x13response_code.proto\"\x84\x01\n" +
 	"\x13TransactionResponse\x12Y\n" +
 	"\x1bnodeTransactionPrecheckCode\x18\x01 \x01(\x0e2\x17.proto.ResponseCodeEnumR\x1bnodeTransactionPrecheckCode\x12\x12\n" +
-	"\x04cost\x18\x02 \x01(\x04R\x04costBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x04cost\x18\x02 \x01(\x04R\x04costBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_transaction_response_proto_rawDescOnce sync.Once

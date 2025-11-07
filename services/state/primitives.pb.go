@@ -280,8 +280,8 @@ const file_state_primitives_proto_rawDesc = "" +
 	"\x05value\x18\x01 \x01(\tR\x05value\"\"\n" +
 	"\n" +
 	"ProtoBytes\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\fR\x05valueB_\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z7github.com/hashgraph/hedera-protobufs-go/services/stateb\x06proto3"
+	"\x05value\x18\x01 \x01(\fR\x05valueB`\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z8github.com/cordialsys/hedera-protobufs-go/services/stateb\x06proto3"
 
 var (
 	file_state_primitives_proto_rawDescOnce sync.Once

@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -913,8 +913,8 @@ const file_custom_fees_proto_rawDesc = "" +
 	"\x0eCustomFeeLimit\x12/\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\v2\x10.proto.AccountIDR\taccountId\x12#\n" +
-	"\x04fees\x18\x02 \x03(\v2\x0f.proto.FixedFeeR\x04feesBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x04fees\x18\x02 \x03(\v2\x0f.proto.FixedFeeR\x04feesBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_custom_fees_proto_rawDescOnce sync.Once

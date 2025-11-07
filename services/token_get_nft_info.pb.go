@@ -17,7 +17,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -277,8 +277,8 @@ const file_token_get_nft_info_proto_rawDesc = "" +
 	"spender_id\x18\x06 \x01(\v2\x10.proto.AccountIDR\tspenderId\"o\n" +
 	"\x17TokenGetNftInfoResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x12%\n" +
-	"\x03nft\x18\x02 \x01(\v2\x13.proto.TokenNftInfoR\x03nftBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x03nft\x18\x02 \x01(\v2\x13.proto.TokenNftInfoR\x03nftBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_token_get_nft_info_proto_rawDescOnce sync.Once

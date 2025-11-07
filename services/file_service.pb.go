@@ -52,8 +52,8 @@ const file_file_service_proto_rawDesc = "" +
 	"\x0egetFileContent\x12\f.proto.Query\x1a\x0f.proto.Response\x12,\n" +
 	"\vgetFileInfo\x12\f.proto.Query\x1a\x0f.proto.Response\x12>\n" +
 	"\fsystemDelete\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12@\n" +
-	"\x0esystemUndelete\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0esystemUndelete\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_file_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

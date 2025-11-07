@@ -2265,8 +2265,8 @@ const file_response_code_proto_rawDesc = "" +
 	"\x18CREATING_SYSTEM_ENTITIES\x10\x8c\x03\x12 \n" +
 	"\x1bTHROTTLE_GROUP_LCM_OVERFLOW\x10\x8d\x03\x122\n" +
 	"-AIRDROP_CONTAINS_MULTIPLE_SENDERS_FOR_A_TOKEN\x10\x8e\x03\x12!\n" +
-	"\x1cGRPC_WEB_PROXY_NOT_SUPPORTED\x10\x8f\x03BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x1cGRPC_WEB_PROXY_NOT_SUPPORTED\x10\x8f\x03BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_response_code_proto_rawDescOnce sync.Once

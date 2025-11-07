@@ -144,8 +144,8 @@ const file_response_header_proto_rawDesc = "" +
 	"\x04cost\x18\x03 \x01(\x04R\x04cost\x12\x1e\n" +
 	"\n" +
 	"stateProof\x18\x04 \x01(\fR\n" +
-	"stateProofBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"stateProofBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_response_header_proto_rawDescOnce sync.Once

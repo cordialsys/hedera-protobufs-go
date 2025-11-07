@@ -19,7 +19,7 @@
 package event
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -111,8 +111,8 @@ const file_event_event_consensus_data_proto_rawDesc = "" +
 	" event/event_consensus_data.proto\x12\x1ecom.hedera.hapi.platform.event\x1a\x11basic_types.proto\x1a\x1cevent/event_descriptor.proto\x1a\x0ftimestamp.proto\"\x80\x01\n" +
 	"\x12EventConsensusData\x12A\n" +
 	"\x13consensus_timestamp\x18\x01 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\x12'\n" +
-	"\x0fconsensus_order\x18\x02 \x01(\x04R\x0econsensusOrderBb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"\x0fconsensus_order\x18\x02 \x01(\x04R\x0econsensusOrderBc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_event_consensus_data_proto_rawDescOnce sync.Once

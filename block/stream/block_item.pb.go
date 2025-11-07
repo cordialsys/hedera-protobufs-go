@@ -28,9 +28,9 @@
 package stream
 
 import (
-	input "github.com/hashgraph/hedera-protobufs-go/block/stream/input"
-	output "github.com/hashgraph/hedera-protobufs-go/block/stream/output"
-	event "github.com/hashgraph/hedera-protobufs-go/platform/event"
+	input "github.com/cordialsys/hedera-protobufs-go/block/stream/input"
+	output "github.com/cordialsys/hedera-protobufs-go/block/stream/output"
+	event "github.com/cordialsys/hedera-protobufs-go/platform/event"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -523,8 +523,8 @@ const file_stream_block_item_proto_rawDesc = "" +
 	"\x04itemJ\x04\b\v\x10\fJ\x04\b\f\x10\rJ\x04\b\r\x10\x0eJ\x04\b\x0e\x10\x0fJ\x04\b\x0f\x10\x10\"T\n" +
 	"\x10FilteredItemHash\x12\x1b\n" +
 	"\titem_hash\x18\x01 \x01(\fR\bitemHash\x12#\n" +
-	"\rfiltered_path\x18\x03 \x01(\x04R\ffilteredPathB^\n" +
-	"#com.hedera.hapi.block.stream.protocP\x01Z5github.com/hashgraph/hedera-protobufs-go/block/streamb\x06proto3"
+	"\rfiltered_path\x18\x03 \x01(\x04R\ffilteredPathB_\n" +
+	"#com.hedera.hapi.block.stream.protocP\x01Z6github.com/cordialsys/hedera-protobufs-go/block/streamb\x06proto3"
 
 var (
 	file_stream_block_item_proto_rawDescOnce sync.Once

@@ -98,8 +98,8 @@ const file_util_prng_proto_rawDesc = "" +
 	"\n" +
 	"\x0futil_prng.proto\x12\x05proto\"/\n" +
 	"\x17UtilPrngTransactionBody\x12\x14\n" +
-	"\x05range\x18\x01 \x01(\x05R\x05rangeBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x05range\x18\x01 \x01(\x05R\x05rangeBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_util_prng_proto_rawDescOnce sync.Once

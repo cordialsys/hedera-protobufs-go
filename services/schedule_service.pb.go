@@ -40,8 +40,8 @@ const file_schedule_service_proto_rawDesc = "" +
 	"\x0ecreateSchedule\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12>\n" +
 	"\fsignSchedule\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12@\n" +
 	"\x0edeleteSchedule\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x120\n" +
-	"\x0fgetScheduleInfo\x12\f.proto.Query\x1a\x0f.proto.ResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0fgetScheduleInfo\x12\f.proto.Query\x1a\x0f.proto.ResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_schedule_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

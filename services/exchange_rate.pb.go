@@ -23,7 +23,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -205,8 +205,8 @@ const file_exchange_rate_proto_rawDesc = "" +
 	"\x0eexpirationTime\x18\x03 \x01(\v2\x17.proto.TimestampSecondsR\x0eexpirationTime\"y\n" +
 	"\x0fExchangeRateSet\x125\n" +
 	"\vcurrentRate\x18\x01 \x01(\v2\x13.proto.ExchangeRateR\vcurrentRate\x12/\n" +
-	"\bnextRate\x18\x02 \x01(\v2\x13.proto.ExchangeRateR\bnextRateBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\bnextRate\x18\x02 \x01(\v2\x13.proto.ExchangeRateR\bnextRateBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_exchange_rate_proto_rawDescOnce sync.Once

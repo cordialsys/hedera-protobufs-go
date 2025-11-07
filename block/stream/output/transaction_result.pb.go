@@ -18,8 +18,8 @@
 package output
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -271,8 +271,8 @@ const file_stream_output_transaction_result_proto_rawDesc = "" +
 	"\x14paid_staking_rewards\x18\n" +
 	" \x03(\v2\x14.proto.AccountAmountR\x12paidStakingRewards\x12B\n" +
 	"\x1dcongestion_pricing_multiplier\x18\v \x01(\x04R\x1bcongestionPricingMultiplier\x12J\n" +
-	"\x14assessed_custom_fees\x18\f \x03(\v2\x18.proto.AssessedCustomFeeR\x12assessedCustomFeesBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x14assessed_custom_fees\x18\f \x03(\v2\x18.proto.AssessedCustomFeeR\x12assessedCustomFeesBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_transaction_result_proto_rawDescOnce sync.Once

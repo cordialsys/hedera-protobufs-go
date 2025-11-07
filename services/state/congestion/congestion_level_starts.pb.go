@@ -18,7 +18,7 @@
 package congestion
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -115,8 +115,8 @@ const file_state_congestion_congestion_level_starts_proto_rawDesc = "" +
 	".state/congestion/congestion_level_starts.proto\x12\x05proto\x1a\x0ftimestamp.proto\"\x97\x01\n" +
 	"\x15CongestionLevelStarts\x12B\n" +
 	"\x14generic_level_starts\x18\x01 \x03(\v2\x10.proto.TimestampR\x12genericLevelStarts\x12:\n" +
-	"\x10gas_level_starts\x18\x02 \x03(\v2\x10.proto.TimestampR\x0egasLevelStartsBj\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZBgithub.com/hashgraph/hedera-protobufs-go/services/state/congestionb\x06proto3"
+	"\x10gas_level_starts\x18\x02 \x03(\v2\x10.proto.TimestampR\x0egasLevelStartsBk\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZCgithub.com/cordialsys/hedera-protobufs-go/services/state/congestionb\x06proto3"
 
 var (
 	file_state_congestion_congestion_level_starts_proto_rawDescOnce sync.Once

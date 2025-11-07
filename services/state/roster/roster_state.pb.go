@@ -167,8 +167,8 @@ const file_state_roster_roster_state_proto_rawDesc = "" +
 	"\x12round_roster_pairs\x18\x02 \x03(\v22.com.hedera.hapi.node.state.roster.RoundRosterPairR\x10roundRosterPairs\"b\n" +
 	"\x0fRoundRosterPair\x12!\n" +
 	"\fround_number\x18\x01 \x01(\x04R\vroundNumber\x12,\n" +
-	"\x12active_roster_hash\x18\x02 \x01(\fR\x10activeRosterHashBf\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/hashgraph/hedera-protobufs-go/services/state/rosterb\x06proto3"
+	"\x12active_roster_hash\x18\x02 \x01(\fR\x10activeRosterHashBg\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/cordialsys/hedera-protobufs-go/services/state/rosterb\x06proto3"
 
 var (
 	file_state_roster_roster_state_proto_rawDescOnce sync.Once

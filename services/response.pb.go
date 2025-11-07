@@ -618,8 +618,8 @@ const file_response_proto_rawDesc = "" +
 	"\x17networkGetExecutionTime\x18\x9d\x01 \x01(\v2&.proto.NetworkGetExecutionTimeResponseH\x00R\x17networkGetExecutionTime\x12K\n" +
 	"\x0eaccountDetails\x18\x9e\x01 \x01(\v2 .proto.GetAccountDetailsResponseH\x00R\x0eaccountDetailsB\n" +
 	"\n" +
-	"\bresponseBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\bresponseBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_response_proto_rawDescOnce sync.Once

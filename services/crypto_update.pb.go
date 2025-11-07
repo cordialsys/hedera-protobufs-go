@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -507,8 +507,8 @@ const file_crypto_update_proto_rawDesc = "" +
 	"\x18sendRecordThresholdFieldB\x1d\n" +
 	"\x1breceiveRecordThresholdFieldB\x1a\n" +
 	"\x18receiverSigRequiredFieldB\v\n" +
-	"\tstaked_idBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\tstaked_idBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_update_proto_rawDescOnce sync.Once

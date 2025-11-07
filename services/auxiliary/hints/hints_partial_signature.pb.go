@@ -111,8 +111,8 @@ const file_auxiliary_hints_hints_partial_signature_proto_rawDesc = "" +
 	"$HintsPartialSignatureTransactionBody\x12'\n" +
 	"\x0fconstruction_id\x18\x01 \x01(\x04R\x0econstructionId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\fR\amessage\x12+\n" +
-	"\x11partial_signature\x18\x03 \x01(\fR\x10partialSignatureBv\n" +
-	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
+	"\x11partial_signature\x18\x03 \x01(\fR\x10partialSignatureBw\n" +
+	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
 
 var (
 	file_auxiliary_hints_hints_partial_signature_proto_rawDescOnce sync.Once

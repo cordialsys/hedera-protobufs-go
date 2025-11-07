@@ -28,7 +28,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -173,8 +173,8 @@ const file_system_undelete_proto_rawDesc = "" +
 	"\n" +
 	"contractID\x18\x02 \x01(\v2\x11.proto.ContractIDH\x00R\n" +
 	"contractIDB\x04\n" +
-	"\x02idBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x02idBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_system_undelete_proto_rawDescOnce sync.Once

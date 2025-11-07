@@ -49,8 +49,8 @@ const file_smart_contract_service_proto_rawDesc = "" +
 	"\x0edeleteContract\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12C\n" +
 	"\fsystemDelete\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\"\x03\x88\x02\x01\x12E\n" +
 	"\x0esystemUndelete\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\"\x03\x88\x02\x01\x12>\n" +
-	"\fcallEthereum\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\fcallEthereum\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_smart_contract_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

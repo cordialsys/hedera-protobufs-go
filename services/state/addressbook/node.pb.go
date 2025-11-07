@@ -7,7 +7,7 @@
 package addressbook
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -289,8 +289,8 @@ const file_state_addressbook_node_proto_rawDesc = "" +
 	" \x01(\v2\n" +
 	".proto.KeyR\badminKey\x12%\n" +
 	"\x0edecline_reward\x18\v \x01(\bR\rdeclineReward\x12F\n" +
-	"\x13grpc_proxy_endpoint\x18\f \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBk\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZCgithub.com/hashgraph/hedera-protobufs-go/services/state/addressbookb\x06proto3"
+	"\x13grpc_proxy_endpoint\x18\f \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBl\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/state/addressbookb\x06proto3"
 
 var (
 	file_state_addressbook_node_proto_rawDescOnce sync.Once

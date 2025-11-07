@@ -249,8 +249,8 @@ const file_state_entity_entity_counts_proto_rawDesc = "" +
 	" \x01(\x04R\bnumNodes\x12#\n" +
 	"\rnum_schedules\x18\v \x01(\x04R\fnumSchedules\x12;\n" +
 	"\x1anum_contract_storage_slots\x18\f \x01(\x04R\x17numContractStorageSlots\x124\n" +
-	"\x16num_contract_bytecodes\x18\r \x01(\x04R\x14numContractBytecodesBf\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/hashgraph/hedera-protobufs-go/services/state/entityb\x06proto3"
+	"\x16num_contract_bytecodes\x18\r \x01(\x04R\x14numContractBytecodesBg\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/cordialsys/hedera-protobufs-go/services/state/entityb\x06proto3"
 
 var (
 	file_state_entity_entity_counts_proto_rawDescOnce sync.Once

@@ -7,7 +7,7 @@
 package streams
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -210,8 +210,8 @@ const file_sidecar_file_proto_rawDesc = "" +
 	"\rstate_changes\x18\x03 \x01(\v2\x1b.proto.ContractStateChangesH\x00R\fstateChanges\x122\n" +
 	"\aactions\x18\x04 \x01(\v2\x16.proto.ContractActionsH\x00R\aactions\x125\n" +
 	"\bbytecode\x18\x05 \x01(\v2\x17.proto.ContractBytecodeH\x00R\bbytecodeB\x11\n" +
-	"\x0fsidecar_recordsBV\n" +
-	" com.hedera.services.stream.protoP\x01Z0github.com/hashgraph/hedera-protobufs-go/streamsb\x06proto3"
+	"\x0fsidecar_recordsBW\n" +
+	" com.hedera.services.stream.protoP\x01Z1github.com/cordialsys/hedera-protobufs-go/streamsb\x06proto3"
 
 var (
 	file_sidecar_file_proto_rawDescOnce sync.Once

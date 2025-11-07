@@ -98,8 +98,8 @@ const file_state_tss_tss_encryption_keys_proto_rawDesc = "" +
 	"#state/tss/tss_encryption_keys.proto\x12\x1ecom.hedera.hapi.node.state.tss\"y\n" +
 	"\x11TssEncryptionKeys\x124\n" +
 	"\x16current_encryption_key\x18\x01 \x01(\fR\x14currentEncryptionKey\x12.\n" +
-	"\x13next_encryption_key\x18\x02 \x01(\fR\x11nextEncryptionKeyBf\n" +
-	"%com.hedera.hapi.node.state.tss.legacyP\x01Z;github.com/hashgraph/hedera-protobufs-go/services/state/tssb\x06proto3"
+	"\x13next_encryption_key\x18\x02 \x01(\fR\x11nextEncryptionKeyBg\n" +
+	"%com.hedera.hapi.node.state.tss.legacyP\x01Z<github.com/cordialsys/hedera-protobufs-go/services/state/tssb\x06proto3"
 
 var (
 	file_state_tss_tss_encryption_keys_proto_rawDescOnce sync.Once

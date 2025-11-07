@@ -20,8 +20,8 @@
 package stream
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	streams "github.com/hashgraph/hedera-protobufs-go/streams"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	streams "github.com/cordialsys/hedera-protobufs-go/streams"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -215,8 +215,8 @@ const file_stream_record_file_item_proto_rawDesc = "" +
 	"\x16record_file_signatures\x18\x04 \x03(\v21.com.hedera.hapi.block.stream.RecordFileSignatureR\x14recordFileSignatures\"Y\n" +
 	"\x13RecordFileSignature\x12)\n" +
 	"\x10signatures_bytes\x18\x01 \x01(\fR\x0fsignaturesBytes\x12\x17\n" +
-	"\anode_id\x18\x02 \x01(\x05R\x06nodeIdB^\n" +
-	"#com.hedera.hapi.block.stream.protocP\x01Z5github.com/hashgraph/hedera-protobufs-go/block/streamb\x06proto3"
+	"\anode_id\x18\x02 \x01(\x05R\x06nodeIdB_\n" +
+	"#com.hedera.hapi.block.stream.protocP\x01Z6github.com/cordialsys/hedera-protobufs-go/block/streamb\x06proto3"
 
 var (
 	file_stream_record_file_item_proto_rawDescOnce sync.Once

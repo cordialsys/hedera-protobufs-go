@@ -303,8 +303,8 @@ const file_stream_output_transaction_output_proto_rawDesc = "" +
 	"\x0fcreate_schedule\x18\x05 \x01(\v29.com.hedera.hapi.block.stream.output.CreateScheduleOutputH\x00R\x0ecreateSchedule\x12^\n" +
 	"\rsign_schedule\x18\x06 \x01(\v27.com.hedera.hapi.block.stream.output.SignScheduleOutputH\x00R\fsignSchedule\x12a\n" +
 	"\x0eaccount_create\x18\a \x01(\v28.com.hedera.hapi.block.stream.output.CreateAccountOutputH\x00R\raccountCreateB\r\n" +
-	"\vtransactionBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\vtransactionBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_transaction_output_proto_rawDescOnce sync.Once

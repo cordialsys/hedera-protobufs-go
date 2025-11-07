@@ -18,7 +18,7 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -224,8 +224,8 @@ const file_state_token_token_relation_proto_rawDesc = "" +
 	"\x15automatic_association\x18\x06 \x01(\bR\x14automaticAssociation\x125\n" +
 	"\x0eprevious_token\x18\a \x01(\v2\x0e.proto.TokenIDR\rpreviousToken\x12-\n" +
 	"\n" +
-	"next_token\x18\b \x01(\v2\x0e.proto.TokenIDR\tnextTokenBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"next_token\x18\b \x01(\v2\x0e.proto.TokenIDR\tnextTokenBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_token_relation_proto_rawDescOnce sync.Once

@@ -88,8 +88,8 @@ const file_state_contract_bytecode_proto_rawDesc = "" +
 	"\n" +
 	"\x1dstate/contract/bytecode.proto\x12\x05proto\"\x1e\n" +
 	"\bBytecode\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\fR\x04codeBh\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z@github.com/hashgraph/hedera-protobufs-go/services/state/contractb\x06proto3"
+	"\x04code\x18\x01 \x01(\fR\x04codeBi\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZAgithub.com/cordialsys/hedera-protobufs-go/services/state/contractb\x06proto3"
 
 var (
 	file_state_contract_bytecode_proto_rawDescOnce sync.Once

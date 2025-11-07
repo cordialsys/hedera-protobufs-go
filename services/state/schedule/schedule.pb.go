@@ -17,8 +17,8 @@
 package schedule
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -566,8 +566,8 @@ const file_state_schedule_schedule_proto_rawDesc = "" +
 	"\x10number_processed\x18\x02 \x01(\rR\x0fnumberProcessed\"X\n" +
 	"\x0eScheduledOrder\x12#\n" +
 	"\rexpiry_second\x18\x01 \x01(\x04R\fexpirySecond\x12!\n" +
-	"\forder_number\x18\x02 \x01(\rR\vorderNumberBh\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z@github.com/hashgraph/hedera-protobufs-go/services/state/scheduleb\x06proto3"
+	"\forder_number\x18\x02 \x01(\rR\vorderNumberBi\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZAgithub.com/cordialsys/hedera-protobufs-go/services/state/scheduleb\x06proto3"
 
 var (
 	file_state_schedule_schedule_proto_rawDescOnce sync.Once

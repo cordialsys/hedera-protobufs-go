@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -479,8 +479,8 @@ const file_schedule_get_info_proto_rawDesc = "" +
 	"\x04data\"\x81\x01\n" +
 	"\x17ScheduleGetInfoResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x127\n" +
-	"\fscheduleInfo\x18\x02 \x01(\v2\x13.proto.ScheduleInfoR\fscheduleInfoBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\fscheduleInfo\x18\x02 \x01(\v2\x13.proto.ScheduleInfoR\fscheduleInfoBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_schedule_get_info_proto_rawDescOnce sync.Once

@@ -302,8 +302,8 @@ const file_stream_output_file_service_proto_rawDesc = "" +
 	"\x10DeleteFileOutput\"\x12\n" +
 	"\x10UpdateFileOutput\"\x14\n" +
 	"\x12SystemDeleteOutput\"\x16\n" +
-	"\x14SystemUndeleteOutputBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x14SystemUndeleteOutputBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_file_service_proto_rawDescOnce sync.Once

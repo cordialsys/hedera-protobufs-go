@@ -40,8 +40,8 @@ const file_network_service_proto_rawDesc = "" +
 	"\x0egetVersionInfo\x12\f.proto.Query\x1a\x0f.proto.Response\x122\n" +
 	"\x11getAccountDetails\x12\f.proto.Query\x1a\x0f.proto.Response\x126\n" +
 	"\x10getExecutionTime\x12\f.proto.Query\x1a\x0f.proto.Response\"\x03\x88\x02\x01\x12F\n" +
-	"\x0funcheckedSubmit\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\"\x03\x88\x02\x01B[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0funcheckedSubmit\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\"\x03\x88\x02\x01B\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_network_service_proto_goTypes = []any{
 	(*Query)(nil),               // 0: proto.Query

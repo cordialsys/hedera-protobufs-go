@@ -111,8 +111,8 @@ const file_stream_block_proto_rawDesc = "" +
 	"\n" +
 	"\x12stream/block.proto\x12\x1ccom.hedera.hapi.block.stream\x1a\x17stream/block_item.proto\"F\n" +
 	"\x05Block\x12=\n" +
-	"\x05items\x18\x01 \x03(\v2'.com.hedera.hapi.block.stream.BlockItemR\x05itemsB^\n" +
-	"#com.hedera.hapi.block.stream.protocP\x01Z5github.com/hashgraph/hedera-protobufs-go/block/streamb\x06proto3"
+	"\x05items\x18\x01 \x03(\v2'.com.hedera.hapi.block.stream.BlockItemR\x05itemsB_\n" +
+	"#com.hedera.hapi.block.stream.protocP\x01Z6github.com/cordialsys/hedera-protobufs-go/block/streamb\x06proto3"
 
 var (
 	file_stream_block_proto_rawDescOnce sync.Once

@@ -17,7 +17,7 @@
 package history
 
 import (
-	history "github.com/hashgraph/hedera-protobufs-go/services/state/history"
+	history "github.com/cordialsys/hedera-protobufs-go/services/state/history"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -100,8 +100,8 @@ const file_auxiliary_history_history_proof_signature_proto_rawDesc = "" +
 	"/auxiliary/history/history_proof_signature.proto\x12*com.hedera.hapi.services.auxiliary.history\x1a!state/history/history_types.proto\"\xa3\x01\n" +
 	"$HistoryProofSignatureTransactionBody\x12'\n" +
 	"\x0fconstruction_id\x18\x01 \x01(\x04R\x0econstructionId\x12R\n" +
-	"\tsignature\x18\x02 \x01(\v24.com.hedera.hapi.node.state.history.HistorySignatureR\tsignatureBz\n" +
-	"1com.hedera.hapi.services.auxiliary.history.legacyP\x01ZCgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/historyb\x06proto3"
+	"\tsignature\x18\x02 \x01(\v24.com.hedera.hapi.node.state.history.HistorySignatureR\tsignatureB{\n" +
+	"1com.hedera.hapi.services.auxiliary.history.legacyP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/historyb\x06proto3"
 
 var (
 	file_auxiliary_history_history_proof_signature_proto_rawDescOnce sync.Once

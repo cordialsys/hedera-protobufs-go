@@ -7,7 +7,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -281,8 +281,8 @@ const file_node_update_proto_rawDesc = "" +
 	".proto.KeyR\badminKey\x12A\n" +
 	"\x0edecline_reward\x18\t \x01(\v2\x1a.google.protobuf.BoolValueR\rdeclineReward\x12F\n" +
 	"\x13grpc_proxy_endpoint\x18\n" +
-	" \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	" \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_node_update_proto_rawDescOnce sync.Once

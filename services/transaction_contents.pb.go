@@ -20,7 +20,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -112,8 +112,8 @@ const file_transaction_contents_proto_rawDesc = "" +
 	"\x1atransaction_contents.proto\x12\x05proto\x1a\x11basic_types.proto\"^\n" +
 	"\x11SignedTransaction\x12\x1c\n" +
 	"\tbodyBytes\x18\x01 \x01(\fR\tbodyBytes\x12+\n" +
-	"\x06sigMap\x18\x02 \x01(\v2\x13.proto.SignatureMapR\x06sigMapBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x06sigMap\x18\x02 \x01(\v2\x13.proto.SignatureMapR\x06sigMapBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_transaction_contents_proto_rawDescOnce sync.Once

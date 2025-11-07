@@ -19,10 +19,10 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	event "github.com/hashgraph/hedera-protobufs-go/platform/event"
-	hints "github.com/hashgraph/hedera-protobufs-go/services/auxiliary/hints"
-	history "github.com/hashgraph/hedera-protobufs-go/services/auxiliary/history"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	event "github.com/cordialsys/hedera-protobufs-go/platform/event"
+	hints "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/hints"
+	history "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/history"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -1716,8 +1716,8 @@ const file_transaction_proto_rawDesc = "" +
 	"\x04dataJ\x04\b\x1e\x10\x1fJ\x04\b=\x10>J\x04\b>\x10?J\x04\b?\x10@J\x04\b@\x10AR\n" +
 	"tssMessageR\atssVoteR\x11tssShareSignatureR\x10tssEncryptionKey\"@\n" +
 	"\x1aAtomicBatchTransactionBody\x12\"\n" +
-	"\ftransactions\x18\x01 \x03(\fR\ftransactionsBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\ftransactions\x18\x01 \x03(\fR\ftransactionsBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_transaction_proto_rawDescOnce sync.Once

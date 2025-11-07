@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -219,8 +219,8 @@ const file_file_create_proto_rawDesc = "" +
 	"\arealmID\x18\x06 \x01(\v2\x0e.proto.RealmIDR\arealmID\x12:\n" +
 	"\x10newRealmAdminKey\x18\a \x01(\v2\n" +
 	".proto.KeyB\x02\x18\x01R\x10newRealmAdminKey\x12\x12\n" +
-	"\x04memo\x18\b \x01(\tR\x04memoBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x04memo\x18\b \x01(\tR\x04memoBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_file_create_proto_rawDescOnce sync.Once

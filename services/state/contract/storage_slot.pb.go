@@ -18,7 +18,7 @@
 package contract
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -179,8 +179,8 @@ const file_state_contract_storage_slot_proto_rawDesc = "" +
 	"\tSlotValue\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\fR\x05value\x12!\n" +
 	"\fprevious_key\x18\x02 \x01(\fR\vpreviousKey\x12\x19\n" +
-	"\bnext_key\x18\x03 \x01(\fR\anextKeyBh\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z@github.com/hashgraph/hedera-protobufs-go/services/state/contractb\x06proto3"
+	"\bnext_key\x18\x03 \x01(\fR\anextKeyBi\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZAgithub.com/cordialsys/hedera-protobufs-go/services/state/contractb\x06proto3"
 
 var (
 	file_state_contract_storage_slot_proto_rawDescOnce sync.Once

@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -197,8 +197,8 @@ const file_crypto_delete_allowance_proto_rawDesc = "" +
 	"\x12NftRemoveAllowance\x12)\n" +
 	"\btoken_id\x18\x01 \x01(\v2\x0e.proto.TokenIDR\atokenId\x12&\n" +
 	"\x05owner\x18\x02 \x01(\v2\x10.proto.AccountIDR\x05owner\x12%\n" +
-	"\x0eserial_numbers\x18\x03 \x03(\x03R\rserialNumbersBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0eserial_numbers\x18\x03 \x03(\x03R\rserialNumbersBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_delete_allowance_proto_rawDescOnce sync.Once

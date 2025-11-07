@@ -87,8 +87,8 @@ const file_auxiliary_history_history_proof_key_publication_proto_rawDesc = "" +
 	"\n" +
 	"5auxiliary/history/history_proof_key_publication.proto\x12*com.hedera.hapi.services.auxiliary.history\"H\n" +
 	")HistoryProofKeyPublicationTransactionBody\x12\x1b\n" +
-	"\tproof_key\x18\x01 \x01(\fR\bproofKeyBz\n" +
-	"1com.hedera.hapi.services.auxiliary.history.legacyP\x01ZCgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/historyb\x06proto3"
+	"\tproof_key\x18\x01 \x01(\fR\bproofKeyB{\n" +
+	"1com.hedera.hapi.services.auxiliary.history.legacyP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/historyb\x06proto3"
 
 var (
 	file_auxiliary_history_history_proof_key_publication_proto_rawDescOnce sync.Once

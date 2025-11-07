@@ -23,7 +23,7 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -1016,8 +1016,8 @@ const file_state_token_account_proto_rawDesc = "" +
 	"\x16AccountCryptoAllowance\x12/\n" +
 	"\n" +
 	"spender_id\x18\x01 \x01(\v2\x10.proto.AccountIDR\tspenderId\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\x03R\x06amountBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\x06amount\x18\x02 \x01(\x03R\x06amountBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_account_proto_rawDescOnce sync.Once

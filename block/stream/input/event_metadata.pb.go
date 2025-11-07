@@ -18,7 +18,7 @@
 package input
 
 import (
-	event "github.com/hashgraph/hedera-protobufs-go/platform/event"
+	event "github.com/cordialsys/hedera-protobufs-go/platform/event"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -202,8 +202,8 @@ const file_stream_input_event_metadata_proto_rawDesc = "" +
 	"\x14ParentEventReference\x12\\\n" +
 	"\x10event_descriptor\x18\x01 \x01(\v2/.com.hedera.hapi.platform.event.EventDescriptorH\x00R\x0feventDescriptor\x12\x16\n" +
 	"\x05index\x18\x02 \x01(\rH\x00R\x05indexB\b\n" +
-	"\x06parentBj\n" +
-	")com.hedera.hapi.block.stream.input.protocP\x01Z;github.com/hashgraph/hedera-protobufs-go/block/stream/inputb\x06proto3"
+	"\x06parentBk\n" +
+	")com.hedera.hapi.block.stream.input.protocP\x01Z<github.com/cordialsys/hedera-protobufs-go/block/stream/inputb\x06proto3"
 
 var (
 	file_stream_input_event_metadata_proto_rawDescOnce sync.Once

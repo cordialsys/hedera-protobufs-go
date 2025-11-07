@@ -17,7 +17,7 @@
 package hints
 
 import (
-	hints "github.com/hashgraph/hedera-protobufs-go/services/state/hints"
+	hints "github.com/cordialsys/hedera-protobufs-go/services/state/hints"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -105,8 +105,8 @@ const file_auxiliary_hints_hints_preprocessing_vote_proto_rawDesc = "" +
 	".auxiliary/hints/hints_preprocessing_vote.proto\x12(com.hedera.hapi.services.auxiliary.hints\x1a\x1dstate/hints/hints_types.proto\"\x99\x01\n" +
 	"%HintsPreprocessingVoteTransactionBody\x12'\n" +
 	"\x0fconstruction_id\x18\x01 \x01(\x04R\x0econstructionId\x12G\n" +
-	"\x04vote\x18\x02 \x01(\v23.com.hedera.hapi.node.state.hints.PreprocessingVoteR\x04voteBv\n" +
-	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
+	"\x04vote\x18\x02 \x01(\v23.com.hedera.hapi.node.state.hints.PreprocessingVoteR\x04voteBw\n" +
+	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
 
 var (
 	file_auxiliary_hints_hints_preprocessing_vote_proto_rawDescOnce sync.Once

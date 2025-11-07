@@ -20,7 +20,7 @@
 package event
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -150,8 +150,8 @@ const file_event_event_core_proto_rawDesc = "" +
 	"birthRound\x123\n" +
 	"\ftime_created\x18\x03 \x01(\v2\x10.proto.TimestampR\vtimeCreated\x12M\n" +
 	"\aparents\x18\x04 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorB\x02\x18\x01R\aparents\x120\n" +
-	"\aversion\x18\x11 \x01(\v2\x16.proto.SemanticVersionR\aversionBb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"\aversion\x18\x11 \x01(\v2\x16.proto.SemanticVersionR\aversionBc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_event_core_proto_rawDescOnce sync.Once

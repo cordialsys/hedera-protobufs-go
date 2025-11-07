@@ -123,8 +123,8 @@ const file_state_blockrecords_running_hashes_proto_rawDesc = "" +
 	"\frunning_hash\x18\x01 \x01(\fR\vrunningHash\x122\n" +
 	"\x16n_minus_1_running_hash\x18\x02 \x01(\fR\x12nMinus1RunningHash\x122\n" +
 	"\x16n_minus_2_running_hash\x18\x03 \x01(\fR\x12nMinus2RunningHash\x122\n" +
-	"\x16n_minus_3_running_hash\x18\x04 \x01(\fR\x12nMinus3RunningHashBl\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/hashgraph/hedera-protobufs-go/services/state/blockrecordsb\x06proto3"
+	"\x16n_minus_3_running_hash\x18\x04 \x01(\fR\x12nMinus3RunningHashBm\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZEgithub.com/cordialsys/hedera-protobufs-go/services/state/blockrecordsb\x06proto3"
 
 var (
 	file_state_blockrecords_running_hashes_proto_rawDescOnce sync.Once

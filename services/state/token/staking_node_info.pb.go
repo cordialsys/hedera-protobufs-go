@@ -284,8 +284,8 @@ const file_state_token_staking_node_info_proto_rawDesc = "" +
 	"\x06weight\x18\n" +
 	" \x01(\x05B\x02\x18\x01R\x06weight\x12'\n" +
 	"\x0fpending_rewards\x18\v \x01(\x03R\x0ependingRewards\x12\x18\n" +
-	"\adeleted\x18\f \x01(\bR\adeletedBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\adeleted\x18\f \x01(\bR\adeletedBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_staking_node_info_proto_rawDescOnce sync.Once

@@ -42,8 +42,8 @@ const file_address_book_service_proto_rawDesc = "" +
 	"\n" +
 	"deleteNode\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12<\n" +
 	"\n" +
-	"updateNode\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"updateNode\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_address_book_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

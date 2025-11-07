@@ -27,7 +27,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -129,8 +129,8 @@ const file_token_grant_kyc_proto_rawDesc = "" +
 	"\x15token_grant_kyc.proto\x12\x05proto\x1a\x11basic_types.proto\"p\n" +
 	"\x1cTokenGrantKycTransactionBody\x12$\n" +
 	"\x05token\x18\x01 \x01(\v2\x0e.proto.TokenIDR\x05token\x12*\n" +
-	"\aaccount\x18\x02 \x01(\v2\x10.proto.AccountIDR\aaccountBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\aaccount\x18\x02 \x01(\v2\x10.proto.AccountIDR\aaccountBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_token_grant_kyc_proto_rawDescOnce sync.Once

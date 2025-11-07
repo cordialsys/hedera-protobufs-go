@@ -7,7 +7,7 @@
 package history
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -784,8 +784,8 @@ const file_state_history_history_types_proto_rawDesc = "" +
 	"\tsignature\x18\x02 \x01(\fR\tsignature\"\xb2\x01\n" +
 	"\x18RecordedHistorySignature\x123\n" +
 	"\fsigning_time\x18\x01 \x01(\v2\x10.proto.TimestampR\vsigningTime\x12a\n" +
-	"\x11history_signature\x18\x02 \x01(\v24.com.hedera.hapi.node.state.history.HistorySignatureR\x10historySignatureBg\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/hashgraph/hedera-protobufs-go/services/state/historyb\x06proto3"
+	"\x11history_signature\x18\x02 \x01(\v24.com.hedera.hapi.node.state.history.HistorySignatureR\x10historySignatureBh\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z@github.com/cordialsys/hedera-protobufs-go/services/state/historyb\x06proto3"
 
 var (
 	file_state_history_history_types_proto_rawDescOnce sync.Once

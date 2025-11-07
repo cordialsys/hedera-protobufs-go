@@ -7,7 +7,7 @@
 package streams
 
 import (
-	_ "github.com/hashgraph/hedera-protobufs-go/common"
+	_ "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -234,8 +234,8 @@ const file_signature_file_proto_rawDesc = "" +
 	"hashObject*A\n" +
 	"\rSignatureType\x12\x1a\n" +
 	"\x16SIGNATURE_TYPE_UNKNOWN\x10\x00\x12\x14\n" +
-	"\x10SHA_384_WITH_RSA\x10\x01BV\n" +
-	" com.hedera.services.stream.protoP\x01Z0github.com/hashgraph/hedera-protobufs-go/streamsb\x06proto3"
+	"\x10SHA_384_WITH_RSA\x10\x01BW\n" +
+	" com.hedera.services.stream.protoP\x01Z1github.com/cordialsys/hedera-protobufs-go/streamsb\x06proto3"
 
 var (
 	file_signature_file_proto_rawDescOnce sync.Once

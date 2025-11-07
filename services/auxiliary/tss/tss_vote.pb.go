@@ -165,8 +165,8 @@ const file_auxiliary_tss_tss_vote_proto_rawDesc = "" +
 	"\x12target_roster_hash\x18\x02 \x01(\fR\x10targetRosterHash\x12\x1b\n" +
 	"\tledger_id\x18\x03 \x01(\fR\bledgerId\x12%\n" +
 	"\x0enode_signature\x18\x04 \x01(\fR\rnodeSignature\x12\x19\n" +
-	"\btss_vote\x18\x05 \x01(\fR\atssVoteBr\n" +
-	"-com.hedera.hapi.services.auxiliary.tss.legacyP\x01Z?github.com/hashgraph/hedera-protobufs-go/services/auxiliary/tssb\x06proto3"
+	"\btss_vote\x18\x05 \x01(\fR\atssVoteBs\n" +
+	"-com.hedera.hapi.services.auxiliary.tss.legacyP\x01Z@github.com/cordialsys/hedera-protobufs-go/services/auxiliary/tssb\x06proto3"
 
 var (
 	file_auxiliary_tss_tss_vote_proto_rawDescOnce sync.Once

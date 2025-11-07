@@ -25,7 +25,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -193,8 +193,8 @@ const file_network_get_execution_time_proto_rawDesc = "" +
 	"\x0ftransaction_ids\x18\x02 \x03(\v2\x14.proto.TransactionIDR\x0etransactionIds:\x02\x18\x01\"}\n" +
 	"\x1fNetworkGetExecutionTimeResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x12'\n" +
-	"\x0fexecution_times\x18\x02 \x03(\x04R\x0eexecutionTimes:\x02\x18\x01BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0fexecution_times\x18\x02 \x03(\x04R\x0eexecutionTimes:\x02\x18\x01BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_network_get_execution_time_proto_rawDescOnce sync.Once

@@ -629,8 +629,8 @@ const file_query_proto_rawDesc = "" +
 	"\x10tokenGetNftInfos\x188 \x01(\v2\x1c.proto.TokenGetNftInfosQueryB\x02\x18\x01H\x00R\x10tokenGetNftInfos\x12c\n" +
 	"\x17networkGetExecutionTime\x189 \x01(\v2#.proto.NetworkGetExecutionTimeQueryB\x02\x18\x01H\x00R\x17networkGetExecutionTime\x12G\n" +
 	"\x0eaccountDetails\x18: \x01(\v2\x1d.proto.GetAccountDetailsQueryH\x00R\x0eaccountDetailsB\a\n" +
-	"\x05queryBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x05queryBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_query_proto_rawDescOnce sync.Once

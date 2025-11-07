@@ -17,7 +17,7 @@
 package throttles
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -171,8 +171,8 @@ const file_state_throttles_throttle_usage_snapshots_proto_rawDesc = "" +
 	"\fgas_throttle\x18\x02 \x01(\v2\x1c.proto.ThrottleUsageSnapshotR\vgasThrottle\"k\n" +
 	"\x15ThrottleUsageSnapshot\x12\x12\n" +
 	"\x04used\x18\x01 \x01(\x03R\x04used\x12>\n" +
-	"\x12last_decision_time\x18\x02 \x01(\v2\x10.proto.TimestampR\x10lastDecisionTimeBi\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/state/throttlesb\x06proto3"
+	"\x12last_decision_time\x18\x02 \x01(\v2\x10.proto.TimestampR\x10lastDecisionTimeBj\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/state/throttlesb\x06proto3"
 
 var (
 	file_state_throttles_throttle_usage_snapshots_proto_rawDescOnce sync.Once

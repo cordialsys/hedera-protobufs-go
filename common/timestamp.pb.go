@@ -167,8 +167,8 @@ const file_timestamp_proto_rawDesc = "" +
 	"\aseconds\x18\x01 \x01(\x03R\aseconds\x12\x14\n" +
 	"\x05nanos\x18\x02 \x01(\x05R\x05nanos\",\n" +
 	"\x10TimestampSeconds\x12\x18\n" +
-	"\aseconds\x18\x01 \x01(\x03R\asecondsBW\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z/github.com/hashgraph/hedera-protobufs-go/commonb\x06proto3"
+	"\aseconds\x18\x01 \x01(\x03R\asecondsBX\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z0github.com/cordialsys/hedera-protobufs-go/commonb\x06proto3"
 
 var (
 	file_timestamp_proto_rawDescOnce sync.Once

@@ -141,8 +141,8 @@ const file_event_event_descriptor_proto_rawDesc = "" +
 	"birthRound\x12\x1e\n" +
 	"\n" +
 	"generation\x18\x11 \x01(\x03R\n" +
-	"generationBb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"generationBc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_event_descriptor_proto_rawDescOnce sync.Once

@@ -18,8 +18,8 @@
 package block
 
 import (
-	stream "github.com/hashgraph/hedera-protobufs-go/block/stream"
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	stream "github.com/cordialsys/hedera-protobufs-go/block/stream"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -2047,8 +2047,8 @@ const file_block_service_proto_rawDesc = "" +
 	"\rstateSnapshot\x12+.com.hedera.hapi.block.StateSnapshotRequest\x1a,.com.hedera.hapi.block.StateSnapshotResponse2\x82\x02\n" +
 	"\x12BlockStreamService\x12s\n" +
 	"\x12publishBlockStream\x12+.com.hedera.hapi.block.PublishStreamRequest\x1a,.com.hedera.hapi.block.PublishStreamResponse(\x010\x01\x12w\n" +
-	"\x14subscribeBlockStream\x12-.com.hedera.hapi.block.SubscribeStreamRequest\x1a..com.hedera.hapi.block.SubscribeStreamResponse0\x01BP\n" +
-	"\x1ccom.hedera.hapi.block.protocP\x01Z.github.com/hashgraph/hedera-protobufs-go/blockb\x06proto3"
+	"\x14subscribeBlockStream\x12-.com.hedera.hapi.block.SubscribeStreamRequest\x1a..com.hedera.hapi.block.SubscribeStreamResponse0\x01BQ\n" +
+	"\x1ccom.hedera.hapi.block.protocP\x01Z/github.com/cordialsys/hedera-protobufs-go/blockb\x06proto3"
 
 var (
 	file_block_service_proto_rawDescOnce sync.Once

@@ -23,27 +23,27 @@
 package output
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	state "github.com/hashgraph/hedera-protobufs-go/platform/state"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
-	hints1 "github.com/hashgraph/hedera-protobufs-go/services/auxiliary/hints"
-	tss1 "github.com/hashgraph/hedera-protobufs-go/services/auxiliary/tss"
-	addressbook "github.com/hashgraph/hedera-protobufs-go/services/state/addressbook"
-	blockrecords "github.com/hashgraph/hedera-protobufs-go/services/state/blockrecords"
-	blockstream "github.com/hashgraph/hedera-protobufs-go/services/state/blockstream"
-	congestion "github.com/hashgraph/hedera-protobufs-go/services/state/congestion"
-	consensus "github.com/hashgraph/hedera-protobufs-go/services/state/consensus"
-	contract "github.com/hashgraph/hedera-protobufs-go/services/state/contract"
-	entity "github.com/hashgraph/hedera-protobufs-go/services/state/entity"
-	file "github.com/hashgraph/hedera-protobufs-go/services/state/file"
-	hints "github.com/hashgraph/hedera-protobufs-go/services/state/hints"
-	history "github.com/hashgraph/hedera-protobufs-go/services/state/history"
-	recordcache "github.com/hashgraph/hedera-protobufs-go/services/state/recordcache"
-	roster "github.com/hashgraph/hedera-protobufs-go/services/state/roster"
-	schedule "github.com/hashgraph/hedera-protobufs-go/services/state/schedule"
-	throttles "github.com/hashgraph/hedera-protobufs-go/services/state/throttles"
-	token "github.com/hashgraph/hedera-protobufs-go/services/state/token"
-	tss "github.com/hashgraph/hedera-protobufs-go/services/state/tss"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	state "github.com/cordialsys/hedera-protobufs-go/platform/state"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
+	hints1 "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/hints"
+	tss1 "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/tss"
+	addressbook "github.com/cordialsys/hedera-protobufs-go/services/state/addressbook"
+	blockrecords "github.com/cordialsys/hedera-protobufs-go/services/state/blockrecords"
+	blockstream "github.com/cordialsys/hedera-protobufs-go/services/state/blockstream"
+	congestion "github.com/cordialsys/hedera-protobufs-go/services/state/congestion"
+	consensus "github.com/cordialsys/hedera-protobufs-go/services/state/consensus"
+	contract "github.com/cordialsys/hedera-protobufs-go/services/state/contract"
+	entity "github.com/cordialsys/hedera-protobufs-go/services/state/entity"
+	file "github.com/cordialsys/hedera-protobufs-go/services/state/file"
+	hints "github.com/cordialsys/hedera-protobufs-go/services/state/hints"
+	history "github.com/cordialsys/hedera-protobufs-go/services/state/history"
+	recordcache "github.com/cordialsys/hedera-protobufs-go/services/state/recordcache"
+	roster "github.com/cordialsys/hedera-protobufs-go/services/state/roster"
+	schedule "github.com/cordialsys/hedera-protobufs-go/services/state/schedule"
+	throttles "github.com/cordialsys/hedera-protobufs-go/services/state/throttles"
+	token "github.com/cordialsys/hedera-protobufs-go/services/state/token"
+	tss "github.com/cordialsys/hedera-protobufs-go/services/state/tss"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -2812,8 +2812,8 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\fNewStateType\x12\r\n" +
 	"\tSINGLETON\x10\x00\x12\x0f\n" +
 	"\vVIRTUAL_MAP\x10\x01\x12\t\n" +
-	"\x05QUEUE\x10\x02Bl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x05QUEUE\x10\x02Bm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_state_changes_proto_rawDescOnce sync.Once

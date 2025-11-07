@@ -89,8 +89,8 @@ const file_duration_proto_rawDesc = "" +
 	"\n" +
 	"\x0eduration.proto\x12\x05proto\"$\n" +
 	"\bDuration\x12\x18\n" +
-	"\aseconds\x18\x01 \x01(\x03R\asecondsBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\aseconds\x18\x01 \x01(\x03R\asecondsBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_duration_proto_rawDescOnce sync.Once

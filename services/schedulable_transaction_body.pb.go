@@ -1089,8 +1089,8 @@ const file_schedulable_transaction_body_proto_rawDesc = "" +
 	"\x12tokenCancelAirdrop\x18. \x01(\v2(.proto.TokenCancelAirdropTransactionBodyH\x00R\x12tokenCancelAirdrop\x12W\n" +
 	"\x11tokenClaimAirdrop\x18/ \x01(\v2'.proto.TokenClaimAirdropTransactionBodyH\x00R\x11tokenClaimAirdrop\x12H\n" +
 	"\ftokenAirdrop\x180 \x01(\v2\".proto.TokenAirdropTransactionBodyH\x00R\ftokenAirdropB\x06\n" +
-	"\x04dataBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x04dataBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_schedulable_transaction_body_proto_rawDescOnce sync.Once

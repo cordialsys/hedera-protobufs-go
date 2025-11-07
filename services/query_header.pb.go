@@ -184,8 +184,8 @@ const file_query_header_proto_rawDesc = "" +
 	"\vANSWER_ONLY\x10\x00\x12\x16\n" +
 	"\x12ANSWER_STATE_PROOF\x10\x01\x12\x0f\n" +
 	"\vCOST_ANSWER\x10\x02\x12\x1b\n" +
-	"\x17COST_ANSWER_STATE_PROOF\x10\x03BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x17COST_ANSWER_STATE_PROOF\x10\x03BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_query_header_proto_rawDescOnce sync.Once

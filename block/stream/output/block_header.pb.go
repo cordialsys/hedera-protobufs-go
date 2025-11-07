@@ -19,7 +19,7 @@
 package output
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -176,8 +176,8 @@ const file_stream_output_block_header_proto_rawDesc = "" +
 	"\x10software_version\x18\x02 \x01(\v2\x16.proto.SemanticVersionR\x0fsoftwareVersion\x12\x16\n" +
 	"\x06number\x18\x03 \x01(\x04R\x06number\x129\n" +
 	"\x0fblock_timestamp\x18\x04 \x01(\v2\x10.proto.TimestampR\x0eblockTimestamp\x12@\n" +
-	"\x0ehash_algorithm\x18\x05 \x01(\x0e2\x19.proto.BlockHashAlgorithmR\rhashAlgorithmBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x0ehash_algorithm\x18\x05 \x01(\x0e2\x19.proto.BlockHashAlgorithmR\rhashAlgorithmBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_block_header_proto_rawDescOnce sync.Once

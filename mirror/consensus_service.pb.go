@@ -26,8 +26,8 @@
 package mirror
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -236,8 +236,8 @@ const file_mirror_consensus_service_proto_rawDesc = "" +
 	"\x12runningHashVersion\x18\x05 \x01(\x04R\x12runningHashVersion\x12>\n" +
 	"\tchunkInfo\x18\x06 \x01(\v2 .proto.ConsensusMessageChunkInfoR\tchunkInfo2\x8d\x01\n" +
 	"\x10ConsensusService\x12y\n" +
-	"\x0esubscribeTopic\x120.com.hedera.mirror.api.proto.ConsensusTopicQuery\x1a3.com.hedera.mirror.api.proto.ConsensusTopicResponse0\x01BP\n" +
-	"\x1bcom.hedera.mirror.api.protoP\x01Z/github.com/hashgraph/hedera-protobufs-go/mirrorb\x06proto3"
+	"\x0esubscribeTopic\x120.com.hedera.mirror.api.proto.ConsensusTopicQuery\x1a3.com.hedera.mirror.api.proto.ConsensusTopicResponse0\x01BQ\n" +
+	"\x1bcom.hedera.mirror.api.protoP\x01Z0github.com/cordialsys/hedera-protobufs-go/mirrorb\x06proto3"
 
 var (
 	file_mirror_consensus_service_proto_rawDescOnce sync.Once

@@ -292,8 +292,8 @@ const file_state_roster_ledger_id_proto_rawDesc = "" +
 	"\x0fnode_signatures\x18\x02 \x03(\v20.com.hedera.hapi.node.state.roster.NodeSignatureR\x0enodeSignatures\"O\n" +
 	"\rNodeSignature\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x12%\n" +
-	"\x0enode_signature\x18\x02 \x01(\fR\rnodeSignatureBf\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/hashgraph/hedera-protobufs-go/services/state/rosterb\x06proto3"
+	"\x0enode_signature\x18\x02 \x01(\fR\rnodeSignatureBg\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/cordialsys/hedera-protobufs-go/services/state/rosterb\x06proto3"
 
 var (
 	file_state_roster_ledger_id_proto_rawDescOnce sync.Once

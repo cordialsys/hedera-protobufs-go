@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -346,8 +346,8 @@ const file_transaction_receipt_proto_rawDesc = "" +
 	"scheduleID\x12L\n" +
 	"\x16scheduledTransactionID\x18\r \x01(\v2\x14.proto.TransactionIDR\x16scheduledTransactionID\x12$\n" +
 	"\rserialNumbers\x18\x0e \x03(\x03R\rserialNumbers\x12\x17\n" +
-	"\anode_id\x18\x0f \x01(\x04R\x06nodeIdBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\anode_id\x18\x0f \x01(\x04R\x06nodeIdBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_transaction_receipt_proto_rawDescOnce sync.Once

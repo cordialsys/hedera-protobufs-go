@@ -7,7 +7,7 @@
 package roster
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -189,8 +189,8 @@ const file_state_roster_roster_proto_rawDesc = "" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x12\x16\n" +
 	"\x06weight\x18\x02 \x01(\x04R\x06weight\x122\n" +
 	"\x15gossip_ca_certificate\x18\x03 \x01(\fR\x13gossipCaCertificate\x12?\n" +
-	"\x0fgossip_endpoint\x18\x05 \x03(\v2\x16.proto.ServiceEndpointR\x0egossipEndpointJ\x04\b\x04\x10\x05Bf\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/hashgraph/hedera-protobufs-go/services/state/rosterb\x06proto3"
+	"\x0fgossip_endpoint\x18\x05 \x03(\v2\x16.proto.ServiceEndpointR\x0egossipEndpointJ\x04\b\x04\x10\x05Bg\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/cordialsys/hedera-protobufs-go/services/state/rosterb\x06proto3"
 
 var (
 	file_state_roster_roster_proto_rawDescOnce sync.Once

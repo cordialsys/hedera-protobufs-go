@@ -97,8 +97,8 @@ const file_auxiliary_hints_crs_publication_proto_rawDesc = "" +
 	"%auxiliary/hints/crs_publication.proto\x12(com.hedera.hapi.services.auxiliary.hints\"N\n" +
 	"\x1dCrsPublicationTransactionBody\x12\x17\n" +
 	"\anew_crs\x18\x01 \x01(\fR\x06newCrs\x12\x14\n" +
-	"\x05proof\x18\x02 \x01(\fR\x05proofBv\n" +
-	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
+	"\x05proof\x18\x02 \x01(\fR\x05proofBw\n" +
+	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
 
 var (
 	file_auxiliary_hints_crs_publication_proto_rawDescOnce sync.Once

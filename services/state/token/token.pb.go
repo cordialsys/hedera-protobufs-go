@@ -18,8 +18,8 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -584,8 +584,8 @@ const file_state_token_token_proto_rawDesc = "" +
 	"customFees\x12\x1a\n" +
 	"\bmetadata\x18\x1b \x01(\fR\bmetadata\x12-\n" +
 	"\fmetadata_key\x18\x1c \x01(\v2\n" +
-	".proto.KeyR\vmetadataKeyBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	".proto.KeyR\vmetadataKeyBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_token_proto_rawDescOnce sync.Once

@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	BASE_MODULE    = "github.com/hashgraph/hedera-protobufs-go"
+	BASE_MODULE    = "github.com/cordialsys/hedera-protobufs-go"
 	COMMON_MODULE  = BASE_MODULE + "/common"
 	PROTO_DIR      = "proto"
 	PROTO_REPO     = "https://github.com/hashgraph/hedera-protobufs"

@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -173,8 +173,8 @@ const file_network_get_version_info_proto_rawDesc = "" +
 	"\x1dNetworkGetVersionInfoResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x12B\n" +
 	"\x10hapiProtoVersion\x18\x02 \x01(\v2\x16.proto.SemanticVersionR\x10hapiProtoVersion\x12L\n" +
-	"\x15hederaServicesVersion\x18\x03 \x01(\v2\x16.proto.SemanticVersionR\x15hederaServicesVersionBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x15hederaServicesVersion\x18\x03 \x01(\v2\x16.proto.SemanticVersionR\x15hederaServicesVersionBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_network_get_version_info_proto_rawDescOnce sync.Once

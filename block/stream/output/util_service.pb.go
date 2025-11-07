@@ -146,8 +146,8 @@ const file_stream_output_util_service_proto_rawDesc = "" +
 	"prng_bytes\x18\x01 \x01(\fH\x00R\tprngBytes\x12!\n" +
 	"\vprng_number\x18\x02 \x01(\rH\x00R\n" +
 	"prngNumberB\t\n" +
-	"\aentropyBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\aentropyBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_util_service_proto_rawDescOnce sync.Once

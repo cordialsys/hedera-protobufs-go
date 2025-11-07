@@ -20,7 +20,7 @@
 package file
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -192,8 +192,8 @@ const file_state_file_file_proto_rawDesc = "" +
 	"\bcontents\x18\x04 \x01(\fR\bcontents\x12\x12\n" +
 	"\x04memo\x18\x05 \x01(\tR\x04memo\x12\x18\n" +
 	"\adeleted\x18\x06 \x01(\bR\adeleted\x12L\n" +
-	"#pre_system_delete_expiration_second\x18\a \x01(\x03R\x1fpreSystemDeleteExpirationSecondBd\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z<github.com/hashgraph/hedera-protobufs-go/services/state/fileb\x06proto3"
+	"#pre_system_delete_expiration_second\x18\a \x01(\x03R\x1fpreSystemDeleteExpirationSecondBe\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/cordialsys/hedera-protobufs-go/services/state/fileb\x06proto3"
 
 var (
 	file_state_file_file_proto_rawDescOnce sync.Once

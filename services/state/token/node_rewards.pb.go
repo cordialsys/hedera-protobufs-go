@@ -180,8 +180,8 @@ const file_state_token_node_rewards_proto_rawDesc = "" +
 	"\x0fnode_activities\x18\x03 \x03(\v2\x13.proto.NodeActivityR\x0enodeActivities\"^\n" +
 	"\fNodeActivity\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x125\n" +
-	"\x17num_missed_judge_rounds\x18\x02 \x01(\x04R\x14numMissedJudgeRoundsBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\x17num_missed_judge_rounds\x18\x02 \x01(\x04R\x14numMissedJudgeRoundsBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_node_rewards_proto_rawDescOnce sync.Once

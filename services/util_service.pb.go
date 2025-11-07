@@ -40,8 +40,8 @@ const file_util_service_proto_rawDesc = "" +
 	"\x12util_service.proto\x12\x05proto\x1a\x1atransaction_response.proto\x1a\x11transaction.proto2\x84\x01\n" +
 	"\vUtilService\x126\n" +
 	"\x04prng\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponse\x12=\n" +
-	"\vatomicBatch\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\vatomicBatch\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_util_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

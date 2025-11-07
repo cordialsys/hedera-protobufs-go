@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -215,8 +215,8 @@ const file_consensus_submit_message_proto_rawDesc = "" +
 	"%ConsensusSubmitMessageTransactionBody\x12(\n" +
 	"\atopicID\x18\x01 \x01(\v2\x0e.proto.TopicIDR\atopicID\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\fR\amessage\x12>\n" +
-	"\tchunkInfo\x18\x03 \x01(\v2 .proto.ConsensusMessageChunkInfoR\tchunkInfoBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\tchunkInfo\x18\x03 \x01(\v2 .proto.ConsensusMessageChunkInfoR\tchunkInfoBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_consensus_submit_message_proto_rawDescOnce sync.Once

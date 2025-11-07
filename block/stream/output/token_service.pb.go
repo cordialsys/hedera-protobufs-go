@@ -19,7 +19,7 @@
 package output
 
 import (
-	_ "github.com/hashgraph/hedera-protobufs-go/services"
+	_ "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -752,8 +752,8 @@ const file_stream_output_token_service_proto_rawDesc = "" +
 	"\x10PauseTokenOutput\"\x14\n" +
 	"\x12UnpauseTokenOutput\"\x17\n" +
 	"\x15UpdateTokenNftsOutput\"\x14\n" +
-	"\x12TokenAirdropOutputBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x12TokenAirdropOutputBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_token_service_proto_rawDescOnce sync.Once

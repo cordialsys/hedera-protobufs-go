@@ -88,8 +88,8 @@ const file_stream_input_round_header_proto_rawDesc = "" +
 	"\n" +
 	"\x1fstream/input/round_header.proto\x12\"com.hedera.hapi.block.stream.input\"0\n" +
 	"\vRoundHeader\x12!\n" +
-	"\fround_number\x18\x01 \x01(\x04R\vroundNumberBj\n" +
-	")com.hedera.hapi.block.stream.input.protocP\x01Z;github.com/hashgraph/hedera-protobufs-go/block/stream/inputb\x06proto3"
+	"\fround_number\x18\x01 \x01(\x04R\vroundNumberBk\n" +
+	")com.hedera.hapi.block.stream.input.protocP\x01Z<github.com/cordialsys/hedera-protobufs-go/block/stream/inputb\x06proto3"
 
 var (
 	file_stream_input_round_header_proto_rawDescOnce sync.Once

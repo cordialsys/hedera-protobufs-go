@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -480,8 +480,8 @@ const file_contract_types_proto_rawDesc = "" +
 	"\x12functionParameters\x18\f \x01(\fR\x12functionParameters\x12-\n" +
 	"\tsender_id\x18\r \x01(\v2\x10.proto.AccountIDR\bsenderId\x12A\n" +
 	"\x0fcontract_nonces\x18\x0e \x03(\v2\x18.proto.ContractNonceInfoR\x0econtractNonces\x12>\n" +
-	"\fsigner_nonce\x18\x0f \x01(\v2\x1b.google.protobuf.Int64ValueR\vsignerNonceJ\x04\b\b\x10\tBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\fsigner_nonce\x18\x0f \x01(\v2\x1b.google.protobuf.Int64ValueR\vsignerNonceJ\x04\b\b\x10\tBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_contract_types_proto_rawDescOnce sync.Once

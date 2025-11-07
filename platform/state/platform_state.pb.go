@@ -16,7 +16,7 @@
 package state
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -531,8 +531,8 @@ const file_state_platform_state_proto_rawDesc = "" +
 	"\x05round\x18\x01 \x01(\x04R\x05round\x12E\n" +
 	"\x1fminimum_judge_ancient_threshold\x18\x02 \x01(\x04R\x1cminimumJudgeAncientThreshold\"\x18\n" +
 	"\x06NodeId\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x04R\x02idBb\n" +
-	"%com.hedera.hapi.platform.state.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/stateb\x06proto3"
+	"\x02id\x18\x01 \x01(\x04R\x02idBc\n" +
+	"%com.hedera.hapi.platform.state.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/stateb\x06proto3"
 
 var (
 	file_state_platform_state_proto_rawDescOnce sync.Once

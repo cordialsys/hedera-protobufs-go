@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -193,8 +193,8 @@ const file_contract_delete_proto_rawDesc = "" +
 	"\x11transferAccountID\x18\x02 \x01(\v2\x10.proto.AccountIDH\x00R\x11transferAccountID\x12C\n" +
 	"\x12transferContractID\x18\x03 \x01(\v2\x11.proto.ContractIDH\x00R\x12transferContractID\x12+\n" +
 	"\x11permanent_removal\x18\x04 \x01(\bR\x10permanentRemovalB\v\n" +
-	"\tobtainersBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\tobtainersBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_contract_delete_proto_rawDescOnce sync.Once

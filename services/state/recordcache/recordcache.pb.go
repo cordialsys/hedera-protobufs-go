@@ -19,8 +19,8 @@
 package recordcache
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -266,8 +266,8 @@ const file_state_recordcache_recordcache_proto_rawDesc = "" +
 	"\x0etransaction_id\x18\x02 \x01(\v2\x14.proto.TransactionIDR\rtransactionId\x12/\n" +
 	"\x06status\x18\x03 \x01(\x0e2\x17.proto.ResponseCodeEnumR\x06status\"U\n" +
 	"\x19TransactionReceiptEntries\x128\n" +
-	"\aentries\x18\x01 \x03(\v2\x1e.proto.TransactionReceiptEntryR\aentriesBk\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZCgithub.com/hashgraph/hedera-protobufs-go/services/state/recordcacheb\x06proto3"
+	"\aentries\x18\x01 \x03(\v2\x1e.proto.TransactionReceiptEntryR\aentriesBl\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/state/recordcacheb\x06proto3"
 
 var (
 	file_state_recordcache_recordcache_proto_rawDescOnce sync.Once

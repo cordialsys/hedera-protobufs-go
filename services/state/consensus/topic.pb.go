@@ -17,8 +17,8 @@
 package consensus
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -316,8 +316,8 @@ const file_state_consensus_topic_proto_rawDesc = "" +
 	"\x13fee_exempt_key_list\x18\f \x03(\v2\n" +
 	".proto.KeyR\x10feeExemptKeyList\x126\n" +
 	"\vcustom_fees\x18\r \x03(\v2\x15.proto.FixedCustomFeeR\n" +
-	"customFeesBi\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/state/consensusb\x06proto3"
+	"customFeesBj\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/state/consensusb\x06proto3"
 
 var (
 	file_state_consensus_topic_proto_rawDescOnce sync.Once

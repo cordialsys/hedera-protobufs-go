@@ -28,7 +28,7 @@
 package output
 
 import (
-	_ "github.com/hashgraph/hedera-protobufs-go/services"
+	_ "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -351,8 +351,8 @@ const file_stream_output_consensus_service_proto_rawDesc = "" +
 	"\x12RunningHashVersion\x12!\n" +
 	"\x1dWITH_MESSAGE_DIGEST_AND_PAYER\x10\x00\x12\x17\n" +
 	"\x13WITH_MESSAGE_DIGEST\x10\x01\x12\x15\n" +
-	"\x11WITH_FULL_MESSAGE\x10\x02Bl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x11WITH_FULL_MESSAGE\x10\x02Bm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_consensus_service_proto_rawDescOnce sync.Once

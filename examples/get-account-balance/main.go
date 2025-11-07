@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashgraph/hedera-protobufs-go/services"
+	"github.com/cordialsys/hedera-protobufs-go/common"
+	"github.com/cordialsys/hedera-protobufs-go/services"
 	"google.golang.org/grpc"
 )
 
@@ -22,9 +23,9 @@ func main() {
 		Query: &services.Query_CryptogetAccountBalance{
 			CryptogetAccountBalance: &services.CryptoGetAccountBalanceQuery{
 				BalanceSource: &services.CryptoGetAccountBalanceQuery_AccountID{
-					AccountID: &services.AccountID{
-						Account: &services.AccountID_AccountNum{
-							AccountNum: 1001,},
+					AccountID: &common.AccountID{
+						Account: &common.AccountID_AccountNum{
+							AccountNum: 1001},
 					},
 				},
 			},

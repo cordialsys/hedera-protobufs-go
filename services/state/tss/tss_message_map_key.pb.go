@@ -107,8 +107,8 @@ const file_state_tss_tss_message_map_key_proto_rawDesc = "" +
 	"\x10TssMessageMapKey\x12\x1f\n" +
 	"\vroster_hash\x18\x01 \x01(\fR\n" +
 	"rosterHash\x12'\n" +
-	"\x0fsequence_number\x18\x02 \x01(\x04R\x0esequenceNumberBf\n" +
-	"%com.hedera.hapi.node.state.tss.legacyP\x01Z;github.com/hashgraph/hedera-protobufs-go/services/state/tssb\x06proto3"
+	"\x0fsequence_number\x18\x02 \x01(\x04R\x0esequenceNumberBg\n" +
+	"%com.hedera.hapi.node.state.tss.legacyP\x01Z<github.com/cordialsys/hedera-protobufs-go/services/state/tssb\x06proto3"
 
 var (
 	file_state_tss_tss_message_map_key_proto_rawDescOnce sync.Once

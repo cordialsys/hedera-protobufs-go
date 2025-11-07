@@ -7,7 +7,7 @@
 package streams
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -221,8 +221,8 @@ const file_account_balance_file_proto_rawDesc = "" +
 	"\x11tokenUnitBalances\x18\x03 \x03(\v2\x17.proto.TokenUnitBalanceR\x11tokenUnitBalances\"\x96\x01\n" +
 	"\x12AllAccountBalances\x12@\n" +
 	"\x12consensusTimestamp\x18\x01 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\x12>\n" +
-	"\vallAccounts\x18\x02 \x03(\v2\x1c.proto.SingleAccountBalancesR\vallAccountsBV\n" +
-	" com.hedera.services.stream.protoP\x01Z0github.com/hashgraph/hedera-protobufs-go/streamsb\x06proto3"
+	"\vallAccounts\x18\x02 \x03(\v2\x1c.proto.SingleAccountBalancesR\vallAccountsBW\n" +
+	" com.hedera.services.stream.protoP\x01Z1github.com/cordialsys/hedera-protobufs-go/streamsb\x06proto3"
 
 var (
 	file_account_balance_file_proto_rawDescOnce sync.Once

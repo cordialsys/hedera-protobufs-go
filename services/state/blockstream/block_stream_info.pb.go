@@ -19,7 +19,7 @@
 package blockstream
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -280,8 +280,8 @@ const file_state_blockstream_block_stream_info_proto_rawDesc = "" +
 	" \x01(\bR\x13postUpgradeWorkDone\x12R\n" +
 	"\x19creation_software_version\x18\v \x01(\v2\x16.proto.SemanticVersionR\x17creationSoftwareVersion\x12M\n" +
 	"\x1alast_interval_process_time\x18\f \x01(\v2\x10.proto.TimestampR\x17lastIntervalProcessTime\x12:\n" +
-	"\x10last_handle_time\x18\r \x01(\v2\x10.proto.TimestampR\x0elastHandleTimeBk\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01ZCgithub.com/hashgraph/hedera-protobufs-go/services/state/blockstreamb\x06proto3"
+	"\x10last_handle_time\x18\r \x01(\v2\x10.proto.TimestampR\x0elastHandleTimeBl\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/state/blockstreamb\x06proto3"
 
 var (
 	file_state_blockstream_block_stream_info_proto_rawDescOnce sync.Once

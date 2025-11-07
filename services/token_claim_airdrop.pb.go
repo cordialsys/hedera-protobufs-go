@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -106,8 +106,8 @@ const file_token_claim_airdrop_proto_rawDesc = "" +
 	"\n" +
 	"\x19token_claim_airdrop.proto\x12\x05proto\x1a\x11basic_types.proto\"f\n" +
 	" TokenClaimAirdropTransactionBody\x12B\n" +
-	"\x10pending_airdrops\x18\x01 \x03(\v2\x17.proto.PendingAirdropIdR\x0fpendingAirdropsBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x10pending_airdrops\x18\x01 \x03(\v2\x17.proto.PendingAirdropIdR\x0fpendingAirdropsBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_token_claim_airdrop_proto_rawDescOnce sync.Once

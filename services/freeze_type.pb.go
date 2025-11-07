@@ -183,8 +183,8 @@ const file_freeze_type_proto_rawDesc = "" +
 	"\x0fPREPARE_UPGRADE\x10\x02\x12\x12\n" +
 	"\x0eFREEZE_UPGRADE\x10\x03\x12\x10\n" +
 	"\fFREEZE_ABORT\x10\x04\x12\x15\n" +
-	"\x11TELEMETRY_UPGRADE\x10\x05BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x11TELEMETRY_UPGRADE\x10\x05BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_freeze_type_proto_rawDescOnce sync.Once

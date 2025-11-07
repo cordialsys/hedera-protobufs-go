@@ -114,8 +114,8 @@ const file_stream_output_network_service_proto_rawDesc = "" +
 	"\n" +
 	"#stream/output/network_service.proto\x12#com.hedera.hapi.block.stream.output\"\x17\n" +
 	"\x15UpdateNodeStakeOutput\"\x0e\n" +
-	"\fFreezeOutputBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\fFreezeOutputBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_network_service_proto_rawDescOnce sync.Once

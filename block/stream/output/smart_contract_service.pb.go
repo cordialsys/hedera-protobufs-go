@@ -25,8 +25,8 @@
 package output
 
 import (
-	services "github.com/hashgraph/hedera-protobufs-go/services"
-	streams "github.com/hashgraph/hedera-protobufs-go/streams"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
+	streams "github.com/cordialsys/hedera-protobufs-go/streams"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -494,8 +494,8 @@ const file_stream_output_smart_contract_service_proto_rawDesc = "" +
 	"\x14ethereum_call_result\x18\x03 \x01(\v2\x1d.proto.ContractFunctionResultH\x00R\x12ethereumCallResult\x12U\n" +
 	"\x16ethereum_create_result\x18\x04 \x01(\v2\x1d.proto.ContractFunctionResultH\x00R\x14ethereumCreateResultB\f\n" +
 	"\n" +
-	"eth_resultBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"eth_resultBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_smart_contract_service_proto_rawDescOnce sync.Once

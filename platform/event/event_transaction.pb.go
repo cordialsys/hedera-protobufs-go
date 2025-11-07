@@ -241,8 +241,8 @@ const file_event_event_transaction_proto_rawDesc = "" +
 	"\x0fSTARTING_PARENT\x10\x04\x12\n" +
 	"\n" +
 	"\x06PARENT\x10\x05\x12\x11\n" +
-	"\rENDING_PARENT\x10\x06Bb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"\rENDING_PARENT\x10\x06Bc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_event_transaction_proto_rawDescOnce sync.Once

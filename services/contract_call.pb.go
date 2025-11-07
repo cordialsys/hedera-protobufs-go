@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -150,8 +150,8 @@ const file_contract_call_proto_rawDesc = "" +
 	"contractID\x12\x10\n" +
 	"\x03gas\x18\x02 \x01(\x03R\x03gas\x12\x16\n" +
 	"\x06amount\x18\x03 \x01(\x03R\x06amount\x12.\n" +
-	"\x12functionParameters\x18\x04 \x01(\fR\x12functionParametersBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x12functionParameters\x18\x04 \x01(\fR\x12functionParametersBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_contract_call_proto_rawDescOnce sync.Once

@@ -23,7 +23,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -163,8 +163,8 @@ const file_ethereum_transaction_proto_rawDesc = "" +
 	"\x17EthereumTransactionBody\x12#\n" +
 	"\rethereum_data\x18\x01 \x01(\fR\fethereumData\x12*\n" +
 	"\tcall_data\x18\x02 \x01(\v2\r.proto.FileIDR\bcallData\x12*\n" +
-	"\x11max_gas_allowance\x18\x03 \x01(\x03R\x0fmaxGasAllowanceBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x11max_gas_allowance\x18\x03 \x01(\x03R\x0fmaxGasAllowanceBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_ethereum_transaction_proto_rawDescOnce sync.Once

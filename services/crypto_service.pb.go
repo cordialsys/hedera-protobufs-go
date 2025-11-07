@@ -58,8 +58,8 @@ const file_crypto_service_proto_rawDesc = "" +
 	"\x10cryptoGetBalance\x12\f.proto.Query\x1a\x0f.proto.Response\x12/\n" +
 	"\x0egetAccountInfo\x12\f.proto.Query\x1a\x0f.proto.Response\x127\n" +
 	"\x16getTransactionReceipts\x12\f.proto.Query\x1a\x0f.proto.Response\x122\n" +
-	"\x11getTxRecordByTxID\x12\f.proto.Query\x1a\x0f.proto.ResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x11getTxRecordByTxID\x12\f.proto.Query\x1a\x0f.proto.ResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_crypto_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

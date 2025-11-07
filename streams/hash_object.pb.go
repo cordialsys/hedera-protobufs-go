@@ -150,8 +150,8 @@ const file_hash_object_proto_rawDesc = "" +
 	"\x04hash\x18\x03 \x01(\fR\x04hash*8\n" +
 	"\rHashAlgorithm\x12\x1a\n" +
 	"\x16HASH_ALGORITHM_UNKNOWN\x10\x00\x12\v\n" +
-	"\aSHA_384\x10\x01BV\n" +
-	" com.hedera.services.stream.protoP\x01Z0github.com/hashgraph/hedera-protobufs-go/streamsb\x06proto3"
+	"\aSHA_384\x10\x01BW\n" +
+	" com.hedera.services.stream.protoP\x01Z1github.com/cordialsys/hedera-protobufs-go/streamsb\x06proto3"
 
 var (
 	file_hash_object_proto_rawDescOnce sync.Once

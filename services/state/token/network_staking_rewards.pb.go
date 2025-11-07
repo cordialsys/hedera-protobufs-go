@@ -18,7 +18,7 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -157,8 +157,8 @@ const file_state_token_network_staking_rewards_proto_rawDesc = "" +
 	"\x19total_staked_reward_start\x18\x02 \x01(\x03R\x16totalStakedRewardStart\x12,\n" +
 	"\x12total_staked_start\x18\x03 \x01(\x03R\x10totalStakedStart\x12'\n" +
 	"\x0fpending_rewards\x18\x04 \x01(\x03R\x0ependingRewards\x12T\n" +
-	"\x1elast_node_reward_payments_time\x18\x05 \x01(\v2\x10.proto.TimestampR\x1alastNodeRewardPaymentsTimeBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\x1elast_node_reward_payments_time\x18\x05 \x01(\v2\x10.proto.TimestampR\x1alastNodeRewardPaymentsTimeBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_network_staking_rewards_proto_rawDescOnce sync.Once

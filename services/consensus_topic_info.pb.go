@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -305,8 +305,8 @@ const file_consensus_topic_info_proto_rawDesc = "" +
 	"\x13fee_exempt_key_list\x18\v \x03(\v2\n" +
 	".proto.KeyR\x10feeExemptKeyList\x126\n" +
 	"\vcustom_fees\x18\f \x03(\v2\x15.proto.FixedCustomFeeR\n" +
-	"customFeesBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"customFeesBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_consensus_topic_info_proto_rawDescOnce sync.Once

@@ -5520,8 +5520,8 @@ const file_basic_types_proto_rawDesc = "" +
 	"\x1aHistoryProofKeyPublication\x10i\x12\x14\n" +
 	"\x10HistoryProofVote\x10j\x12\x12\n" +
 	"\x0eCrsPublication\x10k\x12\x0f\n" +
-	"\vAtomicBatch\x10lBW\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z/github.com/hashgraph/hedera-protobufs-go/commonb\x06proto3"
+	"\vAtomicBatch\x10lBX\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z0github.com/cordialsys/hedera-protobufs-go/commonb\x06proto3"
 
 var (
 	file_basic_types_proto_rawDescOnce sync.Once

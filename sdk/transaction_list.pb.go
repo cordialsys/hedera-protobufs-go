@@ -7,7 +7,7 @@
 package sdk
 
 import (
-	services "github.com/hashgraph/hedera-protobufs-go/services"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -78,8 +78,8 @@ const file_transaction_list_proto_rawDesc = "" +
 	"\n" +
 	"\x16transaction_list.proto\x12\x05proto\x1a\x11transaction.proto\"P\n" +
 	"\x0fTransactionList\x12=\n" +
-	"\x10transaction_list\x18\x01 \x03(\v2\x12.proto.TransactionR\x0ftransactionListBP\n" +
-	"\x1ecom.hedera.hashgraph.sdk.protoP\x01Z,github.com/hashgraph/hedera-protobufs-go/sdkb\x06proto3"
+	"\x10transaction_list\x18\x01 \x03(\v2\x12.proto.TransactionR\x0ftransactionListBQ\n" +
+	"\x1ecom.hedera.hashgraph.sdk.protoP\x01Z-github.com/cordialsys/hedera-protobufs-go/sdkb\x06proto3"
 
 var (
 	file_transaction_list_proto_rawDescOnce sync.Once

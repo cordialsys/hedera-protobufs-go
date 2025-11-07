@@ -40,7 +40,7 @@
 package output
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -244,8 +244,8 @@ const file_stream_output_schedule_service_proto_rawDesc = "" +
 	"\x18scheduled_transaction_id\x18\x02 \x01(\v2\x14.proto.TransactionIDR\x16scheduledTransactionId\"\x16\n" +
 	"\x14DeleteScheduleOutput\"d\n" +
 	"\x12SignScheduleOutput\x12N\n" +
-	"\x18scheduled_transaction_id\x18\x01 \x01(\v2\x14.proto.TransactionIDR\x16scheduledTransactionIdBl\n" +
-	"*com.hedera.hapi.block.stream.output.protocP\x01Z<github.com/hashgraph/hedera-protobufs-go/block/stream/outputb\x06proto3"
+	"\x18scheduled_transaction_id\x18\x01 \x01(\v2\x14.proto.TransactionIDR\x16scheduledTransactionIdBm\n" +
+	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
 	file_stream_output_schedule_service_proto_rawDescOnce sync.Once

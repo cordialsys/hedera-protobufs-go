@@ -7,7 +7,7 @@
 package streams
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -567,8 +567,8 @@ const file_contract_action_proto_rawDesc = "" +
 	"\rOP_STATICCALL\x10\x04\x12\r\n" +
 	"\tOP_CREATE\x10\x05\x12\x0e\n" +
 	"\n" +
-	"OP_CREATE2\x10\x06BV\n" +
-	" com.hedera.services.stream.protoP\x01Z0github.com/hashgraph/hedera-protobufs-go/streamsb\x06proto3"
+	"OP_CREATE2\x10\x06BW\n" +
+	" com.hedera.services.stream.protoP\x01Z1github.com/cordialsys/hedera-protobufs-go/streamsb\x06proto3"
 
 var (
 	file_contract_action_proto_rawDescOnce sync.Once

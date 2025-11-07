@@ -23,7 +23,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -198,8 +198,8 @@ const file_crypto_add_live_hash_proto_rawDesc = "" +
 	"\x04keys\x18\x03 \x01(\v2\x0e.proto.KeyListR\x04keys\x12+\n" +
 	"\bduration\x18\x05 \x01(\v2\x0f.proto.DurationR\bduration\"O\n" +
 	" CryptoAddLiveHashTransactionBody\x12+\n" +
-	"\bliveHash\x18\x03 \x01(\v2\x0f.proto.LiveHashR\bliveHashBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\bliveHash\x18\x03 \x01(\v2\x0f.proto.LiveHashR\bliveHashBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_add_live_hash_proto_rawDescOnce sync.Once

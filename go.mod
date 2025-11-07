@@ -1,4 +1,4 @@
-module github.com/hashgraph/hedera-protobufs-go
+module github.com/cordialsys/hedera-protobufs-go
 
 go 1.25
 

@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -388,8 +388,8 @@ const file_crypto_create_proto_rawDesc = "" +
 	"\x0estaked_node_id\x18\x10 \x01(\x03H\x00R\fstakedNodeId\x12%\n" +
 	"\x0edecline_reward\x18\x11 \x01(\bR\rdeclineReward\x12\x14\n" +
 	"\x05alias\x18\x12 \x01(\fR\x05aliasB\v\n" +
-	"\tstaked_idJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\tstaked_idJ\x04\b\x04\x10\x05J\x04\b\x05\x10\x06BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_create_proto_rawDescOnce sync.Once

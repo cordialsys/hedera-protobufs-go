@@ -17,7 +17,7 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -178,8 +178,8 @@ const file_state_token_nft_proto_rawDesc = "" +
 	"\tmint_time\x18\x04 \x01(\v2\x10.proto.TimestampR\bmintTime\x12\x1a\n" +
 	"\bmetadata\x18\x05 \x01(\fR\bmetadata\x12?\n" +
 	"\x15owner_previous_nft_id\x18\x06 \x01(\v2\f.proto.NftIDR\x12ownerPreviousNftId\x127\n" +
-	"\x11owner_next_nft_id\x18\a \x01(\v2\f.proto.NftIDR\x0eownerNextNftIdBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\x11owner_next_nft_id\x18\a \x01(\v2\f.proto.NftIDR\x0eownerNextNftIdBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_nft_proto_rawDescOnce sync.Once

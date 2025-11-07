@@ -17,7 +17,7 @@
 package hints
 
 import (
-	_ "github.com/hashgraph/hedera-protobufs-go/services/state/hints"
+	_ "github.com/cordialsys/hedera-protobufs-go/services/state/hints"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -117,8 +117,8 @@ const file_auxiliary_hints_hints_key_publication_proto_rawDesc = "" +
 	"\bparty_id\x18\x01 \x01(\rR\apartyId\x12\x1f\n" +
 	"\vnum_parties\x18\x02 \x01(\rR\n" +
 	"numParties\x12\x1b\n" +
-	"\thints_key\x18\x03 \x01(\fR\bhintsKeyBv\n" +
-	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZAgithub.com/hashgraph/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
+	"\thints_key\x18\x03 \x01(\fR\bhintsKeyBw\n" +
+	"/com.hedera.hapi.services.auxiliary.hints.legacyP\x01ZBgithub.com/cordialsys/hedera-protobufs-go/services/auxiliary/hintsb\x06proto3"
 
 var (
 	file_auxiliary_hints_hints_key_publication_proto_rawDescOnce sync.Once

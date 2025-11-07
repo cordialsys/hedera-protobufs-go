@@ -381,8 +381,8 @@ const file_stream_block_proof_proto_rawDesc = "" +
 	"\x16verification_reference\"Q\n" +
 	"\x11MerkleSiblingHash\x12\x19\n" +
 	"\bis_first\x18\x01 \x01(\bR\aisFirst\x12!\n" +
-	"\fsibling_hash\x18\x02 \x01(\fR\vsiblingHashB^\n" +
-	"#com.hedera.hapi.block.stream.protocP\x01Z5github.com/hashgraph/hedera-protobufs-go/block/streamb\x06proto3"
+	"\fsibling_hash\x18\x02 \x01(\fR\vsiblingHashB_\n" +
+	"#com.hedera.hapi.block.stream.protocP\x01Z6github.com/cordialsys/hedera-protobufs-go/block/streamb\x06proto3"
 
 var (
 	file_stream_block_proof_proto_rawDescOnce sync.Once

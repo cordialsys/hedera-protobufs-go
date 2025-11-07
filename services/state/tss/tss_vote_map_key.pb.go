@@ -106,8 +106,8 @@ const file_state_tss_tss_vote_map_key_proto_rawDesc = "" +
 	"\rTssVoteMapKey\x12\x1f\n" +
 	"\vroster_hash\x18\x01 \x01(\fR\n" +
 	"rosterHash\x12\x17\n" +
-	"\anode_id\x18\x02 \x01(\x04R\x06nodeIdBf\n" +
-	"%com.hedera.hapi.node.state.tss.legacyP\x01Z;github.com/hashgraph/hedera-protobufs-go/services/state/tssb\x06proto3"
+	"\anode_id\x18\x02 \x01(\x04R\x06nodeIdBg\n" +
+	"%com.hedera.hapi.node.state.tss.legacyP\x01Z<github.com/cordialsys/hedera-protobufs-go/services/state/tssb\x06proto3"
 
 var (
 	file_state_tss_tss_vote_map_key_proto_rawDescOnce sync.Once

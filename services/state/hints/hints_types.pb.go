@@ -7,7 +7,7 @@
 package hints
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -815,8 +815,8 @@ const file_state_hints_hints_types_proto_rawDesc = "" +
 	"\bCRSStage\x12\x1b\n" +
 	"\x17GATHERING_CONTRIBUTIONS\x10\x00\x12\"\n" +
 	"\x1eWAITING_FOR_ADOPTING_FINAL_CRS\x10\x01\x12\r\n" +
-	"\tCOMPLETED\x10\x02Be\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/hintsb\x06proto3"
+	"\tCOMPLETED\x10\x02Bf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/hintsb\x06proto3"
 
 var (
 	file_state_hints_hints_types_proto_rawDescOnce sync.Once

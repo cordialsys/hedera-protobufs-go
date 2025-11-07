@@ -139,8 +139,8 @@ const file_event_gossip_event_proto_rawDesc = "" +
 	"event_core\x18\x01 \x01(\v2).com.hedera.hapi.platform.event.EventCoreR\teventCore\x12\x1c\n" +
 	"\tsignature\x18\x02 \x01(\fR\tsignature\x12\"\n" +
 	"\ftransactions\x18\x04 \x03(\fR\ftransactions\x12I\n" +
-	"\aparents\x18\x05 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorR\aparentsJ\x04\b\x03\x10\x04Bb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"\aparents\x18\x05 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorR\aparentsJ\x04\b\x03\x10\x04Bc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_gossip_event_proto_rawDescOnce sync.Once

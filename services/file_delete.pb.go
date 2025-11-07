@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -114,8 +114,8 @@ const file_file_delete_proto_rawDesc = "" +
 	"\n" +
 	"\x11file_delete.proto\x12\x05proto\x1a\x11basic_types.proto\"B\n" +
 	"\x19FileDeleteTransactionBody\x12%\n" +
-	"\x06fileID\x18\x02 \x01(\v2\r.proto.FileIDR\x06fileIDBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x06fileID\x18\x02 \x01(\v2\r.proto.FileIDR\x06fileIDBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_file_delete_proto_rawDescOnce sync.Once

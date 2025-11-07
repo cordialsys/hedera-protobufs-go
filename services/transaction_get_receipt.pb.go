@@ -31,7 +31,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -317,8 +317,8 @@ const file_transaction_get_receipt_proto_rawDesc = "" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x123\n" +
 	"\areceipt\x18\x02 \x01(\v2\x19.proto.TransactionReceiptR\areceipt\x12]\n" +
 	"\x1cduplicateTransactionReceipts\x18\x04 \x03(\v2\x19.proto.TransactionReceiptR\x1cduplicateTransactionReceipts\x12W\n" +
-	"\x1achild_transaction_receipts\x18\x05 \x03(\v2\x19.proto.TransactionReceiptR\x18childTransactionReceiptsBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x1achild_transaction_receipts\x18\x05 \x03(\v2\x19.proto.TransactionReceiptR\x18childTransactionReceiptsBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_transaction_get_receipt_proto_rawDescOnce sync.Once

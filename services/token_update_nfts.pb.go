@@ -19,7 +19,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -135,8 +135,8 @@ const file_token_update_nfts_proto_rawDesc = "" +
 	"\x1eTokenUpdateNftsTransactionBody\x12$\n" +
 	"\x05token\x18\x01 \x01(\v2\x0e.proto.TokenIDR\x05token\x12%\n" +
 	"\x0eserial_numbers\x18\x02 \x03(\x03R\rserialNumbers\x127\n" +
-	"\bmetadata\x18\x03 \x01(\v2\x1b.google.protobuf.BytesValueR\bmetadataBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\bmetadata\x18\x03 \x01(\v2\x1b.google.protobuf.BytesValueR\bmetadataBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_token_update_nfts_proto_rawDescOnce sync.Once

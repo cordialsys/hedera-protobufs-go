@@ -104,8 +104,8 @@ const file_unchecked_submit_proto_rawDesc = "" +
 	"\n" +
 	"\x16unchecked_submit.proto\x12\x05proto\"E\n" +
 	"\x13UncheckedSubmitBody\x12*\n" +
-	"\x10transactionBytes\x18\x01 \x01(\fR\x10transactionBytes:\x02\x18\x01BY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x10transactionBytes\x18\x01 \x01(\fR\x10transactionBytes:\x02\x18\x01BZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_unchecked_submit_proto_rawDescOnce sync.Once

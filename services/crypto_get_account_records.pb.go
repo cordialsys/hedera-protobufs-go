@@ -23,7 +23,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -192,8 +192,8 @@ const file_crypto_get_account_records_proto_rawDesc = "" +
 	"\x1fCryptoGetAccountRecordsResponse\x12-\n" +
 	"\x06header\x18\x01 \x01(\v2\x15.proto.ResponseHeaderR\x06header\x12.\n" +
 	"\taccountID\x18\x02 \x01(\v2\x10.proto.AccountIDR\taccountID\x122\n" +
-	"\arecords\x18\x03 \x03(\v2\x18.proto.TransactionRecordR\arecordsBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\arecords\x18\x03 \x03(\v2\x18.proto.TransactionRecordR\arecordsBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_crypto_get_account_records_proto_rawDescOnce sync.Once

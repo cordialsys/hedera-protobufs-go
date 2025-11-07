@@ -115,8 +115,8 @@ const file_event_state_signature_transaction_proto_rawDesc = "" +
 	"\x19StateSignatureTransaction\x12\x14\n" +
 	"\x05round\x18\x01 \x01(\x03R\x05round\x12\x1c\n" +
 	"\tsignature\x18\x02 \x01(\fR\tsignature\x12\x12\n" +
-	"\x04hash\x18\x03 \x01(\fR\x04hashBb\n" +
-	"%com.hedera.hapi.platform.event.legacyP\x01Z7github.com/hashgraph/hedera-protobufs-go/platform/eventb\x06proto3"
+	"\x04hash\x18\x03 \x01(\fR\x04hashBc\n" +
+	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
 	file_event_state_signature_transaction_proto_rawDescOnce sync.Once

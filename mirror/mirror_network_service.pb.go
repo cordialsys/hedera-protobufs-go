@@ -26,7 +26,7 @@
 package mirror
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -108,8 +108,8 @@ const file_mirror_mirror_network_service_proto_rawDesc = "" +
 	"\afile_id\x18\x01 \x01(\v2\r.proto.FileIDR\x06fileId\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit2a\n" +
 	"\x0eNetworkService\x12O\n" +
-	"\bgetNodes\x12-.com.hedera.mirror.api.proto.AddressBookQuery\x1a\x12.proto.NodeAddress0\x01BP\n" +
-	"\x1bcom.hedera.mirror.api.protoP\x01Z/github.com/hashgraph/hedera-protobufs-go/mirrorb\x06proto3"
+	"\bgetNodes\x12-.com.hedera.mirror.api.proto.AddressBookQuery\x1a\x12.proto.NodeAddress0\x01BQ\n" +
+	"\x1bcom.hedera.mirror.api.protoP\x01Z0github.com/cordialsys/hedera-protobufs-go/mirrorb\x06proto3"
 
 var (
 	file_mirror_mirror_network_service_proto_rawDescOnce sync.Once

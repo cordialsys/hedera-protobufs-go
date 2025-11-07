@@ -93,8 +93,8 @@ const file_node_delete_proto_rawDesc = "" +
 	"\n" +
 	"\x11node_delete.proto\x12 com.hedera.hapi.node.addressbook\"4\n" +
 	"\x19NodeDeleteTransactionBody\x12\x17\n" +
-	"\anode_id\x18\x01 \x01(\x04R\x06nodeIdBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\anode_id\x18\x01 \x01(\x04R\x06nodeIdBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_node_delete_proto_rawDescOnce sync.Once

@@ -18,7 +18,7 @@
 package token
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -134,8 +134,8 @@ const file_state_token_account_pending_airdrop_proto_rawDesc = "" +
 	"\x15AccountPendingAirdrop\x12N\n" +
 	"\x15pending_airdrop_value\x18\x01 \x01(\v2\x1a.proto.PendingAirdropValueR\x13pendingAirdropValue\x12B\n" +
 	"\x10previous_airdrop\x18\x02 \x01(\v2\x17.proto.PendingAirdropIdR\x0fpreviousAirdrop\x12:\n" +
-	"\fnext_airdrop\x18\x03 \x01(\v2\x17.proto.PendingAirdropIdR\vnextAirdropBe\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z=github.com/hashgraph/hedera-protobufs-go/services/state/tokenb\x06proto3"
+	"\fnext_airdrop\x18\x03 \x01(\v2\x17.proto.PendingAirdropIdR\vnextAirdropBf\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z>github.com/cordialsys/hedera-protobufs-go/services/state/tokenb\x06proto3"
 
 var (
 	file_state_token_account_pending_airdrop_proto_rawDescOnce sync.Once

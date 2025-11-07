@@ -30,7 +30,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -476,8 +476,8 @@ const file_node_stake_update_proto_rawDesc = "" +
 	"rewardRate\x12\x14\n" +
 	"\x05stake\x18\x05 \x01(\x03R\x05stake\x12,\n" +
 	"\x12stake_not_rewarded\x18\x06 \x01(\x03R\x10stakeNotRewarded\x12%\n" +
-	"\x0estake_rewarded\x18\a \x01(\x03R\rstakeRewardedBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x0estake_rewarded\x18\a \x01(\x03R\rstakeRewardedBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_node_stake_update_proto_rawDescOnce sync.Once

@@ -37,8 +37,8 @@ const file_freeze_service_proto_rawDesc = "" +
 	"\n" +
 	"\x14freeze_service.proto\x12\x05proto\x1a\x1atransaction_response.proto\x1a\x11transaction.proto2I\n" +
 	"\rFreezeService\x128\n" +
-	"\x06freeze\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB[\n" +
-	"&com.hederahashgraph.service.proto.javaZ1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"\x06freeze\x12\x12.proto.Transaction\x1a\x1a.proto.TransactionResponseB\\\n" +
+	"&com.hederahashgraph.service.proto.javaZ2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var file_freeze_service_proto_goTypes = []any{
 	(*Transaction)(nil),         // 0: proto.Transaction

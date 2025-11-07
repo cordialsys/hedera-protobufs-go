@@ -18,7 +18,7 @@
 package services
 
 import (
-	common "github.com/hashgraph/hedera-protobufs-go/common"
+	common "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -250,8 +250,8 @@ const file_freeze_proto_rawDesc = "" +
 	"\n" +
 	"start_time\x18\a \x01(\v2\x10.proto.TimestampR\tstartTime\x122\n" +
 	"\vfreeze_type\x18\b \x01(\x0e2\x11.proto.FreezeTypeR\n" +
-	"freezeTypeBY\n" +
-	"\"com.hederahashgraph.api.proto.javaP\x01Z1github.com/hashgraph/hedera-protobufs-go/servicesb\x06proto3"
+	"freezeTypeBZ\n" +
+	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
 	file_freeze_proto_rawDescOnce sync.Once
