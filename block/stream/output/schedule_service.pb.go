@@ -63,16 +63,6 @@ const (
 type CreateScheduleOutput struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
-	// A schedule identifier.
-	// <p>
-	// If the status of the transaction is `SUCCESS`, this value SHALL be
-	// set to the identifier of the schedule that was created. If the
-	// transaction status is `IDENTICAL_SCHEDULE_ALREADY_CREATED`, this
-	// value SHALL be set to the identifier of the existing schedule that
-	// is identical to the one that was attempted to be created. For any
-	// other status, this value SHALL NOT be set.
-	ScheduleId *common.ScheduleID `protobuf:"bytes,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
-	// *
 	// A scheduled transaction identifier.
 	// <p>
 	// This value SHALL be the transaction identifier for the _scheduled_
@@ -116,13 +106,6 @@ func (x *CreateScheduleOutput) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateScheduleOutput.ProtoReflect.Descriptor instead.
 func (*CreateScheduleOutput) Descriptor() ([]byte, []int) {
 	return file_stream_output_schedule_service_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *CreateScheduleOutput) GetScheduleId() *common.ScheduleID {
-	if x != nil {
-		return x.ScheduleId
-	}
-	return nil
 }
 
 func (x *CreateScheduleOutput) GetScheduledTransactionId() *common.TransactionID {
@@ -237,10 +220,8 @@ var File_stream_output_schedule_service_proto protoreflect.FileDescriptor
 
 const file_stream_output_schedule_service_proto_rawDesc = "" +
 	"\n" +
-	"$stream/output/schedule_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\"\x9a\x01\n" +
-	"\x14CreateScheduleOutput\x122\n" +
-	"\vschedule_id\x18\x01 \x01(\v2\x11.proto.ScheduleIDR\n" +
-	"scheduleId\x12N\n" +
+	"$stream/output/schedule_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\"f\n" +
+	"\x14CreateScheduleOutput\x12N\n" +
 	"\x18scheduled_transaction_id\x18\x02 \x01(\v2\x14.proto.TransactionIDR\x16scheduledTransactionId\"\x16\n" +
 	"\x14DeleteScheduleOutput\"d\n" +
 	"\x12SignScheduleOutput\x12N\n" +
@@ -264,18 +245,16 @@ var file_stream_output_schedule_service_proto_goTypes = []any{
 	(*CreateScheduleOutput)(nil), // 0: com.hedera.hapi.block.stream.output.CreateScheduleOutput
 	(*DeleteScheduleOutput)(nil), // 1: com.hedera.hapi.block.stream.output.DeleteScheduleOutput
 	(*SignScheduleOutput)(nil),   // 2: com.hedera.hapi.block.stream.output.SignScheduleOutput
-	(*common.ScheduleID)(nil),    // 3: proto.ScheduleID
-	(*common.TransactionID)(nil), // 4: proto.TransactionID
+	(*common.TransactionID)(nil), // 3: proto.TransactionID
 }
 var file_stream_output_schedule_service_proto_depIdxs = []int32{
-	3, // 0: com.hedera.hapi.block.stream.output.CreateScheduleOutput.schedule_id:type_name -> proto.ScheduleID
-	4, // 1: com.hedera.hapi.block.stream.output.CreateScheduleOutput.scheduled_transaction_id:type_name -> proto.TransactionID
-	4, // 2: com.hedera.hapi.block.stream.output.SignScheduleOutput.scheduled_transaction_id:type_name -> proto.TransactionID
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 0: com.hedera.hapi.block.stream.output.CreateScheduleOutput.scheduled_transaction_id:type_name -> proto.TransactionID
+	3, // 1: com.hedera.hapi.block.stream.output.SignScheduleOutput.scheduled_transaction_id:type_name -> proto.TransactionID
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_stream_output_schedule_service_proto_init() }

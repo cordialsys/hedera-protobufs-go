@@ -26,24 +26,18 @@ import (
 	common "github.com/cordialsys/hedera-protobufs-go/common"
 	state "github.com/cordialsys/hedera-protobufs-go/platform/state"
 	services "github.com/cordialsys/hedera-protobufs-go/services"
-	hints1 "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/hints"
-	tss1 "github.com/cordialsys/hedera-protobufs-go/services/auxiliary/tss"
 	addressbook "github.com/cordialsys/hedera-protobufs-go/services/state/addressbook"
 	blockrecords "github.com/cordialsys/hedera-protobufs-go/services/state/blockrecords"
 	blockstream "github.com/cordialsys/hedera-protobufs-go/services/state/blockstream"
 	congestion "github.com/cordialsys/hedera-protobufs-go/services/state/congestion"
 	consensus "github.com/cordialsys/hedera-protobufs-go/services/state/consensus"
 	contract "github.com/cordialsys/hedera-protobufs-go/services/state/contract"
-	entity "github.com/cordialsys/hedera-protobufs-go/services/state/entity"
 	file "github.com/cordialsys/hedera-protobufs-go/services/state/file"
-	hints "github.com/cordialsys/hedera-protobufs-go/services/state/hints"
-	history "github.com/cordialsys/hedera-protobufs-go/services/state/history"
 	recordcache "github.com/cordialsys/hedera-protobufs-go/services/state/recordcache"
 	roster "github.com/cordialsys/hedera-protobufs-go/services/state/roster"
 	schedule "github.com/cordialsys/hedera-protobufs-go/services/state/schedule"
 	throttles "github.com/cordialsys/hedera-protobufs-go/services/state/throttles"
 	token "github.com/cordialsys/hedera-protobufs-go/services/state/token"
-	tss "github.com/cordialsys/hedera-protobufs-go/services/state/tss"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -174,73 +168,6 @@ const (
 	// A state identifier for the rosters key/value map.
 	StateIdentifier_STATE_ID_ROSTERS StateIdentifier = 28
 	// *
-	// A state identifier for counts of transactions scheduled and
-	// processed in a second.
-	StateIdentifier_STATE_ID_SCHEDULED_COUNTS StateIdentifier = 29
-	// *
-	// A state identifier for scheduled transaction deduplication.
-	StateIdentifier_STATE_ID_SCHEDULE_ID_BY_EQUALITY StateIdentifier = 30
-	// *
-	// A state identifier for TSS messages.
-	StateIdentifier_STATE_ID_TSS_MESSAGES StateIdentifier = 31
-	// *
-	// A state identifier for TSS votes.
-	StateIdentifier_STATE_ID_TSS_VOTES StateIdentifier = 32
-	// *
-	// A state identifier for the ordering of scheduled transactions.
-	StateIdentifier_STATE_ID_SCHEDULED_ORDERS StateIdentifier = 33
-	// *
-	// A state identifier for scheduled throttle usage snapshots.
-	StateIdentifier_STATE_ID_SCHEDULED_USAGES StateIdentifier = 34
-	// *
-	// A state identifier for the TSS encryption keys.
-	StateIdentifier_STATE_ID_TSS_ENCRYPTION_KEYS StateIdentifier = 35
-	// *
-	// A state identifier for the TSS status.
-	StateIdentifier_STATE_ID_TSS_STATUS StateIdentifier = 36
-	// *
-	// A state identifier for hinTS key sets.
-	StateIdentifier_STATE_ID_HINTS_KEY_SETS StateIdentifier = 37
-	// *
-	// A state identifier for the active hinTS construction.
-	StateIdentifier_STATE_ID_ACTIVE_HINTS_CONSTRUCTION StateIdentifier = 38
-	// *
-	// A state identifier for the next hinTS construction.
-	StateIdentifier_STATE_ID_NEXT_HINTS_CONSTRUCTION StateIdentifier = 39
-	// *
-	// A state identifier for hinTS preprocessing output votes.
-	StateIdentifier_STATE_ID_PREPROCESSING_VOTES StateIdentifier = 40
-	// *
-	// A state identifier for the entity counts.
-	StateIdentifier_STATE_ID_ENTITY_COUNTS StateIdentifier = 41
-	// *
-	// A state identifier for the ledger id.
-	StateIdentifier_STATE_ID_LEDGER_ID StateIdentifier = 42
-	// *
-	// A state identifier for history proof key sets.
-	StateIdentifier_STATE_ID_PROOF_KEY_SETS StateIdentifier = 43
-	// *
-	// A state identifier for the active proof construction.
-	StateIdentifier_STATE_ID_ACTIVE_PROOF_CONSTRUCTION StateIdentifier = 44
-	// *
-	// A state identifier for the next proof construction.
-	StateIdentifier_STATE_ID_NEXT_PROOF_CONSTRUCTION StateIdentifier = 45
-	// *
-	// A state identifier for signatures on roster transition histories.
-	StateIdentifier_STATE_ID_HISTORY_SIGNATURES StateIdentifier = 46
-	// *
-	// A state identifier for votes on history proofs.
-	StateIdentifier_STATE_ID_PROOF_VOTES StateIdentifier = 47
-	// *
-	// A state identifier for the CRS state.
-	StateIdentifier_STATE_ID_CRS_STATE StateIdentifier = 48
-	// *
-	// A state identifier for the CRS publications.
-	StateIdentifier_STATE_ID_CRS_PUBLICATIONS StateIdentifier = 49
-	// *
-	// A state identifier for the node rewards
-	StateIdentifier_STATE_ID_NODE_REWARDS StateIdentifier = 50
-	// *
 	// A state identifier for the round receipts queue.
 	StateIdentifier_STATE_ID_TRANSACTION_RECEIPTS_QUEUE StateIdentifier = 126
 	// *
@@ -307,28 +234,6 @@ var (
 		26:    "STATE_ID_PLATFORM_STATE",
 		27:    "STATE_ID_ROSTER_STATE",
 		28:    "STATE_ID_ROSTERS",
-		29:    "STATE_ID_SCHEDULED_COUNTS",
-		30:    "STATE_ID_SCHEDULE_ID_BY_EQUALITY",
-		31:    "STATE_ID_TSS_MESSAGES",
-		32:    "STATE_ID_TSS_VOTES",
-		33:    "STATE_ID_SCHEDULED_ORDERS",
-		34:    "STATE_ID_SCHEDULED_USAGES",
-		35:    "STATE_ID_TSS_ENCRYPTION_KEYS",
-		36:    "STATE_ID_TSS_STATUS",
-		37:    "STATE_ID_HINTS_KEY_SETS",
-		38:    "STATE_ID_ACTIVE_HINTS_CONSTRUCTION",
-		39:    "STATE_ID_NEXT_HINTS_CONSTRUCTION",
-		40:    "STATE_ID_PREPROCESSING_VOTES",
-		41:    "STATE_ID_ENTITY_COUNTS",
-		42:    "STATE_ID_LEDGER_ID",
-		43:    "STATE_ID_PROOF_KEY_SETS",
-		44:    "STATE_ID_ACTIVE_PROOF_CONSTRUCTION",
-		45:    "STATE_ID_NEXT_PROOF_CONSTRUCTION",
-		46:    "STATE_ID_HISTORY_SIGNATURES",
-		47:    "STATE_ID_PROOF_VOTES",
-		48:    "STATE_ID_CRS_STATE",
-		49:    "STATE_ID_CRS_PUBLICATIONS",
-		50:    "STATE_ID_NODE_REWARDS",
 		126:   "STATE_ID_TRANSACTION_RECEIPTS_QUEUE",
 		10001: "STATE_ID_UPGRADE_DATA_150",
 		10002: "STATE_ID_UPGRADE_DATA_151",
@@ -371,28 +276,6 @@ var (
 		"STATE_ID_PLATFORM_STATE":             26,
 		"STATE_ID_ROSTER_STATE":               27,
 		"STATE_ID_ROSTERS":                    28,
-		"STATE_ID_SCHEDULED_COUNTS":           29,
-		"STATE_ID_SCHEDULE_ID_BY_EQUALITY":    30,
-		"STATE_ID_TSS_MESSAGES":               31,
-		"STATE_ID_TSS_VOTES":                  32,
-		"STATE_ID_SCHEDULED_ORDERS":           33,
-		"STATE_ID_SCHEDULED_USAGES":           34,
-		"STATE_ID_TSS_ENCRYPTION_KEYS":        35,
-		"STATE_ID_TSS_STATUS":                 36,
-		"STATE_ID_HINTS_KEY_SETS":             37,
-		"STATE_ID_ACTIVE_HINTS_CONSTRUCTION":  38,
-		"STATE_ID_NEXT_HINTS_CONSTRUCTION":    39,
-		"STATE_ID_PREPROCESSING_VOTES":        40,
-		"STATE_ID_ENTITY_COUNTS":              41,
-		"STATE_ID_LEDGER_ID":                  42,
-		"STATE_ID_PROOF_KEY_SETS":             43,
-		"STATE_ID_ACTIVE_PROOF_CONSTRUCTION":  44,
-		"STATE_ID_NEXT_PROOF_CONSTRUCTION":    45,
-		"STATE_ID_HISTORY_SIGNATURES":         46,
-		"STATE_ID_PROOF_VOTES":                47,
-		"STATE_ID_CRS_STATE":                  48,
-		"STATE_ID_CRS_PUBLICATIONS":           49,
-		"STATE_ID_NODE_REWARDS":               50,
 		"STATE_ID_TRANSACTION_RECEIPTS_QUEUE": 126,
 		"STATE_ID_UPGRADE_DATA_150":           10001,
 		"STATE_ID_UPGRADE_DATA_151":           10002,
@@ -903,11 +786,6 @@ type SingletonUpdateChange struct {
 	//	*SingletonUpdateChange_BlockStreamInfoValue
 	//	*SingletonUpdateChange_PlatformStateValue
 	//	*SingletonUpdateChange_RosterStateValue
-	//	*SingletonUpdateChange_HintsConstructionValue
-	//	*SingletonUpdateChange_EntityCountsValue
-	//	*SingletonUpdateChange_HistoryProofConstructionValue
-	//	*SingletonUpdateChange_CrsStateValue
-	//	*SingletonUpdateChange_NodeRewardsValue
 	NewValue      isSingletonUpdateChange_NewValue `protobuf_oneof:"new_value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1067,51 +945,6 @@ func (x *SingletonUpdateChange) GetRosterStateValue() *roster.RosterState {
 	return nil
 }
 
-func (x *SingletonUpdateChange) GetHintsConstructionValue() *hints.HintsConstruction {
-	if x != nil {
-		if x, ok := x.NewValue.(*SingletonUpdateChange_HintsConstructionValue); ok {
-			return x.HintsConstructionValue
-		}
-	}
-	return nil
-}
-
-func (x *SingletonUpdateChange) GetEntityCountsValue() *entity.EntityCounts {
-	if x != nil {
-		if x, ok := x.NewValue.(*SingletonUpdateChange_EntityCountsValue); ok {
-			return x.EntityCountsValue
-		}
-	}
-	return nil
-}
-
-func (x *SingletonUpdateChange) GetHistoryProofConstructionValue() *history.HistoryProofConstruction {
-	if x != nil {
-		if x, ok := x.NewValue.(*SingletonUpdateChange_HistoryProofConstructionValue); ok {
-			return x.HistoryProofConstructionValue
-		}
-	}
-	return nil
-}
-
-func (x *SingletonUpdateChange) GetCrsStateValue() *hints.CRSState {
-	if x != nil {
-		if x, ok := x.NewValue.(*SingletonUpdateChange_CrsStateValue); ok {
-			return x.CrsStateValue
-		}
-	}
-	return nil
-}
-
-func (x *SingletonUpdateChange) GetNodeRewardsValue() *token.NodeRewards {
-	if x != nil {
-		if x, ok := x.NewValue.(*SingletonUpdateChange_NodeRewardsValue); ok {
-			return x.NodeRewardsValue
-		}
-	}
-	return nil
-}
-
 type isSingletonUpdateChange_NewValue interface {
 	isSingletonUpdateChange_NewValue()
 }
@@ -1242,38 +1075,6 @@ type SingletonUpdateChange_RosterStateValue struct {
 	RosterStateValue *roster.RosterState `protobuf:"bytes,13,opt,name=roster_state_value,json=rosterStateValue,proto3,oneof"`
 }
 
-type SingletonUpdateChange_HintsConstructionValue struct {
-	// *
-	// A change to a hinTS construction singleton.
-	HintsConstructionValue *hints.HintsConstruction `protobuf:"bytes,14,opt,name=hints_construction_value,json=hintsConstructionValue,proto3,oneof"`
-}
-
-type SingletonUpdateChange_EntityCountsValue struct {
-	// *
-	// A change to the Entity counts singleton.
-	EntityCountsValue *entity.EntityCounts `protobuf:"bytes,15,opt,name=entity_counts_value,json=entityCountsValue,proto3,oneof"`
-}
-
-type SingletonUpdateChange_HistoryProofConstructionValue struct {
-	// *
-	// A change to a hinTS construction singleton.
-	HistoryProofConstructionValue *history.HistoryProofConstruction `protobuf:"bytes,16,opt,name=history_proof_construction_value,json=historyProofConstructionValue,proto3,oneof"`
-}
-
-type SingletonUpdateChange_CrsStateValue struct {
-	// *
-	// A change to the CRS State singleton.
-	CrsStateValue *hints.CRSState `protobuf:"bytes,17,opt,name=crs_state_value,json=crsStateValue,proto3,oneof"`
-}
-
-type SingletonUpdateChange_NodeRewardsValue struct {
-	// *
-	// A change to the node rewards singleton.
-	// <p>
-	// Node rewards SHALL be updated for every non-empty block.
-	NodeRewardsValue *token.NodeRewards `protobuf:"bytes,18,opt,name=node_rewards_value,json=nodeRewardsValue,proto3,oneof"`
-}
-
 func (*SingletonUpdateChange_BlockInfoValue) isSingletonUpdateChange_NewValue() {}
 
 func (*SingletonUpdateChange_CongestionLevelStartsValue) isSingletonUpdateChange_NewValue() {}
@@ -1299,16 +1100,6 @@ func (*SingletonUpdateChange_BlockStreamInfoValue) isSingletonUpdateChange_NewVa
 func (*SingletonUpdateChange_PlatformStateValue) isSingletonUpdateChange_NewValue() {}
 
 func (*SingletonUpdateChange_RosterStateValue) isSingletonUpdateChange_NewValue() {}
-
-func (*SingletonUpdateChange_HintsConstructionValue) isSingletonUpdateChange_NewValue() {}
-
-func (*SingletonUpdateChange_EntityCountsValue) isSingletonUpdateChange_NewValue() {}
-
-func (*SingletonUpdateChange_HistoryProofConstructionValue) isSingletonUpdateChange_NewValue() {}
-
-func (*SingletonUpdateChange_CrsStateValue) isSingletonUpdateChange_NewValue() {}
-
-func (*SingletonUpdateChange_NodeRewardsValue) isSingletonUpdateChange_NewValue() {}
 
 // *
 // An update to a single item in a `VirtualMap`.<br/>
@@ -1458,14 +1249,6 @@ type MapChangeKey struct {
 	//	*MapChangeKey_TopicIdKey
 	//	*MapChangeKey_ContractIdKey
 	//	*MapChangeKey_PendingAirdropIdKey
-	//	*MapChangeKey_TimestampSecondsKey
-	//	*MapChangeKey_ScheduledOrderKey
-	//	*MapChangeKey_TssMessageMapKey
-	//	*MapChangeKey_TssVoteMapKey
-	//	*MapChangeKey_HintsPartyIdKey
-	//	*MapChangeKey_PreprocessingVoteIdKey
-	//	*MapChangeKey_NodeIdKey
-	//	*MapChangeKey_ConstructionNodeIdKey
 	KeyChoice     isMapChangeKey_KeyChoice `protobuf_oneof:"key_choice"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1634,78 +1417,6 @@ func (x *MapChangeKey) GetPendingAirdropIdKey() *common.PendingAirdropId {
 	return nil
 }
 
-func (x *MapChangeKey) GetTimestampSecondsKey() *common.TimestampSeconds {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_TimestampSecondsKey); ok {
-			return x.TimestampSecondsKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetScheduledOrderKey() *schedule.ScheduledOrder {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_ScheduledOrderKey); ok {
-			return x.ScheduledOrderKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetTssMessageMapKey() *tss.TssMessageMapKey {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_TssMessageMapKey); ok {
-			return x.TssMessageMapKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetTssVoteMapKey() *tss.TssVoteMapKey {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_TssVoteMapKey); ok {
-			return x.TssVoteMapKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetHintsPartyIdKey() *hints.HintsPartyId {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_HintsPartyIdKey); ok {
-			return x.HintsPartyIdKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetPreprocessingVoteIdKey() *hints.PreprocessingVoteId {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_PreprocessingVoteIdKey); ok {
-			return x.PreprocessingVoteIdKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetNodeIdKey() *state.NodeId {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_NodeIdKey); ok {
-			return x.NodeIdKey
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeKey) GetConstructionNodeIdKey() *history.ConstructionNodeId {
-	if x != nil {
-		if x, ok := x.KeyChoice.(*MapChangeKey_ConstructionNodeIdKey); ok {
-			return x.ConstructionNodeIdKey
-		}
-	}
-	return nil
-}
-
 type isMapChangeKey_KeyChoice interface {
 	isMapChangeKey_KeyChoice()
 }
@@ -1799,59 +1510,6 @@ type MapChangeKey_PendingAirdropIdKey struct {
 	PendingAirdropIdKey *common.PendingAirdropId `protobuf:"bytes,14,opt,name=pending_airdrop_id_key,json=pendingAirdropIdKey,proto3,oneof"`
 }
 
-type MapChangeKey_TimestampSecondsKey struct {
-	// *
-	// An exact date and time,  with a resolution of one second
-	TimestampSecondsKey *common.TimestampSeconds `protobuf:"bytes,15,opt,name=timestamp_seconds_key,json=timestampSecondsKey,proto3,oneof"`
-}
-
-type MapChangeKey_ScheduledOrderKey struct {
-	// *
-	// An ordering key mapped to a particular schedule.<br/>
-	// This identifies the order in which long term scheduled transactions
-	// that are requested to execute in the same consensus second will
-	// be executed. The value will be the `ScheduleID` for the schedule
-	// to be executed at a particular consensus second and order within
-	// that second.
-	ScheduledOrderKey *schedule.ScheduledOrder `protobuf:"bytes,16,opt,name=scheduled_order_key,json=scheduledOrderKey,proto3,oneof"`
-}
-
-type MapChangeKey_TssMessageMapKey struct {
-	// *
-	// A TSS Message Map Key key.
-	TssMessageMapKey *tss.TssMessageMapKey `protobuf:"bytes,17,opt,name=tss_message_map_key,json=tssMessageMapKey,proto3,oneof"`
-}
-
-type MapChangeKey_TssVoteMapKey struct {
-	// *
-	// A TSS Message Map Key key.
-	TssVoteMapKey *tss.TssVoteMapKey `protobuf:"bytes,18,opt,name=tss_vote_map_key,json=tssVoteMapKey,proto3,oneof"`
-}
-
-type MapChangeKey_HintsPartyIdKey struct {
-	// *
-	// A hinTS party id key.
-	HintsPartyIdKey *hints.HintsPartyId `protobuf:"bytes,19,opt,name=hints_party_id_key,json=hintsPartyIdKey,proto3,oneof"`
-}
-
-type MapChangeKey_PreprocessingVoteIdKey struct {
-	// *
-	// A hinTS preprocessing vote id key.
-	PreprocessingVoteIdKey *hints.PreprocessingVoteId `protobuf:"bytes,20,opt,name=preprocessing_vote_id_key,json=preprocessingVoteIdKey,proto3,oneof"`
-}
-
-type MapChangeKey_NodeIdKey struct {
-	// *
-	// An unscoped node id key.
-	NodeIdKey *state.NodeId `protobuf:"bytes,21,opt,name=node_id_key,json=nodeIdKey,proto3,oneof"`
-}
-
-type MapChangeKey_ConstructionNodeIdKey struct {
-	// *
-	// A construction-scoped node id key.
-	ConstructionNodeIdKey *history.ConstructionNodeId `protobuf:"bytes,22,opt,name=construction_node_id_key,json=constructionNodeIdKey,proto3,oneof"`
-}
-
 func (*MapChangeKey_AccountIdKey) isMapChangeKey_KeyChoice() {}
 
 func (*MapChangeKey_TokenRelationshipKey) isMapChangeKey_KeyChoice() {}
@@ -1880,22 +1538,6 @@ func (*MapChangeKey_ContractIdKey) isMapChangeKey_KeyChoice() {}
 
 func (*MapChangeKey_PendingAirdropIdKey) isMapChangeKey_KeyChoice() {}
 
-func (*MapChangeKey_TimestampSecondsKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_ScheduledOrderKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_TssMessageMapKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_TssVoteMapKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_HintsPartyIdKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_PreprocessingVoteIdKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_NodeIdKey) isMapChangeKey_KeyChoice() {}
-
-func (*MapChangeKey_ConstructionNodeIdKey) isMapChangeKey_KeyChoice() {}
-
 // *
 // A value updated in, or added to, a virtual map.
 type MapChangeValue struct {
@@ -1918,18 +1560,6 @@ type MapChangeValue struct {
 	//	*MapChangeValue_NodeValue
 	//	*MapChangeValue_AccountPendingAirdropValue
 	//	*MapChangeValue_RosterValue
-	//	*MapChangeValue_ScheduledCountsValue
-	//	*MapChangeValue_ScheduleIdValue
-	//	*MapChangeValue_ThrottleUsageSnapshotsValue
-	//	*MapChangeValue_TssEncryptionKeysValue
-	//	*MapChangeValue_TssMessageValue
-	//	*MapChangeValue_TssVoteValue
-	//	*MapChangeValue_HintsKeySetValue
-	//	*MapChangeValue_PreprocessingVoteValue
-	//	*MapChangeValue_CrsPublicationValue
-	//	*MapChangeValue_HistorySignatureValue
-	//	*MapChangeValue_HistoryProofVoteValue
-	//	*MapChangeValue_ProofKeySetValue
 	ValueChoice   isMapChangeValue_ValueChoice `protobuf_oneof:"value_choice"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2116,114 +1746,6 @@ func (x *MapChangeValue) GetRosterValue() *roster.Roster {
 	return nil
 }
 
-func (x *MapChangeValue) GetScheduledCountsValue() *schedule.ScheduledCounts {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_ScheduledCountsValue); ok {
-			return x.ScheduledCountsValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetScheduleIdValue() *common.ScheduleID {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_ScheduleIdValue); ok {
-			return x.ScheduleIdValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetThrottleUsageSnapshotsValue() *throttles.ThrottleUsageSnapshots {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_ThrottleUsageSnapshotsValue); ok {
-			return x.ThrottleUsageSnapshotsValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetTssEncryptionKeysValue() *tss.TssEncryptionKeys {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_TssEncryptionKeysValue); ok {
-			return x.TssEncryptionKeysValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetTssMessageValue() *tss1.TssMessageTransactionBody {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_TssMessageValue); ok {
-			return x.TssMessageValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetTssVoteValue() *tss1.TssVoteTransactionBody {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_TssVoteValue); ok {
-			return x.TssVoteValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetHintsKeySetValue() *hints.HintsKeySet {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_HintsKeySetValue); ok {
-			return x.HintsKeySetValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetPreprocessingVoteValue() *hints.PreprocessingVote {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_PreprocessingVoteValue); ok {
-			return x.PreprocessingVoteValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetCrsPublicationValue() *hints1.CrsPublicationTransactionBody {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_CrsPublicationValue); ok {
-			return x.CrsPublicationValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetHistorySignatureValue() *history.RecordedHistorySignature {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_HistorySignatureValue); ok {
-			return x.HistorySignatureValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetHistoryProofVoteValue() *history.HistoryProofVote {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_HistoryProofVoteValue); ok {
-			return x.HistoryProofVoteValue
-		}
-	}
-	return nil
-}
-
-func (x *MapChangeValue) GetProofKeySetValue() *history.ProofKeySet {
-	if x != nil {
-		if x, ok := x.ValueChoice.(*MapChangeValue_ProofKeySetValue); ok {
-			return x.ProofKeySetValue
-		}
-	}
-	return nil
-}
-
 type isMapChangeValue_ValueChoice interface {
 	isMapChangeValue_ValueChoice()
 }
@@ -2340,79 +1862,6 @@ type MapChangeValue_RosterValue struct {
 	RosterValue *roster.Roster `protobuf:"bytes,16,opt,name=roster_value,json=rosterValue,proto3,oneof"`
 }
 
-type MapChangeValue_ScheduledCountsValue struct {
-	// *
-	// The value of a map summarizing the counts of scheduled and processed transactions
-	// within a particular consensus second.
-	ScheduledCountsValue *schedule.ScheduledCounts `protobuf:"bytes,17,opt,name=scheduled_counts_value,json=scheduledCountsValue,proto3,oneof"`
-}
-
-type MapChangeValue_ScheduleIdValue struct {
-	// *
-	// A scheduled id value.
-	ScheduleIdValue *common.ScheduleID `protobuf:"bytes,18,opt,name=schedule_id_value,json=scheduleIdValue,proto3,oneof"`
-}
-
-type MapChangeValue_ThrottleUsageSnapshotsValue struct {
-	// *
-	// A change to the scheduled throttle usage snapshots.
-	ThrottleUsageSnapshotsValue *throttles.ThrottleUsageSnapshots `protobuf:"bytes,19,opt,name=throttle_usage_snapshots_value,json=throttleUsageSnapshotsValue,proto3,oneof"`
-}
-
-type MapChangeValue_TssEncryptionKeysValue struct {
-	// *
-	// The value of a map that stores tss encryption keys for each node.
-	TssEncryptionKeysValue *tss.TssEncryptionKeys `protobuf:"bytes,20,opt,name=tss_encryption_keys_value,json=tssEncryptionKeysValue,proto3,oneof"`
-}
-
-type MapChangeValue_TssMessageValue struct {
-	// *
-	// The value of a map that stores tss messages submitted for each share of nodes.
-	TssMessageValue *tss1.TssMessageTransactionBody `protobuf:"bytes,21,opt,name=tss_message_value,json=tssMessageValue,proto3,oneof"`
-}
-
-type MapChangeValue_TssVoteValue struct {
-	// *
-	// The value of a map that stores tss votes submitted by each node to recover the ledger id.
-	TssVoteValue *tss1.TssVoteTransactionBody `protobuf:"bytes,22,opt,name=tss_vote_value,json=tssVoteValue,proto3,oneof"`
-}
-
-type MapChangeValue_HintsKeySetValue struct {
-	// *
-	// A hinTS key set.
-	HintsKeySetValue *hints.HintsKeySet `protobuf:"bytes,23,opt,name=hints_key_set_value,json=hintsKeySetValue,proto3,oneof"`
-}
-
-type MapChangeValue_PreprocessingVoteValue struct {
-	// *
-	// A hinTS preprocessing vote.
-	PreprocessingVoteValue *hints.PreprocessingVote `protobuf:"bytes,24,opt,name=preprocessing_vote_value,json=preprocessingVoteValue,proto3,oneof"`
-}
-
-type MapChangeValue_CrsPublicationValue struct {
-	// *
-	// A CRS publication submission.
-	CrsPublicationValue *hints1.CrsPublicationTransactionBody `protobuf:"bytes,25,opt,name=crs_publication_value,json=crsPublicationValue,proto3,oneof"`
-}
-
-type MapChangeValue_HistorySignatureValue struct {
-	// *
-	// A history signature.
-	HistorySignatureValue *history.RecordedHistorySignature `protobuf:"bytes,26,opt,name=history_signature_value,json=historySignatureValue,proto3,oneof"`
-}
-
-type MapChangeValue_HistoryProofVoteValue struct {
-	// *
-	// A history proof vote.
-	HistoryProofVoteValue *history.HistoryProofVote `protobuf:"bytes,27,opt,name=history_proof_vote_value,json=historyProofVoteValue,proto3,oneof"`
-}
-
-type MapChangeValue_ProofKeySetValue struct {
-	// *
-	// A proof key set.
-	ProofKeySetValue *history.ProofKeySet `protobuf:"bytes,28,opt,name=proof_key_set_value,json=proofKeySetValue,proto3,oneof"`
-}
-
 func (*MapChangeValue_AccountValue) isMapChangeValue_ValueChoice() {}
 
 func (*MapChangeValue_AccountIdValue) isMapChangeValue_ValueChoice() {}
@@ -2444,30 +1893,6 @@ func (*MapChangeValue_NodeValue) isMapChangeValue_ValueChoice() {}
 func (*MapChangeValue_AccountPendingAirdropValue) isMapChangeValue_ValueChoice() {}
 
 func (*MapChangeValue_RosterValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_ScheduledCountsValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_ScheduleIdValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_ThrottleUsageSnapshotsValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_TssEncryptionKeysValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_TssMessageValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_TssVoteValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_HintsKeySetValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_PreprocessingVoteValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_CrsPublicationValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_HistorySignatureValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_HistoryProofVoteValue) isMapChangeValue_ValueChoice() {}
-
-func (*MapChangeValue_ProofKeySetValue) isMapChangeValue_ValueChoice() {}
 
 // *
 // Addition of an item to a `Queue` state.<br/>
@@ -2625,7 +2050,7 @@ var File_stream_output_state_changes_proto protoreflect.FileDescriptor
 
 const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\n" +
-	"!stream/output/state_changes.proto\x12#com.hedera.hapi.block.stream.output\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x11basic_types.proto\x1a\x13exchange_rate.proto\x1a\x1cstate/addressbook/node.proto\x1a#state/blockrecords/block_info.proto\x1a'state/blockrecords/running_hashes.proto\x1a)state/blockstream/block_stream_info.proto\x1a.state/congestion/congestion_level_starts.proto\x1a\x1bstate/consensus/topic.proto\x1a\x1dstate/contract/bytecode.proto\x1a!state/contract/storage_slot.proto\x1a\x15state/file/file.proto\x1a#state/recordcache/recordcache.proto\x1a\x19state/roster/roster.proto\x1a\x1fstate/roster/roster_state.proto\x1a\x1dstate/schedule/schedule.proto\x1a.state/throttles/throttle_usage_snapshots.proto\x1a\x19state/token/account.proto\x1a)state/token/account_pending_airdrop.proto\x1a)state/token/network_staking_rewards.proto\x1a\x1estate/token/node_rewards.proto\x1a\x15state/token/nft.proto\x1a#state/token/staking_node_info.proto\x1a\x17state/token/token.proto\x1a state/token/token_relation.proto\x1a\x1astate/platform_state.proto\x1a\x0ftimestamp.proto\x1a\x1fauxiliary/tss/tss_message.proto\x1a\x1cauxiliary/tss/tss_vote.proto\x1a#state/tss/tss_encryption_keys.proto\x1a#state/tss/tss_message_map_key.proto\x1a state/tss/tss_vote_map_key.proto\x1a\x1dstate/hints/hints_types.proto\x1a!state/history/history_types.proto\x1a state/entity/entity_counts.proto\x1a%auxiliary/hints/crs_publication.proto\"\xa8\x01\n" +
+	"!stream/output/state_changes.proto\x12#com.hedera.hapi.block.stream.output\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x11basic_types.proto\x1a\x13exchange_rate.proto\x1a\x1cstate/addressbook/node.proto\x1a#state/blockrecords/block_info.proto\x1a'state/blockrecords/running_hashes.proto\x1a)state/blockstream/block_stream_info.proto\x1a.state/congestion/congestion_level_starts.proto\x1a\x1bstate/consensus/topic.proto\x1a\x1dstate/contract/bytecode.proto\x1a!state/contract/storage_slot.proto\x1a\x15state/file/file.proto\x1a#state/recordcache/recordcache.proto\x1a\x19state/roster/roster.proto\x1a\x1fstate/roster/roster_state.proto\x1a\x1dstate/schedule/schedule.proto\x1a.state/throttles/throttle_usage_snapshots.proto\x1a\x19state/token/account.proto\x1a)state/token/account_pending_airdrop.proto\x1a)state/token/network_staking_rewards.proto\x1a\x15state/token/nft.proto\x1a#state/token/staking_node_info.proto\x1a\x17state/token/token.proto\x1a state/token/token_relation.proto\x1a\x1astate/platform_state.proto\x1a\x0ftimestamp.proto\"\xa8\x01\n" +
 	"\fStateChanges\x12A\n" +
 	"\x13consensus_timestamp\x18\x01 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\x12U\n" +
 	"\rstate_changes\x18\x02 \x03(\v20.com.hedera.hapi.block.stream.output.StateChangeR\fstateChanges\"\xb0\x05\n" +
@@ -2645,7 +2070,7 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\x0eNewStateChange\x12P\n" +
 	"\n" +
 	"state_type\x18\x01 \x01(\x0e21.com.hedera.hapi.block.stream.output.NewStateTypeR\tstateType\"\x14\n" +
-	"\x12RemovedStateChange\"\xe6\f\n" +
+	"\x12RemovedStateChange\"\xee\b\n" +
 	"\x15SingletonUpdateChange\x12<\n" +
 	"\x10block_info_value\x18\x01 \x01(\v2\x10.proto.BlockInfoH\x00R\x0eblockInfoValue\x12a\n" +
 	"\x1dcongestion_level_starts_value\x18\x02 \x01(\v2\x1c.proto.CongestionLevelStartsH\x00R\x1acongestionLevelStartsValue\x12N\n" +
@@ -2661,18 +2086,13 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	" \x01(\v2\x10.proto.TimestampH\x00R\x0etimestampValue\x12p\n" +
 	"\x17block_stream_info_value\x18\v \x01(\v27.com.hedera.hapi.node.state.blockstream.BlockStreamInfoH\x00R\x14blockStreamInfoValue\x12a\n" +
 	"\x14platform_state_value\x18\f \x01(\v2-.com.hedera.hapi.platform.state.PlatformStateH\x00R\x12platformStateValue\x12^\n" +
-	"\x12roster_state_value\x18\r \x01(\v2..com.hedera.hapi.node.state.roster.RosterStateH\x00R\x10rosterStateValue\x12o\n" +
-	"\x18hints_construction_value\x18\x0e \x01(\v23.com.hedera.hapi.node.state.hints.HintsConstructionH\x00R\x16hintsConstructionValue\x12a\n" +
-	"\x13entity_counts_value\x18\x0f \x01(\v2/.com.hedera.hapi.node.state.entity.EntityCountsH\x00R\x11entityCountsValue\x12\x87\x01\n" +
-	" history_proof_construction_value\x18\x10 \x01(\v2<.com.hedera.hapi.node.state.history.HistoryProofConstructionH\x00R\x1dhistoryProofConstructionValue\x12T\n" +
-	"\x0fcrs_state_value\x18\x11 \x01(\v2*.com.hedera.hapi.node.state.hints.CRSStateH\x00R\rcrsStateValue\x12B\n" +
-	"\x12node_rewards_value\x18\x12 \x01(\v2\x12.proto.NodeRewardsH\x00R\x10nodeRewardsValueB\v\n" +
+	"\x12roster_state_value\x18\r \x01(\v2..com.hedera.hapi.node.state.roster.RosterStateH\x00R\x10rosterStateValueB\v\n" +
 	"\tnew_value\"\xa1\x01\n" +
 	"\x0fMapUpdateChange\x12C\n" +
 	"\x03key\x18\x01 \x01(\v21.com.hedera.hapi.block.stream.output.MapChangeKeyR\x03key\x12I\n" +
 	"\x05value\x18\x02 \x01(\v23.com.hedera.hapi.block.stream.output.MapChangeValueR\x05value\"V\n" +
 	"\x0fMapDeleteChange\x12C\n" +
-	"\x03key\x18\x01 \x01(\v21.com.hedera.hapi.block.stream.output.MapChangeKeyR\x03key\"\xf3\f\n" +
+	"\x03key\x18\x01 \x01(\v21.com.hedera.hapi.block.stream.output.MapChangeKeyR\x03key\"\x8e\a\n" +
 	"\fMapChangeKey\x128\n" +
 	"\x0eaccount_id_key\x18\x01 \x01(\v2\x10.proto.AccountIDH\x00R\faccountIdKey\x12O\n" +
 	"\x16token_relationship_key\x18\x02 \x01(\v2\x17.proto.TokenAssociationH\x00R\x14tokenRelationshipKey\x12J\n" +
@@ -2692,17 +2112,9 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\ftopic_id_key\x18\f \x01(\v2\x0e.proto.TopicIDH\x00R\n" +
 	"topicIdKey\x12;\n" +
 	"\x0fcontract_id_key\x18\r \x01(\v2\x11.proto.ContractIDH\x00R\rcontractIdKey\x12N\n" +
-	"\x16pending_airdrop_id_key\x18\x0e \x01(\v2\x17.proto.PendingAirdropIdH\x00R\x13pendingAirdropIdKey\x12M\n" +
-	"\x15timestamp_seconds_key\x18\x0f \x01(\v2\x17.proto.TimestampSecondsH\x00R\x13timestampSecondsKey\x12G\n" +
-	"\x13scheduled_order_key\x18\x10 \x01(\v2\x15.proto.ScheduledOrderH\x00R\x11scheduledOrderKey\x12a\n" +
-	"\x13tss_message_map_key\x18\x11 \x01(\v20.com.hedera.hapi.node.state.tss.TssMessageMapKeyH\x00R\x10tssMessageMapKey\x12X\n" +
-	"\x10tss_vote_map_key\x18\x12 \x01(\v2-.com.hedera.hapi.node.state.tss.TssVoteMapKeyH\x00R\rtssVoteMapKey\x12]\n" +
-	"\x12hints_party_id_key\x18\x13 \x01(\v2..com.hedera.hapi.node.state.hints.HintsPartyIdH\x00R\x0fhintsPartyIdKey\x12r\n" +
-	"\x19preprocessing_vote_id_key\x18\x14 \x01(\v25.com.hedera.hapi.node.state.hints.PreprocessingVoteIdH\x00R\x16preprocessingVoteIdKey\x12H\n" +
-	"\vnode_id_key\x18\x15 \x01(\v2&.com.hedera.hapi.platform.state.NodeIdH\x00R\tnodeIdKey\x12q\n" +
-	"\x18construction_node_id_key\x18\x16 \x01(\v26.com.hedera.hapi.node.state.history.ConstructionNodeIdH\x00R\x15constructionNodeIdKeyB\f\n" +
+	"\x16pending_airdrop_id_key\x18\x0e \x01(\v2\x17.proto.PendingAirdropIdH\x00R\x13pendingAirdropIdKeyB\f\n" +
 	"\n" +
-	"key_choice\"\x8f\x12\n" +
+	"key_choice\"\xb4\b\n" +
 	"\x0eMapChangeValue\x125\n" +
 	"\raccount_value\x18\x01 \x01(\v2\x0e.proto.AccountH\x00R\faccountValue\x12<\n" +
 	"\x10account_id_value\x18\x02 \x01(\v2\x10.proto.AccountIDH\x00R\x0eaccountIdValue\x128\n" +
@@ -2725,26 +2137,14 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\n" +
 	"node_value\x18\x0e \x01(\v2,.com.hedera.hapi.node.state.addressbook.NodeH\x00R\tnodeValue\x12a\n" +
 	"\x1daccount_pending_airdrop_value\x18\x0f \x01(\v2\x1c.proto.AccountPendingAirdropH\x00R\x1aaccountPendingAirdropValue\x12N\n" +
-	"\froster_value\x18\x10 \x01(\v2).com.hedera.hapi.node.state.roster.RosterH\x00R\vrosterValue\x12N\n" +
-	"\x16scheduled_counts_value\x18\x11 \x01(\v2\x16.proto.ScheduledCountsH\x00R\x14scheduledCountsValue\x12?\n" +
-	"\x11schedule_id_value\x18\x12 \x01(\v2\x11.proto.ScheduleIDH\x00R\x0fscheduleIdValue\x12d\n" +
-	"\x1ethrottle_usage_snapshots_value\x18\x13 \x01(\v2\x1d.proto.ThrottleUsageSnapshotsH\x00R\x1bthrottleUsageSnapshotsValue\x12n\n" +
-	"\x19tss_encryption_keys_value\x18\x14 \x01(\v21.com.hedera.hapi.node.state.tss.TssEncryptionKeysH\x00R\x16tssEncryptionKeysValue\x12o\n" +
-	"\x11tss_message_value\x18\x15 \x01(\v2A.com.hedera.hapi.services.auxiliary.tss.TssMessageTransactionBodyH\x00R\x0ftssMessageValue\x12f\n" +
-	"\x0etss_vote_value\x18\x16 \x01(\v2>.com.hedera.hapi.services.auxiliary.tss.TssVoteTransactionBodyH\x00R\ftssVoteValue\x12^\n" +
-	"\x13hints_key_set_value\x18\x17 \x01(\v2-.com.hedera.hapi.node.state.hints.HintsKeySetH\x00R\x10hintsKeySetValue\x12o\n" +
-	"\x18preprocessing_vote_value\x18\x18 \x01(\v23.com.hedera.hapi.node.state.hints.PreprocessingVoteH\x00R\x16preprocessingVoteValue\x12}\n" +
-	"\x15crs_publication_value\x18\x19 \x01(\v2G.com.hedera.hapi.services.auxiliary.hints.CrsPublicationTransactionBodyH\x00R\x13crsPublicationValue\x12v\n" +
-	"\x17history_signature_value\x18\x1a \x01(\v2<.com.hedera.hapi.node.state.history.RecordedHistorySignatureH\x00R\x15historySignatureValue\x12o\n" +
-	"\x18history_proof_vote_value\x18\x1b \x01(\v24.com.hedera.hapi.node.state.history.HistoryProofVoteH\x00R\x15historyProofVoteValue\x12`\n" +
-	"\x13proof_key_set_value\x18\x1c \x01(\v2/.com.hedera.hapi.node.state.history.ProofKeySetH\x00R\x10proofKeySetValueB\x0e\n" +
+	"\froster_value\x18\x10 \x01(\v2).com.hedera.hapi.node.state.roster.RosterH\x00R\vrosterValueB\x0e\n" +
 	"\fvalue_choice\"\xae\x02\n" +
 	"\x0fQueuePushChange\x12M\n" +
 	"\x13proto_bytes_element\x18\x01 \x01(\v2\x1b.google.protobuf.BytesValueH\x00R\x11protoBytesElement\x12P\n" +
 	"\x14proto_string_element\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueH\x00R\x12protoStringElement\x12q\n" +
 	"#transaction_receipt_entries_element\x18\x03 \x01(\v2 .proto.TransactionReceiptEntriesH\x00R transactionReceiptEntriesElementB\a\n" +
 	"\x05value\"\x10\n" +
-	"\x0eQueuePopChange*\xba\x0e\n" +
+	"\x0eQueuePopChange*\x90\t\n" +
 	"\x0fStateIdentifier\x12\x13\n" +
 	"\x0fSTATE_ID_TOPICS\x10\x00\x12\x16\n" +
 	"\x12STATE_ID_ENTITY_ID\x10\x01\x12\x15\n" +
@@ -2775,29 +2175,7 @@ const file_stream_output_state_changes_proto_rawDesc = "" +
 	"\x19STATE_ID_PENDING_AIRDROPS\x10\x19\x12\x1b\n" +
 	"\x17STATE_ID_PLATFORM_STATE\x10\x1a\x12\x19\n" +
 	"\x15STATE_ID_ROSTER_STATE\x10\x1b\x12\x14\n" +
-	"\x10STATE_ID_ROSTERS\x10\x1c\x12\x1d\n" +
-	"\x19STATE_ID_SCHEDULED_COUNTS\x10\x1d\x12$\n" +
-	" STATE_ID_SCHEDULE_ID_BY_EQUALITY\x10\x1e\x12\x19\n" +
-	"\x15STATE_ID_TSS_MESSAGES\x10\x1f\x12\x16\n" +
-	"\x12STATE_ID_TSS_VOTES\x10 \x12\x1d\n" +
-	"\x19STATE_ID_SCHEDULED_ORDERS\x10!\x12\x1d\n" +
-	"\x19STATE_ID_SCHEDULED_USAGES\x10\"\x12 \n" +
-	"\x1cSTATE_ID_TSS_ENCRYPTION_KEYS\x10#\x12\x17\n" +
-	"\x13STATE_ID_TSS_STATUS\x10$\x12\x1b\n" +
-	"\x17STATE_ID_HINTS_KEY_SETS\x10%\x12&\n" +
-	"\"STATE_ID_ACTIVE_HINTS_CONSTRUCTION\x10&\x12$\n" +
-	" STATE_ID_NEXT_HINTS_CONSTRUCTION\x10'\x12 \n" +
-	"\x1cSTATE_ID_PREPROCESSING_VOTES\x10(\x12\x1a\n" +
-	"\x16STATE_ID_ENTITY_COUNTS\x10)\x12\x16\n" +
-	"\x12STATE_ID_LEDGER_ID\x10*\x12\x1b\n" +
-	"\x17STATE_ID_PROOF_KEY_SETS\x10+\x12&\n" +
-	"\"STATE_ID_ACTIVE_PROOF_CONSTRUCTION\x10,\x12$\n" +
-	" STATE_ID_NEXT_PROOF_CONSTRUCTION\x10-\x12\x1f\n" +
-	"\x1bSTATE_ID_HISTORY_SIGNATURES\x10.\x12\x18\n" +
-	"\x14STATE_ID_PROOF_VOTES\x10/\x12\x16\n" +
-	"\x12STATE_ID_CRS_STATE\x100\x12\x1d\n" +
-	"\x19STATE_ID_CRS_PUBLICATIONS\x101\x12\x19\n" +
-	"\x15STATE_ID_NODE_REWARDS\x102\x12'\n" +
+	"\x10STATE_ID_ROSTERS\x10\x1c\x12'\n" +
 	"#STATE_ID_TRANSACTION_RECEIPTS_QUEUE\x10~\x12\x1e\n" +
 	"\x19STATE_ID_UPGRADE_DATA_150\x10\x91N\x12\x1e\n" +
 	"\x19STATE_ID_UPGRADE_DATA_151\x10\x92N\x12\x1e\n" +
@@ -2856,55 +2234,32 @@ var file_stream_output_state_changes_proto_goTypes = []any{
 	(*blockstream.BlockStreamInfo)(nil),           // 23: com.hedera.hapi.node.state.blockstream.BlockStreamInfo
 	(*state.PlatformState)(nil),                   // 24: com.hedera.hapi.platform.state.PlatformState
 	(*roster.RosterState)(nil),                    // 25: com.hedera.hapi.node.state.roster.RosterState
-	(*hints.HintsConstruction)(nil),               // 26: com.hedera.hapi.node.state.hints.HintsConstruction
-	(*entity.EntityCounts)(nil),                   // 27: com.hedera.hapi.node.state.entity.EntityCounts
-	(*history.HistoryProofConstruction)(nil),      // 28: com.hedera.hapi.node.state.history.HistoryProofConstruction
-	(*hints.CRSState)(nil),                        // 29: com.hedera.hapi.node.state.hints.CRSState
-	(*token.NodeRewards)(nil),                     // 30: proto.NodeRewards
-	(*common.AccountID)(nil),                      // 31: proto.AccountID
-	(*common.TokenAssociation)(nil),               // 32: proto.TokenAssociation
-	(*common.FileID)(nil),                         // 33: proto.FileID
-	(*common.NftID)(nil),                          // 34: proto.NftID
-	(*wrapperspb.Int64Value)(nil),                 // 35: google.protobuf.Int64Value
-	(*common.ScheduleID)(nil),                     // 36: proto.ScheduleID
-	(*contract.SlotKey)(nil),                      // 37: proto.SlotKey
-	(*common.TokenID)(nil),                        // 38: proto.TokenID
-	(*common.TopicID)(nil),                        // 39: proto.TopicID
-	(*common.ContractID)(nil),                     // 40: proto.ContractID
-	(*common.PendingAirdropId)(nil),               // 41: proto.PendingAirdropId
-	(*common.TimestampSeconds)(nil),               // 42: proto.TimestampSeconds
-	(*schedule.ScheduledOrder)(nil),               // 43: proto.ScheduledOrder
-	(*tss.TssMessageMapKey)(nil),                  // 44: com.hedera.hapi.node.state.tss.TssMessageMapKey
-	(*tss.TssVoteMapKey)(nil),                     // 45: com.hedera.hapi.node.state.tss.TssVoteMapKey
-	(*hints.HintsPartyId)(nil),                    // 46: com.hedera.hapi.node.state.hints.HintsPartyId
-	(*hints.PreprocessingVoteId)(nil),             // 47: com.hedera.hapi.node.state.hints.PreprocessingVoteId
-	(*state.NodeId)(nil),                          // 48: com.hedera.hapi.platform.state.NodeId
-	(*history.ConstructionNodeId)(nil),            // 49: com.hedera.hapi.node.state.history.ConstructionNodeId
-	(*token.Account)(nil),                         // 50: proto.Account
-	(*contract.Bytecode)(nil),                     // 51: proto.Bytecode
-	(*file.File)(nil),                             // 52: proto.File
-	(*token.Nft)(nil),                             // 53: proto.Nft
-	(*schedule.Schedule)(nil),                     // 54: proto.Schedule
-	(*schedule.ScheduleList)(nil),                 // 55: proto.ScheduleList
-	(*contract.SlotValue)(nil),                    // 56: proto.SlotValue
-	(*token.StakingNodeInfo)(nil),                 // 57: proto.StakingNodeInfo
-	(*token.Token)(nil),                           // 58: proto.Token
-	(*token.TokenRelation)(nil),                   // 59: proto.TokenRelation
-	(*consensus.Topic)(nil),                       // 60: proto.Topic
-	(*addressbook.Node)(nil),                      // 61: com.hedera.hapi.node.state.addressbook.Node
-	(*token.AccountPendingAirdrop)(nil),           // 62: proto.AccountPendingAirdrop
-	(*roster.Roster)(nil),                         // 63: com.hedera.hapi.node.state.roster.Roster
-	(*schedule.ScheduledCounts)(nil),              // 64: proto.ScheduledCounts
-	(*tss.TssEncryptionKeys)(nil),                 // 65: com.hedera.hapi.node.state.tss.TssEncryptionKeys
-	(*tss1.TssMessageTransactionBody)(nil),        // 66: com.hedera.hapi.services.auxiliary.tss.TssMessageTransactionBody
-	(*tss1.TssVoteTransactionBody)(nil),           // 67: com.hedera.hapi.services.auxiliary.tss.TssVoteTransactionBody
-	(*hints.HintsKeySet)(nil),                     // 68: com.hedera.hapi.node.state.hints.HintsKeySet
-	(*hints.PreprocessingVote)(nil),               // 69: com.hedera.hapi.node.state.hints.PreprocessingVote
-	(*hints1.CrsPublicationTransactionBody)(nil),  // 70: com.hedera.hapi.services.auxiliary.hints.CrsPublicationTransactionBody
-	(*history.RecordedHistorySignature)(nil),      // 71: com.hedera.hapi.node.state.history.RecordedHistorySignature
-	(*history.HistoryProofVote)(nil),              // 72: com.hedera.hapi.node.state.history.HistoryProofVote
-	(*history.ProofKeySet)(nil),                   // 73: com.hedera.hapi.node.state.history.ProofKeySet
-	(*recordcache.TransactionReceiptEntries)(nil), // 74: proto.TransactionReceiptEntries
+	(*common.AccountID)(nil),                      // 26: proto.AccountID
+	(*common.TokenAssociation)(nil),               // 27: proto.TokenAssociation
+	(*common.FileID)(nil),                         // 28: proto.FileID
+	(*common.NftID)(nil),                          // 29: proto.NftID
+	(*wrapperspb.Int64Value)(nil),                 // 30: google.protobuf.Int64Value
+	(*common.ScheduleID)(nil),                     // 31: proto.ScheduleID
+	(*contract.SlotKey)(nil),                      // 32: proto.SlotKey
+	(*common.TokenID)(nil),                        // 33: proto.TokenID
+	(*common.TopicID)(nil),                        // 34: proto.TopicID
+	(*common.ContractID)(nil),                     // 35: proto.ContractID
+	(*common.PendingAirdropId)(nil),               // 36: proto.PendingAirdropId
+	(*token.Account)(nil),                         // 37: proto.Account
+	(*contract.Bytecode)(nil),                     // 38: proto.Bytecode
+	(*file.File)(nil),                             // 39: proto.File
+	(*token.Nft)(nil),                             // 40: proto.Nft
+	(*schedule.Schedule)(nil),                     // 41: proto.Schedule
+	(*schedule.ScheduleList)(nil),                 // 42: proto.ScheduleList
+	(*contract.SlotValue)(nil),                    // 43: proto.SlotValue
+	(*token.StakingNodeInfo)(nil),                 // 44: proto.StakingNodeInfo
+	(*token.Token)(nil),                           // 45: proto.Token
+	(*token.TokenRelation)(nil),                   // 46: proto.TokenRelation
+	(*consensus.Topic)(nil),                       // 47: proto.Topic
+	(*addressbook.Node)(nil),                      // 48: com.hedera.hapi.node.state.addressbook.Node
+	(*token.AccountPendingAirdrop)(nil),           // 49: proto.AccountPendingAirdrop
+	(*roster.Roster)(nil),                         // 50: com.hedera.hapi.node.state.roster.Roster
+	(*recordcache.TransactionReceiptEntries)(nil), // 51: proto.TransactionReceiptEntries
 }
 var file_stream_output_state_changes_proto_depIdxs = []int32{
 	13, // 0: com.hedera.hapi.block.stream.output.StateChanges.consensus_timestamp:type_name -> proto.Timestamp
@@ -2930,72 +2285,47 @@ var file_stream_output_state_changes_proto_depIdxs = []int32{
 	23, // 20: com.hedera.hapi.block.stream.output.SingletonUpdateChange.block_stream_info_value:type_name -> com.hedera.hapi.node.state.blockstream.BlockStreamInfo
 	24, // 21: com.hedera.hapi.block.stream.output.SingletonUpdateChange.platform_state_value:type_name -> com.hedera.hapi.platform.state.PlatformState
 	25, // 22: com.hedera.hapi.block.stream.output.SingletonUpdateChange.roster_state_value:type_name -> com.hedera.hapi.node.state.roster.RosterState
-	26, // 23: com.hedera.hapi.block.stream.output.SingletonUpdateChange.hints_construction_value:type_name -> com.hedera.hapi.node.state.hints.HintsConstruction
-	27, // 24: com.hedera.hapi.block.stream.output.SingletonUpdateChange.entity_counts_value:type_name -> com.hedera.hapi.node.state.entity.EntityCounts
-	28, // 25: com.hedera.hapi.block.stream.output.SingletonUpdateChange.history_proof_construction_value:type_name -> com.hedera.hapi.node.state.history.HistoryProofConstruction
-	29, // 26: com.hedera.hapi.block.stream.output.SingletonUpdateChange.crs_state_value:type_name -> com.hedera.hapi.node.state.hints.CRSState
-	30, // 27: com.hedera.hapi.block.stream.output.SingletonUpdateChange.node_rewards_value:type_name -> proto.NodeRewards
-	9,  // 28: com.hedera.hapi.block.stream.output.MapUpdateChange.key:type_name -> com.hedera.hapi.block.stream.output.MapChangeKey
-	10, // 29: com.hedera.hapi.block.stream.output.MapUpdateChange.value:type_name -> com.hedera.hapi.block.stream.output.MapChangeValue
-	9,  // 30: com.hedera.hapi.block.stream.output.MapDeleteChange.key:type_name -> com.hedera.hapi.block.stream.output.MapChangeKey
-	31, // 31: com.hedera.hapi.block.stream.output.MapChangeKey.account_id_key:type_name -> proto.AccountID
-	32, // 32: com.hedera.hapi.block.stream.output.MapChangeKey.token_relationship_key:type_name -> proto.TokenAssociation
-	16, // 33: com.hedera.hapi.block.stream.output.MapChangeKey.entity_number_key:type_name -> google.protobuf.UInt64Value
-	33, // 34: com.hedera.hapi.block.stream.output.MapChangeKey.file_id_key:type_name -> proto.FileID
-	34, // 35: com.hedera.hapi.block.stream.output.MapChangeKey.nft_id_key:type_name -> proto.NftID
-	19, // 36: com.hedera.hapi.block.stream.output.MapChangeKey.proto_bytes_key:type_name -> google.protobuf.BytesValue
-	35, // 37: com.hedera.hapi.block.stream.output.MapChangeKey.proto_long_key:type_name -> google.protobuf.Int64Value
-	20, // 38: com.hedera.hapi.block.stream.output.MapChangeKey.proto_string_key:type_name -> google.protobuf.StringValue
-	36, // 39: com.hedera.hapi.block.stream.output.MapChangeKey.schedule_id_key:type_name -> proto.ScheduleID
-	37, // 40: com.hedera.hapi.block.stream.output.MapChangeKey.slot_key_key:type_name -> proto.SlotKey
-	38, // 41: com.hedera.hapi.block.stream.output.MapChangeKey.token_id_key:type_name -> proto.TokenID
-	39, // 42: com.hedera.hapi.block.stream.output.MapChangeKey.topic_id_key:type_name -> proto.TopicID
-	40, // 43: com.hedera.hapi.block.stream.output.MapChangeKey.contract_id_key:type_name -> proto.ContractID
-	41, // 44: com.hedera.hapi.block.stream.output.MapChangeKey.pending_airdrop_id_key:type_name -> proto.PendingAirdropId
-	42, // 45: com.hedera.hapi.block.stream.output.MapChangeKey.timestamp_seconds_key:type_name -> proto.TimestampSeconds
-	43, // 46: com.hedera.hapi.block.stream.output.MapChangeKey.scheduled_order_key:type_name -> proto.ScheduledOrder
-	44, // 47: com.hedera.hapi.block.stream.output.MapChangeKey.tss_message_map_key:type_name -> com.hedera.hapi.node.state.tss.TssMessageMapKey
-	45, // 48: com.hedera.hapi.block.stream.output.MapChangeKey.tss_vote_map_key:type_name -> com.hedera.hapi.node.state.tss.TssVoteMapKey
-	46, // 49: com.hedera.hapi.block.stream.output.MapChangeKey.hints_party_id_key:type_name -> com.hedera.hapi.node.state.hints.HintsPartyId
-	47, // 50: com.hedera.hapi.block.stream.output.MapChangeKey.preprocessing_vote_id_key:type_name -> com.hedera.hapi.node.state.hints.PreprocessingVoteId
-	48, // 51: com.hedera.hapi.block.stream.output.MapChangeKey.node_id_key:type_name -> com.hedera.hapi.platform.state.NodeId
-	49, // 52: com.hedera.hapi.block.stream.output.MapChangeKey.construction_node_id_key:type_name -> com.hedera.hapi.node.state.history.ConstructionNodeId
-	50, // 53: com.hedera.hapi.block.stream.output.MapChangeValue.account_value:type_name -> proto.Account
-	31, // 54: com.hedera.hapi.block.stream.output.MapChangeValue.account_id_value:type_name -> proto.AccountID
-	51, // 55: com.hedera.hapi.block.stream.output.MapChangeValue.bytecode_value:type_name -> proto.Bytecode
-	52, // 56: com.hedera.hapi.block.stream.output.MapChangeValue.file_value:type_name -> proto.File
-	53, // 57: com.hedera.hapi.block.stream.output.MapChangeValue.nft_value:type_name -> proto.Nft
-	20, // 58: com.hedera.hapi.block.stream.output.MapChangeValue.proto_string_value:type_name -> google.protobuf.StringValue
-	54, // 59: com.hedera.hapi.block.stream.output.MapChangeValue.schedule_value:type_name -> proto.Schedule
-	55, // 60: com.hedera.hapi.block.stream.output.MapChangeValue.schedule_list_value:type_name -> proto.ScheduleList
-	56, // 61: com.hedera.hapi.block.stream.output.MapChangeValue.slot_value_value:type_name -> proto.SlotValue
-	57, // 62: com.hedera.hapi.block.stream.output.MapChangeValue.staking_node_info_value:type_name -> proto.StakingNodeInfo
-	58, // 63: com.hedera.hapi.block.stream.output.MapChangeValue.token_value:type_name -> proto.Token
-	59, // 64: com.hedera.hapi.block.stream.output.MapChangeValue.token_relation_value:type_name -> proto.TokenRelation
-	60, // 65: com.hedera.hapi.block.stream.output.MapChangeValue.topic_value:type_name -> proto.Topic
-	61, // 66: com.hedera.hapi.block.stream.output.MapChangeValue.node_value:type_name -> com.hedera.hapi.node.state.addressbook.Node
-	62, // 67: com.hedera.hapi.block.stream.output.MapChangeValue.account_pending_airdrop_value:type_name -> proto.AccountPendingAirdrop
-	63, // 68: com.hedera.hapi.block.stream.output.MapChangeValue.roster_value:type_name -> com.hedera.hapi.node.state.roster.Roster
-	64, // 69: com.hedera.hapi.block.stream.output.MapChangeValue.scheduled_counts_value:type_name -> proto.ScheduledCounts
-	36, // 70: com.hedera.hapi.block.stream.output.MapChangeValue.schedule_id_value:type_name -> proto.ScheduleID
-	22, // 71: com.hedera.hapi.block.stream.output.MapChangeValue.throttle_usage_snapshots_value:type_name -> proto.ThrottleUsageSnapshots
-	65, // 72: com.hedera.hapi.block.stream.output.MapChangeValue.tss_encryption_keys_value:type_name -> com.hedera.hapi.node.state.tss.TssEncryptionKeys
-	66, // 73: com.hedera.hapi.block.stream.output.MapChangeValue.tss_message_value:type_name -> com.hedera.hapi.services.auxiliary.tss.TssMessageTransactionBody
-	67, // 74: com.hedera.hapi.block.stream.output.MapChangeValue.tss_vote_value:type_name -> com.hedera.hapi.services.auxiliary.tss.TssVoteTransactionBody
-	68, // 75: com.hedera.hapi.block.stream.output.MapChangeValue.hints_key_set_value:type_name -> com.hedera.hapi.node.state.hints.HintsKeySet
-	69, // 76: com.hedera.hapi.block.stream.output.MapChangeValue.preprocessing_vote_value:type_name -> com.hedera.hapi.node.state.hints.PreprocessingVote
-	70, // 77: com.hedera.hapi.block.stream.output.MapChangeValue.crs_publication_value:type_name -> com.hedera.hapi.services.auxiliary.hints.CrsPublicationTransactionBody
-	71, // 78: com.hedera.hapi.block.stream.output.MapChangeValue.history_signature_value:type_name -> com.hedera.hapi.node.state.history.RecordedHistorySignature
-	72, // 79: com.hedera.hapi.block.stream.output.MapChangeValue.history_proof_vote_value:type_name -> com.hedera.hapi.node.state.history.HistoryProofVote
-	73, // 80: com.hedera.hapi.block.stream.output.MapChangeValue.proof_key_set_value:type_name -> com.hedera.hapi.node.state.history.ProofKeySet
-	19, // 81: com.hedera.hapi.block.stream.output.QueuePushChange.proto_bytes_element:type_name -> google.protobuf.BytesValue
-	20, // 82: com.hedera.hapi.block.stream.output.QueuePushChange.proto_string_element:type_name -> google.protobuf.StringValue
-	74, // 83: com.hedera.hapi.block.stream.output.QueuePushChange.transaction_receipt_entries_element:type_name -> proto.TransactionReceiptEntries
-	84, // [84:84] is the sub-list for method output_type
-	84, // [84:84] is the sub-list for method input_type
-	84, // [84:84] is the sub-list for extension type_name
-	84, // [84:84] is the sub-list for extension extendee
-	0,  // [0:84] is the sub-list for field type_name
+	9,  // 23: com.hedera.hapi.block.stream.output.MapUpdateChange.key:type_name -> com.hedera.hapi.block.stream.output.MapChangeKey
+	10, // 24: com.hedera.hapi.block.stream.output.MapUpdateChange.value:type_name -> com.hedera.hapi.block.stream.output.MapChangeValue
+	9,  // 25: com.hedera.hapi.block.stream.output.MapDeleteChange.key:type_name -> com.hedera.hapi.block.stream.output.MapChangeKey
+	26, // 26: com.hedera.hapi.block.stream.output.MapChangeKey.account_id_key:type_name -> proto.AccountID
+	27, // 27: com.hedera.hapi.block.stream.output.MapChangeKey.token_relationship_key:type_name -> proto.TokenAssociation
+	16, // 28: com.hedera.hapi.block.stream.output.MapChangeKey.entity_number_key:type_name -> google.protobuf.UInt64Value
+	28, // 29: com.hedera.hapi.block.stream.output.MapChangeKey.file_id_key:type_name -> proto.FileID
+	29, // 30: com.hedera.hapi.block.stream.output.MapChangeKey.nft_id_key:type_name -> proto.NftID
+	19, // 31: com.hedera.hapi.block.stream.output.MapChangeKey.proto_bytes_key:type_name -> google.protobuf.BytesValue
+	30, // 32: com.hedera.hapi.block.stream.output.MapChangeKey.proto_long_key:type_name -> google.protobuf.Int64Value
+	20, // 33: com.hedera.hapi.block.stream.output.MapChangeKey.proto_string_key:type_name -> google.protobuf.StringValue
+	31, // 34: com.hedera.hapi.block.stream.output.MapChangeKey.schedule_id_key:type_name -> proto.ScheduleID
+	32, // 35: com.hedera.hapi.block.stream.output.MapChangeKey.slot_key_key:type_name -> proto.SlotKey
+	33, // 36: com.hedera.hapi.block.stream.output.MapChangeKey.token_id_key:type_name -> proto.TokenID
+	34, // 37: com.hedera.hapi.block.stream.output.MapChangeKey.topic_id_key:type_name -> proto.TopicID
+	35, // 38: com.hedera.hapi.block.stream.output.MapChangeKey.contract_id_key:type_name -> proto.ContractID
+	36, // 39: com.hedera.hapi.block.stream.output.MapChangeKey.pending_airdrop_id_key:type_name -> proto.PendingAirdropId
+	37, // 40: com.hedera.hapi.block.stream.output.MapChangeValue.account_value:type_name -> proto.Account
+	26, // 41: com.hedera.hapi.block.stream.output.MapChangeValue.account_id_value:type_name -> proto.AccountID
+	38, // 42: com.hedera.hapi.block.stream.output.MapChangeValue.bytecode_value:type_name -> proto.Bytecode
+	39, // 43: com.hedera.hapi.block.stream.output.MapChangeValue.file_value:type_name -> proto.File
+	40, // 44: com.hedera.hapi.block.stream.output.MapChangeValue.nft_value:type_name -> proto.Nft
+	20, // 45: com.hedera.hapi.block.stream.output.MapChangeValue.proto_string_value:type_name -> google.protobuf.StringValue
+	41, // 46: com.hedera.hapi.block.stream.output.MapChangeValue.schedule_value:type_name -> proto.Schedule
+	42, // 47: com.hedera.hapi.block.stream.output.MapChangeValue.schedule_list_value:type_name -> proto.ScheduleList
+	43, // 48: com.hedera.hapi.block.stream.output.MapChangeValue.slot_value_value:type_name -> proto.SlotValue
+	44, // 49: com.hedera.hapi.block.stream.output.MapChangeValue.staking_node_info_value:type_name -> proto.StakingNodeInfo
+	45, // 50: com.hedera.hapi.block.stream.output.MapChangeValue.token_value:type_name -> proto.Token
+	46, // 51: com.hedera.hapi.block.stream.output.MapChangeValue.token_relation_value:type_name -> proto.TokenRelation
+	47, // 52: com.hedera.hapi.block.stream.output.MapChangeValue.topic_value:type_name -> proto.Topic
+	48, // 53: com.hedera.hapi.block.stream.output.MapChangeValue.node_value:type_name -> com.hedera.hapi.node.state.addressbook.Node
+	49, // 54: com.hedera.hapi.block.stream.output.MapChangeValue.account_pending_airdrop_value:type_name -> proto.AccountPendingAirdrop
+	50, // 55: com.hedera.hapi.block.stream.output.MapChangeValue.roster_value:type_name -> com.hedera.hapi.node.state.roster.Roster
+	19, // 56: com.hedera.hapi.block.stream.output.QueuePushChange.proto_bytes_element:type_name -> google.protobuf.BytesValue
+	20, // 57: com.hedera.hapi.block.stream.output.QueuePushChange.proto_string_element:type_name -> google.protobuf.StringValue
+	51, // 58: com.hedera.hapi.block.stream.output.QueuePushChange.transaction_receipt_entries_element:type_name -> proto.TransactionReceiptEntries
+	59, // [59:59] is the sub-list for method output_type
+	59, // [59:59] is the sub-list for method input_type
+	59, // [59:59] is the sub-list for extension type_name
+	59, // [59:59] is the sub-list for extension extendee
+	0,  // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_stream_output_state_changes_proto_init() }
@@ -3026,11 +2356,6 @@ func file_stream_output_state_changes_proto_init() {
 		(*SingletonUpdateChange_BlockStreamInfoValue)(nil),
 		(*SingletonUpdateChange_PlatformStateValue)(nil),
 		(*SingletonUpdateChange_RosterStateValue)(nil),
-		(*SingletonUpdateChange_HintsConstructionValue)(nil),
-		(*SingletonUpdateChange_EntityCountsValue)(nil),
-		(*SingletonUpdateChange_HistoryProofConstructionValue)(nil),
-		(*SingletonUpdateChange_CrsStateValue)(nil),
-		(*SingletonUpdateChange_NodeRewardsValue)(nil),
 	}
 	file_stream_output_state_changes_proto_msgTypes[7].OneofWrappers = []any{
 		(*MapChangeKey_AccountIdKey)(nil),
@@ -3047,14 +2372,6 @@ func file_stream_output_state_changes_proto_init() {
 		(*MapChangeKey_TopicIdKey)(nil),
 		(*MapChangeKey_ContractIdKey)(nil),
 		(*MapChangeKey_PendingAirdropIdKey)(nil),
-		(*MapChangeKey_TimestampSecondsKey)(nil),
-		(*MapChangeKey_ScheduledOrderKey)(nil),
-		(*MapChangeKey_TssMessageMapKey)(nil),
-		(*MapChangeKey_TssVoteMapKey)(nil),
-		(*MapChangeKey_HintsPartyIdKey)(nil),
-		(*MapChangeKey_PreprocessingVoteIdKey)(nil),
-		(*MapChangeKey_NodeIdKey)(nil),
-		(*MapChangeKey_ConstructionNodeIdKey)(nil),
 	}
 	file_stream_output_state_changes_proto_msgTypes[8].OneofWrappers = []any{
 		(*MapChangeValue_AccountValue)(nil),
@@ -3073,18 +2390,6 @@ func file_stream_output_state_changes_proto_init() {
 		(*MapChangeValue_NodeValue)(nil),
 		(*MapChangeValue_AccountPendingAirdropValue)(nil),
 		(*MapChangeValue_RosterValue)(nil),
-		(*MapChangeValue_ScheduledCountsValue)(nil),
-		(*MapChangeValue_ScheduleIdValue)(nil),
-		(*MapChangeValue_ThrottleUsageSnapshotsValue)(nil),
-		(*MapChangeValue_TssEncryptionKeysValue)(nil),
-		(*MapChangeValue_TssMessageValue)(nil),
-		(*MapChangeValue_TssVoteValue)(nil),
-		(*MapChangeValue_HintsKeySetValue)(nil),
-		(*MapChangeValue_PreprocessingVoteValue)(nil),
-		(*MapChangeValue_CrsPublicationValue)(nil),
-		(*MapChangeValue_HistorySignatureValue)(nil),
-		(*MapChangeValue_HistoryProofVoteValue)(nil),
-		(*MapChangeValue_ProofKeySetValue)(nil),
 	}
 	file_stream_output_state_changes_proto_msgTypes[9].OneofWrappers = []any{
 		(*QueuePushChange_ProtoBytesElement)(nil),

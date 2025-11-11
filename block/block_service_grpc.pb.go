@@ -2,6 +2,39 @@
 // # Block Service
 // The Service API exposed by the Block Nodes.
 //
+// ## Workarounds
+// > There are incorrect elements in this file to work around bugs in the
+// > PBJ Compiler.
+// >> Issues 262, 263, 240, 218, 217, and 216 are related.
+// >
+// > Issue 263
+// >> A number of fields reference child messages, these _should_ specify
+// >> the parent message (i.e. `Parent.child field = #;`) but do not do
+// >> so due to issue 263.
+// >
+// > Issue 262
+// >> Some fields reference messages defined in other packages that share
+// >> a common prefix (e.g. `com.hedera.hapi.block.stream`). These fields
+// >> specify the entire package instead of the shorter and clearer suffix
+// >> due to issue 262
+// >
+// > Issue 240
+// >> These files currently cause PBJ integration tests to fail if included
+// >> due to issue 240.
+// >
+// > Issue 218
+// >> These files have the same value for package and java_package. Ideally
+// >> we would not specify `java_package` or the pbj comment in that situation,
+// >> but Issue 218 prevents eliding the unnecessary directives.
+// >
+// > Issue 217
+// >> These files may cause PBJ to fail compilation due to comments preceeding
+// >> the `syntax` keyword.
+// >
+// > Issue 216
+// >> These files would do well with validation support, but cannot make
+// >> use of validation, even as an advisory element, due to Issue 216.
+//
 // ### Keywords
 // The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 // "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
@@ -30,364 +63,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BlockNodeService_ServerStatus_FullMethodName = "/com.hedera.hapi.block.BlockNodeService/serverStatus"
-)
-
-// BlockNodeServiceClient is the client API for BlockNodeService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node ancillary services.
-type BlockNodeServiceClient interface {
-	// *
-	// Read the status of this Block-Node.
-	// <p>
-	// A client SHOULD request server status prior to requesting block stream
-	// data or a state snapshot.
-	ServerStatus(ctx context.Context, in *ServerStatusRequest, opts ...grpc.CallOption) (*ServerStatusResponse, error)
-}
-
-type blockNodeServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewBlockNodeServiceClient(cc grpc.ClientConnInterface) BlockNodeServiceClient {
-	return &blockNodeServiceClient{cc}
-}
-
-func (c *blockNodeServiceClient) ServerStatus(ctx context.Context, in *ServerStatusRequest, opts ...grpc.CallOption) (*ServerStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ServerStatusResponse)
-	err := c.cc.Invoke(ctx, BlockNodeService_ServerStatus_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// BlockNodeServiceServer is the server API for BlockNodeService service.
-// All implementations must embed UnimplementedBlockNodeServiceServer
-// for forward compatibility.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node ancillary services.
-type BlockNodeServiceServer interface {
-	// *
-	// Read the status of this Block-Node.
-	// <p>
-	// A client SHOULD request server status prior to requesting block stream
-	// data or a state snapshot.
-	ServerStatus(context.Context, *ServerStatusRequest) (*ServerStatusResponse, error)
-	mustEmbedUnimplementedBlockNodeServiceServer()
-}
-
-// UnimplementedBlockNodeServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedBlockNodeServiceServer struct{}
-
-func (UnimplementedBlockNodeServiceServer) ServerStatus(context.Context, *ServerStatusRequest) (*ServerStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ServerStatus not implemented")
-}
-func (UnimplementedBlockNodeServiceServer) mustEmbedUnimplementedBlockNodeServiceServer() {}
-func (UnimplementedBlockNodeServiceServer) testEmbeddedByValue()                          {}
-
-// UnsafeBlockNodeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BlockNodeServiceServer will
-// result in compilation errors.
-type UnsafeBlockNodeServiceServer interface {
-	mustEmbedUnimplementedBlockNodeServiceServer()
-}
-
-func RegisterBlockNodeServiceServer(s grpc.ServiceRegistrar, srv BlockNodeServiceServer) {
-	// If the following call pancis, it indicates UnimplementedBlockNodeServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&BlockNodeService_ServiceDesc, srv)
-}
-
-func _BlockNodeService_ServerStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServerStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BlockNodeServiceServer).ServerStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BlockNodeService_ServerStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BlockNodeServiceServer).ServerStatus(ctx, req.(*ServerStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// BlockNodeService_ServiceDesc is the grpc.ServiceDesc for BlockNodeService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var BlockNodeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "com.hedera.hapi.block.BlockNodeService",
-	HandlerType: (*BlockNodeServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "serverStatus",
-			Handler:    _BlockNodeService_ServerStatus_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "block_service.proto",
-}
-
-const (
-	BlockAccessService_SingleBlock_FullMethodName = "/com.hedera.hapi.block.BlockAccessService/singleBlock"
-)
-
-// BlockAccessServiceClient is the client API for BlockAccessService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node block services.
-type BlockAccessServiceClient interface {
-	// *
-	// Read a single block from the Block-Node.
-	// <p>
-	// The request SHALL describe the block number of the block to retrieve.
-	SingleBlock(ctx context.Context, in *SingleBlockRequest, opts ...grpc.CallOption) (*SingleBlockResponse, error)
-}
-
-type blockAccessServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewBlockAccessServiceClient(cc grpc.ClientConnInterface) BlockAccessServiceClient {
-	return &blockAccessServiceClient{cc}
-}
-
-func (c *blockAccessServiceClient) SingleBlock(ctx context.Context, in *SingleBlockRequest, opts ...grpc.CallOption) (*SingleBlockResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SingleBlockResponse)
-	err := c.cc.Invoke(ctx, BlockAccessService_SingleBlock_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// BlockAccessServiceServer is the server API for BlockAccessService service.
-// All implementations must embed UnimplementedBlockAccessServiceServer
-// for forward compatibility.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node block services.
-type BlockAccessServiceServer interface {
-	// *
-	// Read a single block from the Block-Node.
-	// <p>
-	// The request SHALL describe the block number of the block to retrieve.
-	SingleBlock(context.Context, *SingleBlockRequest) (*SingleBlockResponse, error)
-	mustEmbedUnimplementedBlockAccessServiceServer()
-}
-
-// UnimplementedBlockAccessServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedBlockAccessServiceServer struct{}
-
-func (UnimplementedBlockAccessServiceServer) SingleBlock(context.Context, *SingleBlockRequest) (*SingleBlockResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SingleBlock not implemented")
-}
-func (UnimplementedBlockAccessServiceServer) mustEmbedUnimplementedBlockAccessServiceServer() {}
-func (UnimplementedBlockAccessServiceServer) testEmbeddedByValue()                            {}
-
-// UnsafeBlockAccessServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BlockAccessServiceServer will
-// result in compilation errors.
-type UnsafeBlockAccessServiceServer interface {
-	mustEmbedUnimplementedBlockAccessServiceServer()
-}
-
-func RegisterBlockAccessServiceServer(s grpc.ServiceRegistrar, srv BlockAccessServiceServer) {
-	// If the following call pancis, it indicates UnimplementedBlockAccessServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&BlockAccessService_ServiceDesc, srv)
-}
-
-func _BlockAccessService_SingleBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SingleBlockRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BlockAccessServiceServer).SingleBlock(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BlockAccessService_SingleBlock_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BlockAccessServiceServer).SingleBlock(ctx, req.(*SingleBlockRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// BlockAccessService_ServiceDesc is the grpc.ServiceDesc for BlockAccessService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var BlockAccessService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "com.hedera.hapi.block.BlockAccessService",
-	HandlerType: (*BlockAccessServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "singleBlock",
-			Handler:    _BlockAccessService_SingleBlock_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "block_service.proto",
-}
-
-const (
-	StateService_StateSnapshot_FullMethodName = "/com.hedera.hapi.block.StateService/stateSnapshot"
-)
-
-// StateServiceClient is the client API for StateService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node state snapshot
-// and query services.
-type StateServiceClient interface {
-	// *
-	// Read a state snapshot from the Block-Node.
-	// <p>
-	// The request SHALL describe the last block number present in the
-	// snapshot.<br/>
-	// Block-Node implementations MAY decline a request for a snapshot older
-	// than the latest available, but MUST clearly document this behavior.
-	StateSnapshot(ctx context.Context, in *StateSnapshotRequest, opts ...grpc.CallOption) (*StateSnapshotResponse, error)
-}
-
-type stateServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewStateServiceClient(cc grpc.ClientConnInterface) StateServiceClient {
-	return &stateServiceClient{cc}
-}
-
-func (c *stateServiceClient) StateSnapshot(ctx context.Context, in *StateSnapshotRequest, opts ...grpc.CallOption) (*StateSnapshotResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StateSnapshotResponse)
-	err := c.cc.Invoke(ctx, StateService_StateSnapshot_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// StateServiceServer is the server API for StateService service.
-// All implementations must embed UnimplementedStateServiceServer
-// for forward compatibility.
-//
-// *
-// Remote procedure calls (RPCs) for the Block-Node state snapshot
-// and query services.
-type StateServiceServer interface {
-	// *
-	// Read a state snapshot from the Block-Node.
-	// <p>
-	// The request SHALL describe the last block number present in the
-	// snapshot.<br/>
-	// Block-Node implementations MAY decline a request for a snapshot older
-	// than the latest available, but MUST clearly document this behavior.
-	StateSnapshot(context.Context, *StateSnapshotRequest) (*StateSnapshotResponse, error)
-	mustEmbedUnimplementedStateServiceServer()
-}
-
-// UnimplementedStateServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedStateServiceServer struct{}
-
-func (UnimplementedStateServiceServer) StateSnapshot(context.Context, *StateSnapshotRequest) (*StateSnapshotResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StateSnapshot not implemented")
-}
-func (UnimplementedStateServiceServer) mustEmbedUnimplementedStateServiceServer() {}
-func (UnimplementedStateServiceServer) testEmbeddedByValue()                      {}
-
-// UnsafeStateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to StateServiceServer will
-// result in compilation errors.
-type UnsafeStateServiceServer interface {
-	mustEmbedUnimplementedStateServiceServer()
-}
-
-func RegisterStateServiceServer(s grpc.ServiceRegistrar, srv StateServiceServer) {
-	// If the following call pancis, it indicates UnimplementedStateServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&StateService_ServiceDesc, srv)
-}
-
-func _StateService_StateSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StateSnapshotRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StateServiceServer).StateSnapshot(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: StateService_StateSnapshot_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StateServiceServer).StateSnapshot(ctx, req.(*StateSnapshotRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// StateService_ServiceDesc is the grpc.ServiceDesc for StateService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var StateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "com.hedera.hapi.block.StateService",
-	HandlerType: (*StateServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "stateSnapshot",
-			Handler:    _StateService_StateSnapshot_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "block_service.proto",
-}
-
-const (
+	BlockStreamService_ServerStatus_FullMethodName         = "/com.hedera.hapi.block.BlockStreamService/serverStatus"
+	BlockStreamService_SingleBlock_FullMethodName          = "/com.hedera.hapi.block.BlockStreamService/singleBlock"
+	BlockStreamService_StateSnapshot_FullMethodName        = "/com.hedera.hapi.block.BlockStreamService/stateSnapshot"
 	BlockStreamService_PublishBlockStream_FullMethodName   = "/com.hedera.hapi.block.BlockStreamService/publishBlockStream"
 	BlockStreamService_SubscribeBlockStream_FullMethodName = "/com.hedera.hapi.block.BlockStreamService/subscribeBlockStream"
 )
@@ -397,20 +75,39 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // *
-// Remote procedure calls (RPCs) for the Block-Node stream services.
+// Remote procedure calls (RPCs) for the Block Node.
 type BlockStreamServiceClient interface {
+	// *
+	// Read the status of this block node server.
+	// <p>
+	// A client SHOULD request server status prior to requesting block stream
+	// data or a state snapshot.
+	ServerStatus(ctx context.Context, in *ServerStatusRequest, opts ...grpc.CallOption) (*ServerStatusResponse, error)
+	// *
+	// Read a single block from the block node.
+	// <p>
+	// The request SHALL describe the block number of the block to retrieve.
+	SingleBlock(ctx context.Context, in *SingleBlockRequest, opts ...grpc.CallOption) (*SingleBlockResponse, error)
+	// *
+	// Read a state snapshot from the block node.
+	// <p>
+	// The request SHALL describe the last block number present in the
+	// snapshot.<br/>
+	// Block node implementations MAY decline a request for a snapshot older
+	// than the latest available, but MUST clearly document this behavior.
+	StateSnapshot(ctx context.Context, in *StateSnapshotRequest, opts ...grpc.CallOption) (*StateSnapshotResponse, error)
 	// *
 	// Publish a stream of blocks.
 	// <p>
 	// Each item in the stream MUST contain one `BlockItem`.<br/>
 	// Each Block MUST begin with a single `BlockHeader` block item.<br/>
-	// The Block-Node SHALL append each `BlockItem` to an internal structure
+	// The block node SHALL append each `BlockItem` to an internal structure
 	// to construct full blocks.<br/>
 	// Each Block MUST end with a single `BlockStateProof` block item.<br/>
 	// It is RECOMMENDED that the implementations verify the Block using the
 	// `BlockStateProof` to validate all data was received correctly.<br/>
 	// This API SHOULD, generally, be restricted based on mTLS authentication
-	// to a limited set of Publisher (i.e. consensus node) systems.
+	// to a limited set of source (i.e. consensus node) systems.
 	PublishBlockStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[PublishStreamRequest, PublishStreamResponse], error)
 	// *
 	// Subscribe to a stream of blocks.
@@ -419,25 +116,25 @@ type BlockStreamServiceClient interface {
 	// response code.<br/>
 	// The request message MUST specify start and end block numbers
 	// to return/<br/>
-	// The Block-Node SHALL stream the full contents of the blocks
+	// The block node SHALL stream the full contents of the blocks
 	// requested.<br/>
 	// The block items SHALL be streamed in order originally produced within
 	// a block.<br/>
 	// The blocks shall be streamed in ascending order by `block_number`.<br/>
-	// The Block-Node SHALL end the stream when the last requested block,
+	// The block node SHALL end the stream when the last requested block,
 	// if set, has been sent.<br/>
 	// A request with an end block of `0` SHALL be interpreted to indicate the
-	// stream has no end. The Block-Node SHALL continue to stream new blocks
+	// stream has no end. The block node SHALL continue to stream new blocks
 	// as soon as each becomes available.<br/>
-	// The Block-Node SHALL end the stream with response code containing a
+	// The block node SHALL end the stream with response code containing a
 	// status of SUCCESS when the stream is complete.<br/>
-	// The Block-Node SHALL end the stream with a response code containing a
+	// The block node SHALL end the stream with a response code containing a
 	// status of `READ_STREAM_INVALID_START_BLOCK_NUMBER` if the start block
 	// number is greater than the end block number.<br/>
-	// The Block-Node SHALL end the stream with a response code containing a
+	// The block node SHALL end the stream with a response code containing a
 	// status of `READ_STREAM_PAYMENT_INSUFFICIENT` if insufficient payment
 	// remains to complete the requested stream.<br/>
-	// The Block-Node SHALL make every reasonable effort to fulfill as much
+	// The block node SHALL make every reasonable effort to fulfill as much
 	// of the request as possible in the event payment is not sufficient to
 	// complete the request.
 	SubscribeBlockStream(ctx context.Context, in *SubscribeStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SubscribeStreamResponse], error)
@@ -449,6 +146,36 @@ type blockStreamServiceClient struct {
 
 func NewBlockStreamServiceClient(cc grpc.ClientConnInterface) BlockStreamServiceClient {
 	return &blockStreamServiceClient{cc}
+}
+
+func (c *blockStreamServiceClient) ServerStatus(ctx context.Context, in *ServerStatusRequest, opts ...grpc.CallOption) (*ServerStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ServerStatusResponse)
+	err := c.cc.Invoke(ctx, BlockStreamService_ServerStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blockStreamServiceClient) SingleBlock(ctx context.Context, in *SingleBlockRequest, opts ...grpc.CallOption) (*SingleBlockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SingleBlockResponse)
+	err := c.cc.Invoke(ctx, BlockStreamService_SingleBlock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blockStreamServiceClient) StateSnapshot(ctx context.Context, in *StateSnapshotRequest, opts ...grpc.CallOption) (*StateSnapshotResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StateSnapshotResponse)
+	err := c.cc.Invoke(ctx, BlockStreamService_StateSnapshot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *blockStreamServiceClient) PublishBlockStream(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[PublishStreamRequest, PublishStreamResponse], error) {
@@ -488,20 +215,39 @@ type BlockStreamService_SubscribeBlockStreamClient = grpc.ServerStreamingClient[
 // for forward compatibility.
 //
 // *
-// Remote procedure calls (RPCs) for the Block-Node stream services.
+// Remote procedure calls (RPCs) for the Block Node.
 type BlockStreamServiceServer interface {
+	// *
+	// Read the status of this block node server.
+	// <p>
+	// A client SHOULD request server status prior to requesting block stream
+	// data or a state snapshot.
+	ServerStatus(context.Context, *ServerStatusRequest) (*ServerStatusResponse, error)
+	// *
+	// Read a single block from the block node.
+	// <p>
+	// The request SHALL describe the block number of the block to retrieve.
+	SingleBlock(context.Context, *SingleBlockRequest) (*SingleBlockResponse, error)
+	// *
+	// Read a state snapshot from the block node.
+	// <p>
+	// The request SHALL describe the last block number present in the
+	// snapshot.<br/>
+	// Block node implementations MAY decline a request for a snapshot older
+	// than the latest available, but MUST clearly document this behavior.
+	StateSnapshot(context.Context, *StateSnapshotRequest) (*StateSnapshotResponse, error)
 	// *
 	// Publish a stream of blocks.
 	// <p>
 	// Each item in the stream MUST contain one `BlockItem`.<br/>
 	// Each Block MUST begin with a single `BlockHeader` block item.<br/>
-	// The Block-Node SHALL append each `BlockItem` to an internal structure
+	// The block node SHALL append each `BlockItem` to an internal structure
 	// to construct full blocks.<br/>
 	// Each Block MUST end with a single `BlockStateProof` block item.<br/>
 	// It is RECOMMENDED that the implementations verify the Block using the
 	// `BlockStateProof` to validate all data was received correctly.<br/>
 	// This API SHOULD, generally, be restricted based on mTLS authentication
-	// to a limited set of Publisher (i.e. consensus node) systems.
+	// to a limited set of source (i.e. consensus node) systems.
 	PublishBlockStream(grpc.BidiStreamingServer[PublishStreamRequest, PublishStreamResponse]) error
 	// *
 	// Subscribe to a stream of blocks.
@@ -510,25 +256,25 @@ type BlockStreamServiceServer interface {
 	// response code.<br/>
 	// The request message MUST specify start and end block numbers
 	// to return/<br/>
-	// The Block-Node SHALL stream the full contents of the blocks
+	// The block node SHALL stream the full contents of the blocks
 	// requested.<br/>
 	// The block items SHALL be streamed in order originally produced within
 	// a block.<br/>
 	// The blocks shall be streamed in ascending order by `block_number`.<br/>
-	// The Block-Node SHALL end the stream when the last requested block,
+	// The block node SHALL end the stream when the last requested block,
 	// if set, has been sent.<br/>
 	// A request with an end block of `0` SHALL be interpreted to indicate the
-	// stream has no end. The Block-Node SHALL continue to stream new blocks
+	// stream has no end. The block node SHALL continue to stream new blocks
 	// as soon as each becomes available.<br/>
-	// The Block-Node SHALL end the stream with response code containing a
+	// The block node SHALL end the stream with response code containing a
 	// status of SUCCESS when the stream is complete.<br/>
-	// The Block-Node SHALL end the stream with a response code containing a
+	// The block node SHALL end the stream with a response code containing a
 	// status of `READ_STREAM_INVALID_START_BLOCK_NUMBER` if the start block
 	// number is greater than the end block number.<br/>
-	// The Block-Node SHALL end the stream with a response code containing a
+	// The block node SHALL end the stream with a response code containing a
 	// status of `READ_STREAM_PAYMENT_INSUFFICIENT` if insufficient payment
 	// remains to complete the requested stream.<br/>
-	// The Block-Node SHALL make every reasonable effort to fulfill as much
+	// The block node SHALL make every reasonable effort to fulfill as much
 	// of the request as possible in the event payment is not sufficient to
 	// complete the request.
 	SubscribeBlockStream(*SubscribeStreamRequest, grpc.ServerStreamingServer[SubscribeStreamResponse]) error
@@ -542,6 +288,15 @@ type BlockStreamServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedBlockStreamServiceServer struct{}
 
+func (UnimplementedBlockStreamServiceServer) ServerStatus(context.Context, *ServerStatusRequest) (*ServerStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ServerStatus not implemented")
+}
+func (UnimplementedBlockStreamServiceServer) SingleBlock(context.Context, *SingleBlockRequest) (*SingleBlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SingleBlock not implemented")
+}
+func (UnimplementedBlockStreamServiceServer) StateSnapshot(context.Context, *StateSnapshotRequest) (*StateSnapshotResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StateSnapshot not implemented")
+}
 func (UnimplementedBlockStreamServiceServer) PublishBlockStream(grpc.BidiStreamingServer[PublishStreamRequest, PublishStreamResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method PublishBlockStream not implemented")
 }
@@ -569,6 +324,60 @@ func RegisterBlockStreamServiceServer(s grpc.ServiceRegistrar, srv BlockStreamSe
 	s.RegisterService(&BlockStreamService_ServiceDesc, srv)
 }
 
+func _BlockStreamService_ServerStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ServerStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockStreamServiceServer).ServerStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockStreamService_ServerStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockStreamServiceServer).ServerStatus(ctx, req.(*ServerStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlockStreamService_SingleBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockStreamServiceServer).SingleBlock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockStreamService_SingleBlock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockStreamServiceServer).SingleBlock(ctx, req.(*SingleBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlockStreamService_StateSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StateSnapshotRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockStreamServiceServer).StateSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockStreamService_StateSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockStreamServiceServer).StateSnapshot(ctx, req.(*StateSnapshotRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BlockStreamService_PublishBlockStream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(BlockStreamServiceServer).PublishBlockStream(&grpc.GenericServerStream[PublishStreamRequest, PublishStreamResponse]{ServerStream: stream})
 }
@@ -593,7 +402,20 @@ type BlockStreamService_SubscribeBlockStreamServer = grpc.ServerStreamingServer[
 var BlockStreamService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "com.hedera.hapi.block.BlockStreamService",
 	HandlerType: (*BlockStreamServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "serverStatus",
+			Handler:    _BlockStreamService_ServerStatus_Handler,
+		},
+		{
+			MethodName: "singleBlock",
+			Handler:    _BlockStreamService_SingleBlock_Handler,
+		},
+		{
+			MethodName: "stateSnapshot",
+			Handler:    _BlockStreamService_StateSnapshot_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "publishBlockStream",

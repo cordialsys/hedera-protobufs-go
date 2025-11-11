@@ -6,11 +6,7 @@
 // ### Topic Running Hash Calculation
 // Submitted messages include a topic running hash. This value has changed
 // over time, with the known versions detailed in the `RunningHashVersion`
-// enumeration. The running hash version SHALL NOT be transmitted in the
-// Block Stream, however, as it is a fixed value that can only be changed
-// with a new release of consensus node software following a HIP to update
-// the specification, so repeating that fixed value in the block stream is
-// wasteful and unnecessary.
+// enumeration.
 //
 // ### Keywords
 // The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -28,7 +24,6 @@
 package output
 
 import (
-	_ "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -343,7 +338,7 @@ var File_stream_output_consensus_service_proto protoreflect.FileDescriptor
 
 const file_stream_output_consensus_service_proto_rawDesc = "" +
 	"\n" +
-	"%stream/output/consensus_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11custom_fees.proto\"\x13\n" +
+	"%stream/output/consensus_service.proto\x12#com.hedera.hapi.block.stream.output\"\x13\n" +
 	"\x11CreateTopicOutput\"\x13\n" +
 	"\x11UpdateTopicOutput\"\x13\n" +
 	"\x11DeleteTopicOutput\"\x15\n" +

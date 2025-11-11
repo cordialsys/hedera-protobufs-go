@@ -33,7 +33,7 @@ type Roster struct {
 	// <p>
 	// This list SHALL contain roster entries in natural order of ascending node ids.
 	// This list SHALL NOT be empty.<br/>
-	RosterEntries []*RosterEntry `protobuf:"bytes,1,rep,name=roster_entries,json=rosterEntries,proto3" json:"roster_entries,omitempty"`
+	Rosters       []*RosterEntry `protobuf:"bytes,1,rep,name=rosters,proto3" json:"rosters,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,9 +68,9 @@ func (*Roster) Descriptor() ([]byte, []int) {
 	return file_state_roster_roster_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Roster) GetRosterEntries() []*RosterEntry {
+func (x *Roster) GetRosters() []*RosterEntry {
 	if x != nil {
-		return x.RosterEntries
+		return x.Rosters
 	}
 	return nil
 }
@@ -80,7 +80,7 @@ func (x *Roster) GetRosterEntries() []*RosterEntry {
 //
 // Each roster entry SHALL encapsulate the elements required
 // to manage node participation in the Threshold Signature Scheme (TSS).<br/>
-// All fields are REQUIRED.
+// All fields except tss_encryption_key are REQUIRED.
 type RosterEntry struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
@@ -104,6 +104,19 @@ type RosterEntry struct {
 	// This value SHALL be the DER encoding of the certificate presented.<br/>
 	// This field is REQUIRED and MUST NOT be empty.
 	GossipCaCertificate []byte `protobuf:"bytes,3,opt,name=gossip_ca_certificate,json=gossipCaCertificate,proto3" json:"gossip_ca_certificate,omitempty"`
+	// *
+	// An elliptic curve public encryption key.<br/>
+	// This is currently an ALT_BN128 curve, but the elliptic curve
+	// type may change in the future. For example,
+	// if the Ethereum ecosystem creates precompiles for BLS12_381,
+	// we may switch to that curve.
+	// <p>
+	// This value SHALL be specified according to EIP-196 and EIP-197 standards,
+	// See <a href='https://eips.ethereum.org/EIPS/eip-196#encoding'>EIP-196</a> and
+	// <a href='https://eips.ethereum.org/EIPS/eip-197#encoding'>EIP-197</a><br/>
+	// This field is _initially_ OPTIONAL (i.e. it can be unset _when created_)
+	// but once set, it is REQUIRED thereafter.
+	TssEncryptionKey []byte `protobuf:"bytes,4,opt,name=tss_encryption_key,json=tssEncryptionKey,proto3" json:"tss_encryption_key,omitempty"`
 	// *
 	// A list of service endpoints for gossip.
 	// <p>
@@ -171,6 +184,13 @@ func (x *RosterEntry) GetGossipCaCertificate() []byte {
 	return nil
 }
 
+func (x *RosterEntry) GetTssEncryptionKey() []byte {
+	if x != nil {
+		return x.TssEncryptionKey
+	}
+	return nil
+}
+
 func (x *RosterEntry) GetGossipEndpoint() []*common.ServiceEndpoint {
 	if x != nil {
 		return x.GossipEndpoint
@@ -182,14 +202,15 @@ var File_state_roster_roster_proto protoreflect.FileDescriptor
 
 const file_state_roster_roster_proto_rawDesc = "" +
 	"\n" +
-	"\x19state/roster/roster.proto\x12!com.hedera.hapi.node.state.roster\x1a\x11basic_types.proto\"_\n" +
-	"\x06Roster\x12U\n" +
-	"\x0eroster_entries\x18\x01 \x03(\v2..com.hedera.hapi.node.state.roster.RosterEntryR\rrosterEntries\"\xb9\x01\n" +
+	"\x19state/roster/roster.proto\x12!com.hedera.hapi.node.state.roster\x1a\x11basic_types.proto\"R\n" +
+	"\x06Roster\x12H\n" +
+	"\arosters\x18\x01 \x03(\v2..com.hedera.hapi.node.state.roster.RosterEntryR\arosters\"\xe1\x01\n" +
 	"\vRosterEntry\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x12\x16\n" +
 	"\x06weight\x18\x02 \x01(\x04R\x06weight\x122\n" +
-	"\x15gossip_ca_certificate\x18\x03 \x01(\fR\x13gossipCaCertificate\x12?\n" +
-	"\x0fgossip_endpoint\x18\x05 \x03(\v2\x16.proto.ServiceEndpointR\x0egossipEndpointJ\x04\b\x04\x10\x05Bg\n" +
+	"\x15gossip_ca_certificate\x18\x03 \x01(\fR\x13gossipCaCertificate\x12,\n" +
+	"\x12tss_encryption_key\x18\x04 \x01(\fR\x10tssEncryptionKey\x12?\n" +
+	"\x0fgossip_endpoint\x18\x05 \x03(\v2\x16.proto.ServiceEndpointR\x0egossipEndpointBg\n" +
 	"\"com.hederahashgraph.api.proto.javaP\x01Z?github.com/cordialsys/hedera-protobufs-go/services/state/rosterb\x06proto3"
 
 var (
@@ -211,7 +232,7 @@ var file_state_roster_roster_proto_goTypes = []any{
 	(*common.ServiceEndpoint)(nil), // 2: proto.ServiceEndpoint
 }
 var file_state_roster_roster_proto_depIdxs = []int32{
-	1, // 0: com.hedera.hapi.node.state.roster.Roster.roster_entries:type_name -> com.hedera.hapi.node.state.roster.RosterEntry
+	1, // 0: com.hedera.hapi.node.state.roster.Roster.rosters:type_name -> com.hedera.hapi.node.state.roster.RosterEntry
 	2, // 1: com.hedera.hapi.node.state.roster.RosterEntry.gossip_endpoint:type_name -> proto.ServiceEndpoint
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type

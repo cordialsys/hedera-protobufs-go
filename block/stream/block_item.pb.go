@@ -90,47 +90,6 @@ const (
 // Items to be hashed MUST NOT be contained within another item.<br/>
 // Items which might be filtered out of the stream MUST NOT be
 // contained in other items.
-//
-// ### Forward Compatibility
-// In order to maximize forward compatibility, and minimize the need to
-// coordinate deployments of different systems creating and processing
-// block streams in the future, the following rules SHALL be followed
-// for field numbering in this message.
-//   - The first 15 field numbers SHALL be assigned to the fields present
-//     in the first release. Unused fields in this range SHALL remain reserved
-//     until needed for additional options that do not fit into "input" or
-//     "output" categories.
-//   - Fields numbered 16 and above MUST be numbered as follows.
-//   - "input" items MUST use `odd` field numbers.
-//   - "output" items MUST use `even` field numbers.
-//
-// #### Forward Compatibility Example
-// A future update adding three new items. A "BlockTrailer" item which is
-// neither input nor output, a new "ConsensusTransom" which is an input,
-// and a new "BridgeTransform" which is an output.
-//   - The "BlockTrailer" is field 11, which is removed from the `reserved` list.
-//   - The "ConsensusTransom" is an input, so it is field `17` (the first unused
-//     `odd` field greater than or equal to 16).
-//   - The "BridgeTransform" is an output, so it is field `16` (the first unused
-//     even field greater than or equal to 16).
-//
-// #### Initial Field assignment to "input", "output", and "other" categories.
-// - Inputs
-//   - `event_header`
-//   - `round_header`
-//   - `event_transaction`
-//
-// - Outputs
-//   - `block_header`
-//   - `transaction_result`
-//   - `transaction_output`
-//   - `state_changes`
-//   - Any subtree (depending on what was filtered).
-//     This item details it's path in the tree.
-//   - `filtered_item_hash`
-//   - Neither input nor output (and not part of the "proof" merkle tree)
-//   - `block_proof`
-//   - `record_file`
 type BlockItem struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Item:
@@ -505,7 +464,7 @@ var File_stream_block_item_proto protoreflect.FileDescriptor
 
 const file_stream_block_item_proto_rawDesc = "" +
 	"\n" +
-	"\x17stream/block_item.proto\x12\x1ccom.hedera.hapi.block.stream\x1a\x1devent/event_transaction.proto\x1a\x18stream/block_proof.proto\x1a\x1dstream/record_file_item.proto\x1a!stream/input/event_metadata.proto\x1a\x1fstream/input/round_header.proto\x1a stream/output/block_header.proto\x1a!stream/output/state_changes.proto\x1a&stream/output/transaction_output.proto\x1a&stream/output/transaction_result.proto\"\xbf\a\n" +
+	"\x17stream/block_item.proto\x12\x1ccom.hedera.hapi.block.stream\x1a\x1devent/event_transaction.proto\x1a\x18stream/block_proof.proto\x1a\x1dstream/record_file_item.proto\x1a!stream/input/event_metadata.proto\x1a\x1fstream/input/round_header.proto\x1a stream/output/block_header.proto\x1a!stream/output/state_changes.proto\x1a&stream/output/transaction_output.proto\x1a&stream/output/transaction_result.proto\"\xa1\a\n" +
 	"\tBlockItem\x12U\n" +
 	"\fblock_header\x18\x01 \x01(\v20.com.hedera.hapi.block.stream.output.BlockHeaderH\x00R\vblockHeader\x12T\n" +
 	"\fevent_header\x18\x02 \x01(\v2/.com.hedera.hapi.block.stream.input.EventHeaderH\x00R\veventHeader\x12T\n" +
@@ -520,7 +479,7 @@ const file_stream_block_item_proto_rawDesc = "" +
 	"\vrecord_file\x18\n" +
 	" \x01(\v2,.com.hedera.hapi.block.stream.RecordFileItemH\x00R\n" +
 	"recordFileB\x06\n" +
-	"\x04itemJ\x04\b\v\x10\fJ\x04\b\f\x10\rJ\x04\b\r\x10\x0eJ\x04\b\x0e\x10\x0fJ\x04\b\x0f\x10\x10\"T\n" +
+	"\x04item\"T\n" +
 	"\x10FilteredItemHash\x12\x1b\n" +
 	"\titem_hash\x18\x01 \x01(\fR\bitemHash\x12#\n" +
 	"\rfiltered_path\x18\x03 \x01(\x04R\ffilteredPathB_\n" +

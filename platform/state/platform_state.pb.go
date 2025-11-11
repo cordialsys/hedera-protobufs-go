@@ -103,8 +103,25 @@ type PlatformState struct {
 	//
 	// Deprecated: Marked as deprecated in state/platform_state.proto.
 	FirstVersionInBirthRoundMode *common.SemanticVersion `protobuf:"bytes,10003,opt,name=first_version_in_birth_round_mode,json=firstVersionInBirthRoundMode,proto3" json:"first_version_in_birth_round_mode,omitempty"`
-	unknownFields                protoimpl.UnknownFields
-	sizeCache                    protoimpl.SizeCache
+	// *
+	// An address book for this round.
+	// <p>
+	// This SHALL be the latest network-consensus view of consensus nodes.
+	//
+	// Deprecated: Marked as deprecated in state/platform_state.proto.
+	AddressBook *AddressBook `protobuf:"bytes,10004,opt,name=address_book,json=addressBook,proto3" json:"address_book,omitempty"`
+	// *
+	// A previous address book.
+	// <p>
+	// If present, the previous address book SHALL be the address book from the
+	// most recent preceding round.
+	// <p>
+	// This is a temporary workaround until dynamic address books are supported.
+	//
+	// Deprecated: Marked as deprecated in state/platform_state.proto.
+	PreviousAddressBook *AddressBook `protobuf:"bytes,10005,opt,name=previous_address_book,json=previousAddressBook,proto3" json:"previous_address_book,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *PlatformState) Reset() {
@@ -204,6 +221,22 @@ func (x *PlatformState) GetFirstVersionInBirthRoundMode() *common.SemanticVersio
 	return nil
 }
 
+// Deprecated: Marked as deprecated in state/platform_state.proto.
+func (x *PlatformState) GetAddressBook() *AddressBook {
+	if x != nil {
+		return x.AddressBook
+	}
+	return nil
+}
+
+// Deprecated: Marked as deprecated in state/platform_state.proto.
+func (x *PlatformState) GetPreviousAddressBook() *AddressBook {
+	if x != nil {
+		return x.PreviousAddressBook
+	}
+	return nil
+}
+
 // *
 // A consensus snapshot.<br/>
 // This is a snapshot of the consensus state for a particular round.
@@ -222,8 +255,6 @@ type ConsensusSnapshot struct {
 	// <p>
 	// This list SHALL be ordered by creator ID.<br/>
 	// This list MUST be deterministically ordered.
-	//
-	// Deprecated: Marked as deprecated in state/platform_state.proto.
 	JudgeHashes [][]byte `protobuf:"bytes,2,rep,name=judge_hashes,json=judgeHashes,proto3" json:"judge_hashes,omitempty"`
 	// *
 	// A list of minimum judge information entries.<br/>
@@ -248,10 +279,8 @@ type ConsensusSnapshot struct {
 	// "wall clock" timestamp.<br/>
 	// Consensus Timestamps SHALL always increase.
 	ConsensusTimestamp *common.Timestamp `protobuf:"bytes,5,opt,name=consensus_timestamp,json=consensusTimestamp,proto3" json:"consensus_timestamp,omitempty"`
-	// A list of judge creator ids and its hashes in a round.<br/>
-	JudgeIds      []*JudgeId `protobuf:"bytes,6,rep,name=judge_ids,json=judgeIds,proto3" json:"judge_ids,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *ConsensusSnapshot) Reset() {
@@ -291,7 +320,6 @@ func (x *ConsensusSnapshot) GetRound() uint64 {
 	return 0
 }
 
-// Deprecated: Marked as deprecated in state/platform_state.proto.
 func (x *ConsensusSnapshot) GetJudgeHashes() [][]byte {
 	if x != nil {
 		return x.JudgeHashes
@@ -320,72 +348,6 @@ func (x *ConsensusSnapshot) GetConsensusTimestamp() *common.Timestamp {
 	return nil
 }
 
-func (x *ConsensusSnapshot) GetJudgeIds() []*JudgeId {
-	if x != nil {
-		return x.JudgeIds
-	}
-	return nil
-}
-
-// *
-// A judge information that includes the creator node ID and the
-// SHA-384 hash value of the judge.
-type JudgeId struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// The creator node ID who created this judge.
-	CreatorId uint64 `protobuf:"varint,1,opt,name=creator_id,json=creatorId,proto3" json:"creator_id,omitempty"`
-	// *
-	// SHA-384 hash value of this judge
-	JudgeHash     []byte `protobuf:"bytes,2,opt,name=judge_hash,json=judgeHash,proto3" json:"judge_hash,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *JudgeId) Reset() {
-	*x = JudgeId{}
-	mi := &file_state_platform_state_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JudgeId) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JudgeId) ProtoMessage() {}
-
-func (x *JudgeId) ProtoReflect() protoreflect.Message {
-	mi := &file_state_platform_state_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JudgeId.ProtoReflect.Descriptor instead.
-func (*JudgeId) Descriptor() ([]byte, []int) {
-	return file_state_platform_state_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *JudgeId) GetCreatorId() uint64 {
-	if x != nil {
-		return x.CreatorId
-	}
-	return 0
-}
-
-func (x *JudgeId) GetJudgeHash() []byte {
-	if x != nil {
-		return x.JudgeHash
-	}
-	return nil
-}
-
 // *
 // Records the minimum ancient indicator for all judges in a particular round.
 type MinimumJudgeInfo struct {
@@ -408,7 +370,7 @@ type MinimumJudgeInfo struct {
 
 func (x *MinimumJudgeInfo) Reset() {
 	*x = MinimumJudgeInfo{}
-	mi := &file_state_platform_state_proto_msgTypes[3]
+	mi := &file_state_platform_state_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -420,7 +382,7 @@ func (x *MinimumJudgeInfo) String() string {
 func (*MinimumJudgeInfo) ProtoMessage() {}
 
 func (x *MinimumJudgeInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_state_platform_state_proto_msgTypes[3]
+	mi := &file_state_platform_state_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -433,7 +395,7 @@ func (x *MinimumJudgeInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MinimumJudgeInfo.ProtoReflect.Descriptor instead.
 func (*MinimumJudgeInfo) Descriptor() ([]byte, []int) {
-	return file_state_platform_state_proto_rawDescGZIP(), []int{3}
+	return file_state_platform_state_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *MinimumJudgeInfo) GetRound() uint64 {
@@ -451,6 +413,258 @@ func (x *MinimumJudgeInfo) GetMinimumJudgeAncientThreshold() uint64 {
 }
 
 // *
+// A network address book.<br/>
+// The address book records the address of every known consensus node that
+// participates in the network, including `0 weight` nodes.<br/>
+type AddressBook struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// *
+	// A consensus round.<br/>
+	// The round when this address book was created.
+	Round int64 `protobuf:"varint,1,opt,name=round,proto3" json:"round,omitempty"`
+	// *
+	// The node ID of the next address that can be added.
+	// <p>
+	// The next node identifier assigned SHALL be equal to this value.<br/>
+	// All existing node identifiers SHALL be strictly less than this value.<br/>
+	NextNodeId *NodeId `protobuf:"bytes,2,opt,name=next_node_id,json=nextNodeId,proto3" json:"next_node_id,omitempty"`
+	// *
+	// A list of all consensus node addresses.
+	// <p>
+	// This list SHALL NOT be empty.
+	// If a consensus node is not in this list it SHALL NOT participate in the
+	// network.
+	Addresses     []*Address `protobuf:"bytes,3,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddressBook) Reset() {
+	*x = AddressBook{}
+	mi := &file_state_platform_state_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddressBook) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddressBook) ProtoMessage() {}
+
+func (x *AddressBook) ProtoReflect() protoreflect.Message {
+	mi := &file_state_platform_state_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddressBook.ProtoReflect.Descriptor instead.
+func (*AddressBook) Descriptor() ([]byte, []int) {
+	return file_state_platform_state_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AddressBook) GetRound() int64 {
+	if x != nil {
+		return x.Round
+	}
+	return 0
+}
+
+func (x *AddressBook) GetNextNodeId() *NodeId {
+	if x != nil {
+		return x.NextNodeId
+	}
+	return nil
+}
+
+func (x *AddressBook) GetAddresses() []*Address {
+	if x != nil {
+		return x.Addresses
+	}
+	return nil
+}
+
+// *
+// A single network address.
+// This is one address in the network address book, including all required
+// information to include that consensus node in the consensus gossip.
+type Address struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// *
+	// The ID of this member.
+	// <p>
+	// This identifier SHALL be agreed upon by all consensus nodes.
+	Id *NodeId `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// *
+	// The nickname other consensus nodes will use to refer to this consensus node.
+	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	// *
+	// The name that a consensus node uses to refer to themselves.
+	SelfName string `protobuf:"bytes,3,opt,name=self_name,json=selfName,proto3" json:"self_name,omitempty"`
+	// *
+	// A consensus weight.<br/>
+	// This value is the relative weight for this consensus node in the
+	// consensus voting algorithm.
+	Weight uint64 `protobuf:"varint,4,opt,name=weight,proto3" json:"weight,omitempty"`
+	// *
+	// A string network address.<br/>
+	// This value is the hostname assigned on the "internal" network
+	// interface behind any network firewalls, protocol gateways, or
+	// DNS translations.
+	// <p>
+	// This value SHALL be either a FQDN host name or an IPv4 address.
+	HostnameInternal string `protobuf:"bytes,5,opt,name=hostname_internal,json=hostnameInternal,proto3" json:"hostname_internal,omitempty"`
+	// *
+	// Network port number.<br/>
+	// This value is the "translated" port number assigned on the "internal"
+	// network behind any network firewalls or other address translations.
+	// <p>
+	// This value SHALL be between 1 and 65535.
+	PortInternal uint32 `protobuf:"varint,6,opt,name=port_internal,json=portInternal,proto3" json:"port_internal,omitempty"`
+	// *
+	// A string network address.<br/>
+	// This value is the hostname assigned on the "public" network
+	// interface visible to the general internet.
+	// <p>
+	// This value SHALL be either a FQDN host name or an IPv4 address.
+	HostnameExternal string `protobuf:"bytes,7,opt,name=hostname_external,json=hostnameExternal,proto3" json:"hostname_external,omitempty"`
+	// *
+	// Network port number.<br/>
+	// This value is the port number visible to the general internet.
+	// <p>
+	// This value SHALL be between 1 and 65535.
+	PortExternal uint32 `protobuf:"varint,8,opt,name=port_external,json=portExternal,proto3" json:"port_external,omitempty"`
+	// *
+	// The signing x509 certificate of the consensus node.
+	// <p>
+	// This SHALL provide the public key used for signing.
+	SigningCertificate []byte `protobuf:"bytes,9,opt,name=signing_certificate,json=signingCertificate,proto3" json:"signing_certificate,omitempty"`
+	// *
+	// The agreement x509 certificate of the consensus node.
+	// <p>
+	// This SHALL be used for establishing TLS connections.
+	AgreementCertificate []byte `protobuf:"bytes,10,opt,name=agreement_certificate,json=agreementCertificate,proto3" json:"agreement_certificate,omitempty"`
+	// *
+	// A string that provides additional information about this consensus node.
+	Memo          string `protobuf:"bytes,11,opt,name=memo,proto3" json:"memo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Address) Reset() {
+	*x = Address{}
+	mi := &file_state_platform_state_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Address) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Address) ProtoMessage() {}
+
+func (x *Address) ProtoReflect() protoreflect.Message {
+	mi := &file_state_platform_state_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Address.ProtoReflect.Descriptor instead.
+func (*Address) Descriptor() ([]byte, []int) {
+	return file_state_platform_state_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Address) GetId() *NodeId {
+	if x != nil {
+		return x.Id
+	}
+	return nil
+}
+
+func (x *Address) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
+func (x *Address) GetSelfName() string {
+	if x != nil {
+		return x.SelfName
+	}
+	return ""
+}
+
+func (x *Address) GetWeight() uint64 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *Address) GetHostnameInternal() string {
+	if x != nil {
+		return x.HostnameInternal
+	}
+	return ""
+}
+
+func (x *Address) GetPortInternal() uint32 {
+	if x != nil {
+		return x.PortInternal
+	}
+	return 0
+}
+
+func (x *Address) GetHostnameExternal() string {
+	if x != nil {
+		return x.HostnameExternal
+	}
+	return ""
+}
+
+func (x *Address) GetPortExternal() uint32 {
+	if x != nil {
+		return x.PortExternal
+	}
+	return 0
+}
+
+func (x *Address) GetSigningCertificate() []byte {
+	if x != nil {
+		return x.SigningCertificate
+	}
+	return nil
+}
+
+func (x *Address) GetAgreementCertificate() []byte {
+	if x != nil {
+		return x.AgreementCertificate
+	}
+	return nil
+}
+
+func (x *Address) GetMemo() string {
+	if x != nil {
+		return x.Memo
+	}
+	return ""
+}
+
+// *
 // A consensus node identifier.<br/>
 // This value uniquely identifies a single consensus node within the network.
 type NodeId struct {
@@ -464,7 +678,7 @@ type NodeId struct {
 
 func (x *NodeId) Reset() {
 	*x = NodeId{}
-	mi := &file_state_platform_state_proto_msgTypes[4]
+	mi := &file_state_platform_state_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -476,7 +690,7 @@ func (x *NodeId) String() string {
 func (*NodeId) ProtoMessage() {}
 
 func (x *NodeId) ProtoReflect() protoreflect.Message {
-	mi := &file_state_platform_state_proto_msgTypes[4]
+	mi := &file_state_platform_state_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -489,7 +703,7 @@ func (x *NodeId) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeId.ProtoReflect.Descriptor instead.
 func (*NodeId) Descriptor() ([]byte, []int) {
-	return file_state_platform_state_proto_rawDescGZIP(), []int{4}
+	return file_state_platform_state_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *NodeId) GetId() uint64 {
@@ -503,7 +717,7 @@ var File_state_platform_state_proto protoreflect.FileDescriptor
 
 const file_state_platform_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1astate/platform_state.proto\x12\x1ecom.hedera.hapi.platform.state\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\"\xf6\x05\n" +
+	"\x1astate/platform_state.proto\x12\x1ecom.hedera.hapi.platform.state\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\"\xfc\x06\n" +
 	"\rPlatformState\x12R\n" +
 	"\x19creation_software_version\x18\x01 \x01(\v2\x16.proto.SemanticVersionR\x17creationSoftwareVersion\x12,\n" +
 	"\x12rounds_non_ancient\x18\x02 \x01(\rR\x10roundsNonAncient\x12`\n" +
@@ -514,22 +728,36 @@ const file_state_platform_state_proto_rawDesc = "" +
 	"\x19legacy_running_event_hash\x18\x90N \x01(\fB\x02\x18\x01R\x16legacyRunningEventHash\x12g\n" +
 	"/lowest_judge_generation_before_birth_round_mode\x18\x91N \x01(\x04B\x02\x18\x01R)lowestJudgeGenerationBeforeBirthRoundMode\x12N\n" +
 	"\"last_round_before_birth_round_mode\x18\x92N \x01(\x04B\x02\x18\x01R\x1dlastRoundBeforeBirthRoundMode\x12d\n" +
-	"!first_version_in_birth_round_mode\x18\x93N \x01(\v2\x16.proto.SemanticVersionB\x02\x18\x01R\x1cfirstVersionInBirthRoundModeJ\x06\b\x94N\x10\x95NJ\x06\b\x95N\x10\x96NR\faddress_bookR\x15previous_address_book\"\xf6\x02\n" +
+	"!first_version_in_birth_round_mode\x18\x93N \x01(\v2\x16.proto.SemanticVersionB\x02\x18\x01R\x1cfirstVersionInBirthRoundMode\x12S\n" +
+	"\faddress_book\x18\x94N \x01(\v2+.com.hedera.hapi.platform.state.AddressBookB\x02\x18\x01R\vaddressBook\x12d\n" +
+	"\x15previous_address_book\x18\x95N \x01(\v2+.com.hedera.hapi.platform.state.AddressBookB\x02\x18\x01R\x13previousAddressBook\"\xac\x02\n" +
 	"\x11ConsensusSnapshot\x12\x14\n" +
-	"\x05round\x18\x01 \x01(\x04R\x05round\x12%\n" +
-	"\fjudge_hashes\x18\x02 \x03(\fB\x02\x18\x01R\vjudgeHashes\x12g\n" +
+	"\x05round\x18\x01 \x01(\x04R\x05round\x12!\n" +
+	"\fjudge_hashes\x18\x02 \x03(\fR\vjudgeHashes\x12g\n" +
 	"\x17minimum_judge_info_list\x18\x03 \x03(\v20.com.hedera.hapi.platform.state.MinimumJudgeInfoR\x14minimumJudgeInfoList\x122\n" +
 	"\x15next_consensus_number\x18\x04 \x01(\x04R\x13nextConsensusNumber\x12A\n" +
-	"\x13consensus_timestamp\x18\x05 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\x12D\n" +
-	"\tjudge_ids\x18\x06 \x03(\v2'.com.hedera.hapi.platform.state.JudgeIdR\bjudgeIds\"G\n" +
-	"\aJudgeId\x12\x1d\n" +
-	"\n" +
-	"creator_id\x18\x01 \x01(\x04R\tcreatorId\x12\x1d\n" +
-	"\n" +
-	"judge_hash\x18\x02 \x01(\fR\tjudgeHash\"o\n" +
+	"\x13consensus_timestamp\x18\x05 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\"o\n" +
 	"\x10MinimumJudgeInfo\x12\x14\n" +
 	"\x05round\x18\x01 \x01(\x04R\x05round\x12E\n" +
-	"\x1fminimum_judge_ancient_threshold\x18\x02 \x01(\x04R\x1cminimumJudgeAncientThreshold\"\x18\n" +
+	"\x1fminimum_judge_ancient_threshold\x18\x02 \x01(\x04R\x1cminimumJudgeAncientThreshold\"\xb4\x01\n" +
+	"\vAddressBook\x12\x14\n" +
+	"\x05round\x18\x01 \x01(\x03R\x05round\x12H\n" +
+	"\fnext_node_id\x18\x02 \x01(\v2&.com.hedera.hapi.platform.state.NodeIdR\n" +
+	"nextNodeId\x12E\n" +
+	"\taddresses\x18\x03 \x03(\v2'.com.hedera.hapi.platform.state.AddressR\taddresses\"\xb0\x03\n" +
+	"\aAddress\x126\n" +
+	"\x02id\x18\x01 \x01(\v2&.com.hedera.hapi.platform.state.NodeIdR\x02id\x12\x1a\n" +
+	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x1b\n" +
+	"\tself_name\x18\x03 \x01(\tR\bselfName\x12\x16\n" +
+	"\x06weight\x18\x04 \x01(\x04R\x06weight\x12+\n" +
+	"\x11hostname_internal\x18\x05 \x01(\tR\x10hostnameInternal\x12#\n" +
+	"\rport_internal\x18\x06 \x01(\rR\fportInternal\x12+\n" +
+	"\x11hostname_external\x18\a \x01(\tR\x10hostnameExternal\x12#\n" +
+	"\rport_external\x18\b \x01(\rR\fportExternal\x12/\n" +
+	"\x13signing_certificate\x18\t \x01(\fR\x12signingCertificate\x123\n" +
+	"\x15agreement_certificate\x18\n" +
+	" \x01(\fR\x14agreementCertificate\x12\x12\n" +
+	"\x04memo\x18\v \x01(\tR\x04memo\"\x18\n" +
 	"\x06NodeId\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02idBc\n" +
 	"%com.hedera.hapi.platform.state.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/stateb\x06proto3"
@@ -546,30 +774,35 @@ func file_state_platform_state_proto_rawDescGZIP() []byte {
 	return file_state_platform_state_proto_rawDescData
 }
 
-var file_state_platform_state_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_state_platform_state_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_state_platform_state_proto_goTypes = []any{
 	(*PlatformState)(nil),          // 0: com.hedera.hapi.platform.state.PlatformState
 	(*ConsensusSnapshot)(nil),      // 1: com.hedera.hapi.platform.state.ConsensusSnapshot
-	(*JudgeId)(nil),                // 2: com.hedera.hapi.platform.state.JudgeId
-	(*MinimumJudgeInfo)(nil),       // 3: com.hedera.hapi.platform.state.MinimumJudgeInfo
-	(*NodeId)(nil),                 // 4: com.hedera.hapi.platform.state.NodeId
-	(*common.SemanticVersion)(nil), // 5: proto.SemanticVersion
-	(*common.Timestamp)(nil),       // 6: proto.Timestamp
+	(*MinimumJudgeInfo)(nil),       // 2: com.hedera.hapi.platform.state.MinimumJudgeInfo
+	(*AddressBook)(nil),            // 3: com.hedera.hapi.platform.state.AddressBook
+	(*Address)(nil),                // 4: com.hedera.hapi.platform.state.Address
+	(*NodeId)(nil),                 // 5: com.hedera.hapi.platform.state.NodeId
+	(*common.SemanticVersion)(nil), // 6: proto.SemanticVersion
+	(*common.Timestamp)(nil),       // 7: proto.Timestamp
 }
 var file_state_platform_state_proto_depIdxs = []int32{
-	5, // 0: com.hedera.hapi.platform.state.PlatformState.creation_software_version:type_name -> proto.SemanticVersion
-	1, // 1: com.hedera.hapi.platform.state.PlatformState.consensus_snapshot:type_name -> com.hedera.hapi.platform.state.ConsensusSnapshot
-	6, // 2: com.hedera.hapi.platform.state.PlatformState.freeze_time:type_name -> proto.Timestamp
-	6, // 3: com.hedera.hapi.platform.state.PlatformState.last_frozen_time:type_name -> proto.Timestamp
-	5, // 4: com.hedera.hapi.platform.state.PlatformState.first_version_in_birth_round_mode:type_name -> proto.SemanticVersion
-	3, // 5: com.hedera.hapi.platform.state.ConsensusSnapshot.minimum_judge_info_list:type_name -> com.hedera.hapi.platform.state.MinimumJudgeInfo
-	6, // 6: com.hedera.hapi.platform.state.ConsensusSnapshot.consensus_timestamp:type_name -> proto.Timestamp
-	2, // 7: com.hedera.hapi.platform.state.ConsensusSnapshot.judge_ids:type_name -> com.hedera.hapi.platform.state.JudgeId
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	6,  // 0: com.hedera.hapi.platform.state.PlatformState.creation_software_version:type_name -> proto.SemanticVersion
+	1,  // 1: com.hedera.hapi.platform.state.PlatformState.consensus_snapshot:type_name -> com.hedera.hapi.platform.state.ConsensusSnapshot
+	7,  // 2: com.hedera.hapi.platform.state.PlatformState.freeze_time:type_name -> proto.Timestamp
+	7,  // 3: com.hedera.hapi.platform.state.PlatformState.last_frozen_time:type_name -> proto.Timestamp
+	6,  // 4: com.hedera.hapi.platform.state.PlatformState.first_version_in_birth_round_mode:type_name -> proto.SemanticVersion
+	3,  // 5: com.hedera.hapi.platform.state.PlatformState.address_book:type_name -> com.hedera.hapi.platform.state.AddressBook
+	3,  // 6: com.hedera.hapi.platform.state.PlatformState.previous_address_book:type_name -> com.hedera.hapi.platform.state.AddressBook
+	2,  // 7: com.hedera.hapi.platform.state.ConsensusSnapshot.minimum_judge_info_list:type_name -> com.hedera.hapi.platform.state.MinimumJudgeInfo
+	7,  // 8: com.hedera.hapi.platform.state.ConsensusSnapshot.consensus_timestamp:type_name -> proto.Timestamp
+	5,  // 9: com.hedera.hapi.platform.state.AddressBook.next_node_id:type_name -> com.hedera.hapi.platform.state.NodeId
+	4,  // 10: com.hedera.hapi.platform.state.AddressBook.addresses:type_name -> com.hedera.hapi.platform.state.Address
+	5,  // 11: com.hedera.hapi.platform.state.Address.id:type_name -> com.hedera.hapi.platform.state.NodeId
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_state_platform_state_proto_init() }
@@ -583,7 +816,7 @@ func file_state_platform_state_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_state_platform_state_proto_rawDesc), len(file_state_platform_state_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

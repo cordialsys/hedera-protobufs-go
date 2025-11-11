@@ -7,6 +7,7 @@
 package roster
 
 import (
+	_ "github.com/cordialsys/hedera-protobufs-go/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -161,7 +162,7 @@ var File_state_roster_roster_state_proto protoreflect.FileDescriptor
 
 const file_state_roster_roster_state_proto_rawDesc = "" +
 	"\n" +
-	"\x1fstate/roster/roster_state.proto\x12!com.hedera.hapi.node.state.roster\"\xa3\x01\n" +
+	"\x1fstate/roster/roster_state.proto\x12!com.hedera.hapi.node.state.roster\x1a\x11basic_types.proto\"\xa3\x01\n" +
 	"\vRosterState\x122\n" +
 	"\x15candidate_roster_hash\x18\x01 \x01(\fR\x13candidateRosterHash\x12`\n" +
 	"\x12round_roster_pairs\x18\x02 \x03(\v22.com.hedera.hapi.node.state.roster.RoundRosterPairR\x10roundRosterPairs\"b\n" +

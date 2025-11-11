@@ -31,9 +31,9 @@ const (
 // address book. The transaction, once complete, enables a new consensus node
 // to join the network, and requires governing council authorization.
 //
+//   - A `NodeCreateTransactionBody` MUST be signed by the governing council.
 //   - A `NodeCreateTransactionBody` MUST be signed by the `Key` assigned to the
-//     `admin_key` field and one of those keys: treasure account (2) key,
-//     systemAdmin(50) key, or addressBookAdmin(55) key.
+//     `admin_key` field.
 //   - The newly created node information SHALL be added to the network address
 //     book information in the network state.
 //   - The new entry SHALL be created in "state" but SHALL NOT participate in
@@ -43,11 +43,9 @@ const (
 //     configuration during the next `freeze` transaction with the field
 //     `freeze_type` set to `PREPARE_UPGRADE`.
 //
-// ### Block Stream Effects
-// Upon completion the newly assigned `node_id` SHALL be recorded in
-// the transaction receipt.<br/>
-// This value SHALL be the next available node identifier.<br/>
-// Node identifiers SHALL NOT be reused.
+// ### Record Stream Effects
+// Upon completion the newly assigned `node_id` SHALL be in the transaction
+// receipt.
 type NodeCreateTransactionBody struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
@@ -62,8 +60,7 @@ type NodeCreateTransactionBody struct {
 	// *
 	// A short description of the node.
 	// <p>
-	// This value, if set, MUST NOT exceed `transaction.maxMemoUtf8Bytes`
-	// (default 100) bytes when encoded as UTF-8.<br/>
+	// This value, if set, MUST NOT exceed 100 bytes when encoded as UTF-8.<br/>
 	// This field is OPTIONAL.
 	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	// *
@@ -124,27 +121,9 @@ type NodeCreateTransactionBody struct {
 	// This key MUST sign each transaction to update this node.<br/>
 	// This field MUST contain a valid `Key` value.<br/>
 	// This field is REQUIRED and MUST NOT be set to an empty `KeyList`.
-	AdminKey *common.Key `protobuf:"bytes,7,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
-	// *
-	// A boolean flag indicating whether the node operator declines to receive
-	// node rewards.
-	// <p>
-	// If this flag is set to `true`, the node operator declines to receive
-	// node rewards.<br/>
-	DeclineReward bool `protobuf:"varint,8,opt,name=decline_reward,json=declineReward,proto3" json:"decline_reward,omitempty"`
-	// *
-	// A web proxy for gRPC from non-gRPC clients.
-	// <p>
-	// This endpoint SHALL be a Fully Qualified Domain Name (FQDN) using the HTTPS
-	// protocol, and SHALL support gRPC-Web for use by browser-based clients.<br/>
-	// This endpoint MUST be signed by a trusted certificate authority.<br/>
-	// This endpoint MUST use a valid port and SHALL be reachable over TLS.<br/>
-	// This field MAY be omitted if the node does not support gRPC-Web access.<br/>
-	// This field MUST be updated if the gRPC-Web endpoint changes.<br/>
-	// This field SHALL enable frontend clients to avoid hard-coded proxy endpoints.
-	GrpcProxyEndpoint *common.ServiceEndpoint `protobuf:"bytes,9,opt,name=grpc_proxy_endpoint,json=grpcProxyEndpoint,proto3" json:"grpc_proxy_endpoint,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	AdminKey      *common.Key `protobuf:"bytes,7,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *NodeCreateTransactionBody) Reset() {
@@ -226,25 +205,11 @@ func (x *NodeCreateTransactionBody) GetAdminKey() *common.Key {
 	return nil
 }
 
-func (x *NodeCreateTransactionBody) GetDeclineReward() bool {
-	if x != nil {
-		return x.DeclineReward
-	}
-	return false
-}
-
-func (x *NodeCreateTransactionBody) GetGrpcProxyEndpoint() *common.ServiceEndpoint {
-	if x != nil {
-		return x.GrpcProxyEndpoint
-	}
-	return nil
-}
-
 var File_node_create_proto protoreflect.FileDescriptor
 
 const file_node_create_proto_rawDesc = "" +
 	"\n" +
-	"\x11node_create.proto\x12 com.hedera.hapi.node.addressbook\x1a\x11basic_types.proto\"\xf2\x03\n" +
+	"\x11node_create.proto\x12 com.hedera.hapi.node.addressbook\x1a\x11basic_types.proto\"\x83\x03\n" +
 	"\x19NodeCreateTransactionBody\x12/\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\v2\x10.proto.AccountIDR\taccountId\x12 \n" +
@@ -254,9 +219,7 @@ const file_node_create_proto_rawDesc = "" +
 	"\x15gossip_ca_certificate\x18\x05 \x01(\fR\x13gossipCaCertificate\x122\n" +
 	"\x15grpc_certificate_hash\x18\x06 \x01(\fR\x13grpcCertificateHash\x12'\n" +
 	"\tadmin_key\x18\a \x01(\v2\n" +
-	".proto.KeyR\badminKey\x12%\n" +
-	"\x0edecline_reward\x18\b \x01(\bR\rdeclineReward\x12F\n" +
-	"\x13grpc_proxy_endpoint\x18\t \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBZ\n" +
+	".proto.KeyR\badminKeyBZ\n" +
 	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
@@ -283,12 +246,11 @@ var file_node_create_proto_depIdxs = []int32{
 	2, // 1: com.hedera.hapi.node.addressbook.NodeCreateTransactionBody.gossip_endpoint:type_name -> proto.ServiceEndpoint
 	2, // 2: com.hedera.hapi.node.addressbook.NodeCreateTransactionBody.service_endpoint:type_name -> proto.ServiceEndpoint
 	3, // 3: com.hedera.hapi.node.addressbook.NodeCreateTransactionBody.admin_key:type_name -> proto.Key
-	2, // 4: com.hedera.hapi.node.addressbook.NodeCreateTransactionBody.grpc_proxy_endpoint:type_name -> proto.ServiceEndpoint
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_node_create_proto_init() }

@@ -48,27 +48,14 @@ type GossipEvent struct {
 	// 2. The SHA-384 hash of each individual `EventTransaction`, in the order the transaction appear in the `event_transaction` field
 	Signature []byte `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 	// *
-	// A list of serialized transactions.
+	// The event transaction.
 	// <p>
 	// This field MAY contain zero transactions.<br/>
-	// Each transaction in this list SHALL be presented exactly as
-	// it was supplied to the consensus algorithm.<br/>
-	// This field MUST contain one entry for each transaction
-	// included in this gossip event.
-	Transactions [][]byte `protobuf:"bytes,4,rep,name=transactions,proto3" json:"transactions,omitempty"`
-	// *
-	// A list of EventDescriptors representing the parents of this event.<br/>
-	// The list of parents SHALL include zero or one self parents, and zero or more other parents.<br/>
-	// The first element of the list SHALL be the self parent, if one exists.<br/>
-	// The list of parents SHALL NOT include more than one parent from the same creator.
-	// <p>
-	// NOTE: This field is currently being migrated from EventCore to GossipEvent.
-	// Once the migration is complete, this field will be removed from EventCore.
-	// While migration is ongoing, the expectation is that only one of the two
-	// fields will be set, but not both.
-	Parents       []*EventDescriptor `protobuf:"bytes,5,rep,name=parents,proto3" json:"parents,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// This field MUST NOT exceed `maxTransactionCountPerEvent` entries, initially `245760`.<br/>
+	// This total size of this field MUST NOT exceed `maxTransactionBytesPerEvent`, initially `245760` bytes.
+	EventTransaction []*EventTransaction `protobuf:"bytes,3,rep,name=event_transaction,json=eventTransaction,proto3" json:"event_transaction,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *GossipEvent) Reset() {
@@ -115,16 +102,9 @@ func (x *GossipEvent) GetSignature() []byte {
 	return nil
 }
 
-func (x *GossipEvent) GetTransactions() [][]byte {
+func (x *GossipEvent) GetEventTransaction() []*EventTransaction {
 	if x != nil {
-		return x.Transactions
-	}
-	return nil
-}
-
-func (x *GossipEvent) GetParents() []*EventDescriptor {
-	if x != nil {
-		return x.Parents
+		return x.EventTransaction
 	}
 	return nil
 }
@@ -133,13 +113,12 @@ var File_event_gossip_event_proto protoreflect.FileDescriptor
 
 const file_event_gossip_event_proto_rawDesc = "" +
 	"\n" +
-	"\x18event/gossip_event.proto\x12\x1ecom.hedera.hapi.platform.event\x1a\x16event/event_core.proto\x1a\x1cevent/event_descriptor.proto\"\xea\x01\n" +
+	"\x18event/gossip_event.proto\x12\x1ecom.hedera.hapi.platform.event\x1a\x1devent/event_transaction.proto\x1a\x16event/event_core.proto\"\xd4\x01\n" +
 	"\vGossipEvent\x12H\n" +
 	"\n" +
 	"event_core\x18\x01 \x01(\v2).com.hedera.hapi.platform.event.EventCoreR\teventCore\x12\x1c\n" +
-	"\tsignature\x18\x02 \x01(\fR\tsignature\x12\"\n" +
-	"\ftransactions\x18\x04 \x03(\fR\ftransactions\x12I\n" +
-	"\aparents\x18\x05 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorR\aparentsJ\x04\b\x03\x10\x04Bc\n" +
+	"\tsignature\x18\x02 \x01(\fR\tsignature\x12]\n" +
+	"\x11event_transaction\x18\x03 \x03(\v20.com.hedera.hapi.platform.event.EventTransactionR\x10eventTransactionBc\n" +
 	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
@@ -156,13 +135,13 @@ func file_event_gossip_event_proto_rawDescGZIP() []byte {
 
 var file_event_gossip_event_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_event_gossip_event_proto_goTypes = []any{
-	(*GossipEvent)(nil),     // 0: com.hedera.hapi.platform.event.GossipEvent
-	(*EventCore)(nil),       // 1: com.hedera.hapi.platform.event.EventCore
-	(*EventDescriptor)(nil), // 2: com.hedera.hapi.platform.event.EventDescriptor
+	(*GossipEvent)(nil),      // 0: com.hedera.hapi.platform.event.GossipEvent
+	(*EventCore)(nil),        // 1: com.hedera.hapi.platform.event.EventCore
+	(*EventTransaction)(nil), // 2: com.hedera.hapi.platform.event.EventTransaction
 }
 var file_event_gossip_event_proto_depIdxs = []int32{
 	1, // 0: com.hedera.hapi.platform.event.GossipEvent.event_core:type_name -> com.hedera.hapi.platform.event.EventCore
-	2, // 1: com.hedera.hapi.platform.event.GossipEvent.parents:type_name -> com.hedera.hapi.platform.event.EventDescriptor
+	2, // 1: com.hedera.hapi.platform.event.GossipEvent.event_transaction:type_name -> com.hedera.hapi.platform.event.EventTransaction
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
@@ -175,8 +154,8 @@ func file_event_gossip_event_proto_init() {
 	if File_event_gossip_event_proto != nil {
 		return
 	}
+	file_event_event_transaction_proto_init()
 	file_event_event_core_proto_init()
-	file_event_event_descriptor_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

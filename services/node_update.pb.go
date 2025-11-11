@@ -39,8 +39,9 @@ const (
 //     configuration during the next `freeze` transaction with the field
 //     `freeze_type` set to `PREPARE_UPGRADE`.
 //
-// ### Block Stream Effects
-// None.
+// ### Record Stream Effects
+// Upon completion the `node_id` for the updated entry SHALL be in the
+// transaction receipt.
 type NodeUpdateTransactionBody struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
@@ -60,8 +61,7 @@ type NodeUpdateTransactionBody struct {
 	// *
 	// A short description of the node.
 	// <p>
-	// This value, if set, MUST NOT exceed `transaction.maxMemoUtf8Bytes`
-	// (default 100) bytes when encoded as UTF-8.<br/>
+	// This value, if set, MUST NOT exceed 100 bytes when encoded as UTF-8.<br/>
 	// If set, this value SHALL replace the previous value.
 	Description *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	// *
@@ -83,7 +83,9 @@ type NodeUpdateTransactionBody struct {
 	// details.<br/>
 	// <blockquote>Example<blockquote>
 	// Hedera Mainnet _requires_ that address be specified, and does not
-	// permit DNS name (FQDN) to be specified.
+	// permit DNS name (FQDN) to be specified.<br/>
+	// Mainnet also requires that the first entry be an "internal" IP
+	// address and the second entry be an "external" IP address.
 	// </blockquote>
 	// <blockquote>
 	// Solo, however, _requires_ DNS name (FQDN) but also permits
@@ -141,26 +143,9 @@ type NodeUpdateTransactionBody struct {
 	// update this node.<br/>
 	// If set, this field MUST contain a valid `Key` value.<br/>
 	// If set, this field MUST NOT be set to an empty `KeyList`.
-	AdminKey *common.Key `protobuf:"bytes,8,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
-	// *
-	// A boolean indicating that this node has chosen to decline node rewards
-	// distributed at the end of staking period.
-	// <p>
-	// This node SHALL NOT receive reward if this value is set, and `true`.
-	DeclineReward *wrapperspb.BoolValue `protobuf:"bytes,9,opt,name=decline_reward,json=declineReward,proto3" json:"decline_reward,omitempty"`
-	// *
-	// A web proxy for gRPC from non-gRPC clients.
-	// <p>
-	// This endpoint SHALL be a Fully Qualified Domain Name (FQDN) using the HTTPS
-	// protocol, and SHALL support gRPC-Web for use by browser-based clients.<br/>
-	// This endpoint MUST be signed by a trusted certificate authority.<br/>
-	// This endpoint MUST use a valid port and SHALL be reachable over TLS.<br/>
-	// This field MAY be omitted if the node does not support gRPC-Web access.<br/>
-	// This field MUST be updated if the gRPC-Web endpoint changes.<br/>
-	// This field SHALL enable frontend clients to avoid hard-coded proxy endpoints.
-	GrpcProxyEndpoint *common.ServiceEndpoint `protobuf:"bytes,10,opt,name=grpc_proxy_endpoint,json=grpcProxyEndpoint,proto3" json:"grpc_proxy_endpoint,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	AdminKey      *common.Key `protobuf:"bytes,8,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *NodeUpdateTransactionBody) Reset() {
@@ -249,25 +234,11 @@ func (x *NodeUpdateTransactionBody) GetAdminKey() *common.Key {
 	return nil
 }
 
-func (x *NodeUpdateTransactionBody) GetDeclineReward() *wrapperspb.BoolValue {
-	if x != nil {
-		return x.DeclineReward
-	}
-	return nil
-}
-
-func (x *NodeUpdateTransactionBody) GetGrpcProxyEndpoint() *common.ServiceEndpoint {
-	if x != nil {
-		return x.GrpcProxyEndpoint
-	}
-	return nil
-}
-
 var File_node_update_proto protoreflect.FileDescriptor
 
 const file_node_update_proto_rawDesc = "" +
 	"\n" +
-	"\x11node_update.proto\x12 com.hedera.hapi.node.addressbook\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x11basic_types.proto\"\xff\x04\n" +
+	"\x11node_update.proto\x12 com.hedera.hapi.node.addressbook\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x11basic_types.proto\"\xf4\x03\n" +
 	"\x19NodeUpdateTransactionBody\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x12/\n" +
 	"\n" +
@@ -278,10 +249,7 @@ const file_node_update_proto_rawDesc = "" +
 	"\x15gossip_ca_certificate\x18\x06 \x01(\v2\x1b.google.protobuf.BytesValueR\x13gossipCaCertificate\x12O\n" +
 	"\x15grpc_certificate_hash\x18\a \x01(\v2\x1b.google.protobuf.BytesValueR\x13grpcCertificateHash\x12'\n" +
 	"\tadmin_key\x18\b \x01(\v2\n" +
-	".proto.KeyR\badminKey\x12A\n" +
-	"\x0edecline_reward\x18\t \x01(\v2\x1a.google.protobuf.BoolValueR\rdeclineReward\x12F\n" +
-	"\x13grpc_proxy_endpoint\x18\n" +
-	" \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBZ\n" +
+	".proto.KeyR\badminKeyBZ\n" +
 	"\"com.hederahashgraph.api.proto.javaP\x01Z2github.com/cordialsys/hedera-protobufs-go/servicesb\x06proto3"
 
 var (
@@ -304,7 +272,6 @@ var file_node_update_proto_goTypes = []any{
 	(*common.ServiceEndpoint)(nil),    // 3: proto.ServiceEndpoint
 	(*wrapperspb.BytesValue)(nil),     // 4: google.protobuf.BytesValue
 	(*common.Key)(nil),                // 5: proto.Key
-	(*wrapperspb.BoolValue)(nil),      // 6: google.protobuf.BoolValue
 }
 var file_node_update_proto_depIdxs = []int32{
 	1, // 0: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.account_id:type_name -> proto.AccountID
@@ -314,13 +281,11 @@ var file_node_update_proto_depIdxs = []int32{
 	4, // 4: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.gossip_ca_certificate:type_name -> google.protobuf.BytesValue
 	4, // 5: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.grpc_certificate_hash:type_name -> google.protobuf.BytesValue
 	5, // 6: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.admin_key:type_name -> proto.Key
-	6, // 7: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.decline_reward:type_name -> google.protobuf.BoolValue
-	3, // 8: com.hedera.hapi.node.addressbook.NodeUpdateTransactionBody.grpc_proxy_endpoint:type_name -> proto.ServiceEndpoint
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_node_update_proto_init() }

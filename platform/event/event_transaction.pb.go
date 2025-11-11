@@ -33,85 +33,6 @@ const (
 )
 
 // *
-// Defines the position of an EventTransaction relative to a logical "group"
-// of EventTransaction that correspond to a single set of changes to the state
-// Merkle tree.
-type TransactionGroupRole int32
-
-const (
-	// *
-	// The EventTransaction is the only transaction in its group.
-	TransactionGroupRole_STANDALONE TransactionGroupRole = 0
-	// *
-	// The EventTransaction is a child and first in its group.
-	TransactionGroupRole_FIRST_CHILD TransactionGroupRole = 1
-	// *
-	// The EventTransaction is a child in the middle of its group.
-	TransactionGroupRole_MIDDLE_CHILD TransactionGroupRole = 2
-	// *
-	// The EventTransaction is a child and last in its group.
-	TransactionGroupRole_LAST_CHILD TransactionGroupRole = 3
-	// *
-	// The EventTransaction is a parent and first in its group.
-	TransactionGroupRole_STARTING_PARENT TransactionGroupRole = 4
-	// *
-	// The EventTransaction is a parent in the middle of its group.
-	TransactionGroupRole_PARENT TransactionGroupRole = 5
-	// *
-	// The EventTransaction is a parent and last in its group.
-	TransactionGroupRole_ENDING_PARENT TransactionGroupRole = 6
-)
-
-// Enum value maps for TransactionGroupRole.
-var (
-	TransactionGroupRole_name = map[int32]string{
-		0: "STANDALONE",
-		1: "FIRST_CHILD",
-		2: "MIDDLE_CHILD",
-		3: "LAST_CHILD",
-		4: "STARTING_PARENT",
-		5: "PARENT",
-		6: "ENDING_PARENT",
-	}
-	TransactionGroupRole_value = map[string]int32{
-		"STANDALONE":      0,
-		"FIRST_CHILD":     1,
-		"MIDDLE_CHILD":    2,
-		"LAST_CHILD":      3,
-		"STARTING_PARENT": 4,
-		"PARENT":          5,
-		"ENDING_PARENT":   6,
-	}
-)
-
-func (x TransactionGroupRole) Enum() *TransactionGroupRole {
-	p := new(TransactionGroupRole)
-	*p = x
-	return p
-}
-
-func (x TransactionGroupRole) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (TransactionGroupRole) Descriptor() protoreflect.EnumDescriptor {
-	return file_event_event_transaction_proto_enumTypes[0].Descriptor()
-}
-
-func (TransactionGroupRole) Type() protoreflect.EnumType {
-	return &file_event_event_transaction_proto_enumTypes[0]
-}
-
-func (x TransactionGroupRole) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use TransactionGroupRole.Descriptor instead.
-func (TransactionGroupRole) EnumDescriptor() ([]byte, []int) {
-	return file_event_event_transaction_proto_rawDescGZIP(), []int{0}
-}
-
-// *
 // An Event Transaction gossiped between nodes as part of events.
 //
 // Each node MUST extract this transaction and process according to the type
@@ -125,12 +46,9 @@ type EventTransaction struct {
 	//
 	//	*EventTransaction_ApplicationTransaction
 	//	*EventTransaction_StateSignatureTransaction
-	Transaction isEventTransaction_Transaction `protobuf_oneof:"transaction"`
-	// *
-	// The role of this transaction in a group of transactions.
-	TransactionGroupRole TransactionGroupRole `protobuf:"varint,3,opt,name=transaction_group_role,json=transactionGroupRole,proto3,enum=com.hedera.hapi.platform.event.TransactionGroupRole" json:"transaction_group_role,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	Transaction   isEventTransaction_Transaction `protobuf_oneof:"transaction"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *EventTransaction) Reset() {
@@ -188,13 +106,6 @@ func (x *EventTransaction) GetStateSignatureTransaction() *StateSignatureTransac
 	return nil
 }
 
-func (x *EventTransaction) GetTransactionGroupRole() TransactionGroupRole {
-	if x != nil {
-		return x.TransactionGroupRole
-	}
-	return TransactionGroupRole_STANDALONE
-}
-
 type isEventTransaction_Transaction interface {
 	isEventTransaction_Transaction()
 }
@@ -225,23 +136,11 @@ var File_event_event_transaction_proto protoreflect.FileDescriptor
 
 const file_event_event_transaction_proto_rawDesc = "" +
 	"\n" +
-	"\x1devent/event_transaction.proto\x12\x1ecom.hedera.hapi.platform.event\x1a'event/state_signature_transaction.proto\"\xc5\x02\n" +
+	"\x1devent/event_transaction.proto\x12\x1ecom.hedera.hapi.platform.event\x1a'event/state_signature_transaction.proto\"\xd9\x01\n" +
 	"\x10EventTransaction\x129\n" +
 	"\x17application_transaction\x18\x01 \x01(\fH\x00R\x16applicationTransaction\x12{\n" +
-	"\x1bstate_signature_transaction\x18\x02 \x01(\v29.com.hedera.hapi.platform.event.StateSignatureTransactionH\x00R\x19stateSignatureTransaction\x12j\n" +
-	"\x16transaction_group_role\x18\x03 \x01(\x0e24.com.hedera.hapi.platform.event.TransactionGroupRoleR\x14transactionGroupRoleB\r\n" +
-	"\vtransaction*\x8d\x01\n" +
-	"\x14TransactionGroupRole\x12\x0e\n" +
-	"\n" +
-	"STANDALONE\x10\x00\x12\x0f\n" +
-	"\vFIRST_CHILD\x10\x01\x12\x10\n" +
-	"\fMIDDLE_CHILD\x10\x02\x12\x0e\n" +
-	"\n" +
-	"LAST_CHILD\x10\x03\x12\x13\n" +
-	"\x0fSTARTING_PARENT\x10\x04\x12\n" +
-	"\n" +
-	"\x06PARENT\x10\x05\x12\x11\n" +
-	"\rENDING_PARENT\x10\x06Bc\n" +
+	"\x1bstate_signature_transaction\x18\x02 \x01(\v29.com.hedera.hapi.platform.event.StateSignatureTransactionH\x00R\x19stateSignatureTransactionB\r\n" +
+	"\vtransactionBc\n" +
 	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 
 var (
@@ -256,21 +155,18 @@ func file_event_event_transaction_proto_rawDescGZIP() []byte {
 	return file_event_event_transaction_proto_rawDescData
 }
 
-var file_event_event_transaction_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_event_event_transaction_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_event_event_transaction_proto_goTypes = []any{
-	(TransactionGroupRole)(0),         // 0: com.hedera.hapi.platform.event.TransactionGroupRole
-	(*EventTransaction)(nil),          // 1: com.hedera.hapi.platform.event.EventTransaction
-	(*StateSignatureTransaction)(nil), // 2: com.hedera.hapi.platform.event.StateSignatureTransaction
+	(*EventTransaction)(nil),          // 0: com.hedera.hapi.platform.event.EventTransaction
+	(*StateSignatureTransaction)(nil), // 1: com.hedera.hapi.platform.event.StateSignatureTransaction
 }
 var file_event_event_transaction_proto_depIdxs = []int32{
-	2, // 0: com.hedera.hapi.platform.event.EventTransaction.state_signature_transaction:type_name -> com.hedera.hapi.platform.event.StateSignatureTransaction
-	0, // 1: com.hedera.hapi.platform.event.EventTransaction.transaction_group_role:type_name -> com.hedera.hapi.platform.event.TransactionGroupRole
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1, // 0: com.hedera.hapi.platform.event.EventTransaction.state_signature_transaction:type_name -> com.hedera.hapi.platform.event.StateSignatureTransaction
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_event_event_transaction_proto_init() }
@@ -288,14 +184,13 @@ func file_event_event_transaction_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_event_event_transaction_proto_rawDesc), len(file_event_event_transaction_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_event_event_transaction_proto_goTypes,
 		DependencyIndexes: file_event_event_transaction_proto_depIdxs,
-		EnumInfos:         file_event_event_transaction_proto_enumTypes,
 		MessageInfos:      file_event_event_transaction_proto_msgTypes,
 	}.Build()
 	File_event_event_transaction_proto = out.File

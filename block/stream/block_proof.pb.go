@@ -167,13 +167,8 @@ type BlockProof struct {
 	// "secondary" root hash MUST then be verified using
 	// the value of `block_signature`.
 	SiblingHashes []*MerkleSiblingHash `protobuf:"bytes,5,rep,name=sibling_hashes,json=siblingHashes,proto3" json:"sibling_hashes,omitempty"`
-	// Types that are valid to be assigned to VerificationReference:
-	//
-	//	*BlockProof_SchemeId
-	//	*BlockProof_VerificationKey
-	VerificationReference isBlockProof_VerificationReference `protobuf_oneof:"verification_reference"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *BlockProof) Reset() {
@@ -240,54 +235,6 @@ func (x *BlockProof) GetSiblingHashes() []*MerkleSiblingHash {
 	}
 	return nil
 }
-
-func (x *BlockProof) GetVerificationReference() isBlockProof_VerificationReference {
-	if x != nil {
-		return x.VerificationReference
-	}
-	return nil
-}
-
-func (x *BlockProof) GetSchemeId() uint64 {
-	if x != nil {
-		if x, ok := x.VerificationReference.(*BlockProof_SchemeId); ok {
-			return x.SchemeId
-		}
-	}
-	return 0
-}
-
-func (x *BlockProof) GetVerificationKey() []byte {
-	if x != nil {
-		if x, ok := x.VerificationReference.(*BlockProof_VerificationKey); ok {
-			return x.VerificationKey
-		}
-	}
-	return nil
-}
-
-type isBlockProof_VerificationReference interface {
-	isBlockProof_VerificationReference()
-}
-
-type BlockProof_SchemeId struct {
-	// *
-	// The id of the hinTS scheme this signature verifies under.
-	SchemeId uint64 `protobuf:"varint,6,opt,name=scheme_id,json=schemeId,proto3,oneof"`
-}
-
-type BlockProof_VerificationKey struct {
-	// *
-	// The explicit hinTS key this signature verifies under; useful when
-	// the verifier can easily check whether a chain-of-trust proof
-	// exists for a key, but does does not have any context of the
-	// latest hinTS schemes published in the block stream.
-	VerificationKey []byte `protobuf:"bytes,7,opt,name=verification_key,json=verificationKey,proto3,oneof"`
-}
-
-func (*BlockProof_SchemeId) isBlockProof_VerificationReference() {}
-
-func (*BlockProof_VerificationKey) isBlockProof_VerificationReference() {}
 
 // *
 // A hash of a "sibling" to an entry in a Merkle tree.
@@ -368,17 +315,14 @@ var File_stream_block_proof_proto protoreflect.FileDescriptor
 
 const file_stream_block_proof_proto_rawDesc = "" +
 	"\n" +
-	"\x18stream/block_proof.proto\x12\x1ccom.hedera.hapi.block.stream\"\x85\x03\n" +
+	"\x18stream/block_proof.proto\x12\x1ccom.hedera.hapi.block.stream\"\x9f\x02\n" +
 	"\n" +
 	"BlockProof\x12\x14\n" +
 	"\x05block\x18\x01 \x01(\x04R\x05block\x127\n" +
 	"\x18previous_block_root_hash\x18\x02 \x01(\fR\x15previousBlockRootHash\x12A\n" +
 	"\x1estart_of_block_state_root_hash\x18\x03 \x01(\fR\x19startOfBlockStateRootHash\x12'\n" +
 	"\x0fblock_signature\x18\x04 \x01(\fR\x0eblockSignature\x12V\n" +
-	"\x0esibling_hashes\x18\x05 \x03(\v2/.com.hedera.hapi.block.stream.MerkleSiblingHashR\rsiblingHashes\x12\x1d\n" +
-	"\tscheme_id\x18\x06 \x01(\x04H\x00R\bschemeId\x12+\n" +
-	"\x10verification_key\x18\a \x01(\fH\x00R\x0fverificationKeyB\x18\n" +
-	"\x16verification_reference\"Q\n" +
+	"\x0esibling_hashes\x18\x05 \x03(\v2/.com.hedera.hapi.block.stream.MerkleSiblingHashR\rsiblingHashes\"Q\n" +
 	"\x11MerkleSiblingHash\x12\x19\n" +
 	"\bis_first\x18\x01 \x01(\bR\aisFirst\x12!\n" +
 	"\fsibling_hash\x18\x02 \x01(\fR\vsiblingHashB_\n" +
@@ -414,10 +358,6 @@ func init() { file_stream_block_proof_proto_init() }
 func file_stream_block_proof_proto_init() {
 	if File_stream_block_proof_proto != nil {
 		return
-	}
-	file_stream_block_proof_proto_msgTypes[0].OneofWrappers = []any{
-		(*BlockProof_SchemeId)(nil),
-		(*BlockProof_VerificationKey)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

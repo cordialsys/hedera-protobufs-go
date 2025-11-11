@@ -17,7 +17,7 @@ const (
 	COMMON_MODULE  = BASE_MODULE + "/common"
 	PROTO_DIR      = "proto"
 	PROTO_REPO     = "https://github.com/hashgraph/hedera-protobufs"
-	PROTO_REVISION = "8c27786cec93abab974309074feaef9b48a695b7"
+	PROTO_REVISION = "d5e69887fc65796c6afdcc140b5140d4133bb5f4"
 )
 
 // Common module contains proto files that are commonly referenced and could cause cyclic references

@@ -37,23 +37,21 @@ type Node struct {
 	// *
 	// A consensus node identifier.
 	// <p>
-	// Node identifiers SHALL be globally unique for a given ledger.
+	// Node identifiers SHALL be unique _within_ a shard and realm,
+	// but a node SHALL NOT, ever, serve multiple shards or realms,
+	// therefore the node identifier MAY be repeated _between_ shards and realms.
 	NodeId uint64 `protobuf:"varint,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	// *
 	// An account identifier.
 	// <p>
 	// This account SHALL be owned by the entity responsible for the node.<br/>
-	// This account SHALL be charged transaction fees for any transactions
-	// that are submitted to the network by this node and
-	// fail due diligence checks.<br/>
-	// This account SHALL be paid the node portion of transaction fees
-	// for transactions submitted by this node.
+	// This account SHALL be charged transaction fees for any transactions that
+	// are submitted to the network by this node and fail due diligence checks.
 	AccountId *common.AccountID `protobuf:"bytes,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	// *
 	// A short description of the node.
 	// <p>
-	// This value, if set, MUST NOT exceed `transaction.maxMemoUtf8Bytes`
-	// (default 100) bytes when encoded as UTF-8.
+	// This value, if set, SHALL NOT exceed 100 bytes when encoded as UTF-8.
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	// *
 	// A list of service endpoints for gossip.
@@ -72,7 +70,7 @@ type Node struct {
 	// All other entries SHALL be reserved for future use.
 	GossipEndpoint []*common.ServiceEndpoint `protobuf:"bytes,4,rep,name=gossip_endpoint,json=gossipEndpoint,proto3" json:"gossip_endpoint,omitempty"`
 	// *
-	// A list of service endpoints for client calls.
+	// A list of service endpoints for gRPC calls.
 	// <p>
 	// These endpoints SHALL represent the published endpoints to which clients
 	// may submit transactions.<br/>
@@ -109,11 +107,6 @@ type Node struct {
 	// of HBAR staked to that node.<br/>
 	// Consensus SHALL be calculated based on agreement of greater than `2/3`
 	// of the total `weight` value of all nodes on the network.
-	// <p>
-	// This field is deprecated and SHALL NOT be used when RosterLifecycle
-	// is enabled.
-	//
-	// Deprecated: Marked as deprecated in state/addressbook/node.proto.
 	Weight uint64 `protobuf:"varint,8,opt,name=weight,proto3" json:"weight,omitempty"`
 	// *
 	// A flag indicating this node is deleted.
@@ -131,27 +124,9 @@ type Node struct {
 	// This key MUST sign each transaction to update this node.<br/>
 	// This field MUST contain a valid `Key` value.<br/>
 	// This field is REQUIRED and MUST NOT be set to an empty `KeyList`.
-	AdminKey *common.Key `protobuf:"bytes,10,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
-	// *
-	// A flag indicating this node declines node rewards distributed at
-	// the end of staking period.
-	// <p>
-	// If this field is set, then this node SHALL NOT receive any node rewards
-	// distributed at the end of the staking period.
-	DeclineReward bool `protobuf:"varint,11,opt,name=decline_reward,json=declineReward,proto3" json:"decline_reward,omitempty"`
-	// *
-	// A web proxy for gRPC from non-gRPC clients.
-	// <p>
-	// This endpoint SHALL be a Fully Qualified Domain Name (FQDN) using the HTTPS
-	// protocol, and SHALL support gRPC-Web for use by browser-based clients.<br/>
-	// This endpoint MUST be signed by a trusted certificate authority.<br/>
-	// This endpoint MUST use a valid port and SHALL be reachable over TLS.<br/>
-	// This field MAY be omitted if the node does not support gRPC-Web access.<br/>
-	// This field MUST be updated if the gRPC-Web endpoint changes.<br/>
-	// This field SHALL enable frontend clients to avoid hard-coded proxy endpoints.
-	GrpcProxyEndpoint *common.ServiceEndpoint `protobuf:"bytes,12,opt,name=grpc_proxy_endpoint,json=grpcProxyEndpoint,proto3" json:"grpc_proxy_endpoint,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	AdminKey      *common.Key `protobuf:"bytes,10,opt,name=admin_key,json=adminKey,proto3" json:"admin_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Node) Reset() {
@@ -233,7 +208,6 @@ func (x *Node) GetGrpcCertificateHash() []byte {
 	return nil
 }
 
-// Deprecated: Marked as deprecated in state/addressbook/node.proto.
 func (x *Node) GetWeight() uint64 {
 	if x != nil {
 		return x.Weight
@@ -255,25 +229,11 @@ func (x *Node) GetAdminKey() *common.Key {
 	return nil
 }
 
-func (x *Node) GetDeclineReward() bool {
-	if x != nil {
-		return x.DeclineReward
-	}
-	return false
-}
-
-func (x *Node) GetGrpcProxyEndpoint() *common.ServiceEndpoint {
-	if x != nil {
-		return x.GrpcProxyEndpoint
-	}
-	return nil
-}
-
 var File_state_addressbook_node_proto protoreflect.FileDescriptor
 
 const file_state_addressbook_node_proto_rawDesc = "" +
 	"\n" +
-	"\x1cstate/addressbook/node.proto\x12&com.hedera.hapi.node.state.addressbook\x1a\x11basic_types.proto\"\xac\x04\n" +
+	"\x1cstate/addressbook/node.proto\x12&com.hedera.hapi.node.state.addressbook\x1a\x11basic_types.proto\"\xb9\x03\n" +
 	"\x04Node\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\x04R\x06nodeId\x12/\n" +
 	"\n" +
@@ -282,14 +242,12 @@ const file_state_addressbook_node_proto_rawDesc = "" +
 	"\x0fgossip_endpoint\x18\x04 \x03(\v2\x16.proto.ServiceEndpointR\x0egossipEndpoint\x12A\n" +
 	"\x10service_endpoint\x18\x05 \x03(\v2\x16.proto.ServiceEndpointR\x0fserviceEndpoint\x122\n" +
 	"\x15gossip_ca_certificate\x18\x06 \x01(\fR\x13gossipCaCertificate\x122\n" +
-	"\x15grpc_certificate_hash\x18\a \x01(\fR\x13grpcCertificateHash\x12\x1a\n" +
-	"\x06weight\x18\b \x01(\x04B\x02\x18\x01R\x06weight\x12\x18\n" +
+	"\x15grpc_certificate_hash\x18\a \x01(\fR\x13grpcCertificateHash\x12\x16\n" +
+	"\x06weight\x18\b \x01(\x04R\x06weight\x12\x18\n" +
 	"\adeleted\x18\t \x01(\bR\adeleted\x12'\n" +
 	"\tadmin_key\x18\n" +
 	" \x01(\v2\n" +
-	".proto.KeyR\badminKey\x12%\n" +
-	"\x0edecline_reward\x18\v \x01(\bR\rdeclineReward\x12F\n" +
-	"\x13grpc_proxy_endpoint\x18\f \x01(\v2\x16.proto.ServiceEndpointR\x11grpcProxyEndpointBl\n" +
+	".proto.KeyR\badminKeyBl\n" +
 	"\"com.hederahashgraph.api.proto.javaP\x01ZDgithub.com/cordialsys/hedera-protobufs-go/services/state/addressbookb\x06proto3"
 
 var (
@@ -316,12 +274,11 @@ var file_state_addressbook_node_proto_depIdxs = []int32{
 	2, // 1: com.hedera.hapi.node.state.addressbook.Node.gossip_endpoint:type_name -> proto.ServiceEndpoint
 	2, // 2: com.hedera.hapi.node.state.addressbook.Node.service_endpoint:type_name -> proto.ServiceEndpoint
 	3, // 3: com.hedera.hapi.node.state.addressbook.Node.admin_key:type_name -> proto.Key
-	2, // 4: com.hedera.hapi.node.state.addressbook.Node.grpc_proxy_endpoint:type_name -> proto.ServiceEndpoint
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_state_addressbook_node_proto_init() }

@@ -23,8 +23,7 @@
 package output
 
 import (
-	common "github.com/cordialsys/hedera-protobufs-go/common"
-	_ "github.com/cordialsys/hedera-protobufs-go/services"
+	services "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -127,20 +126,9 @@ func (*DeleteAllowanceOutput) Descriptor() ([]byte, []int) {
 // This message SHALL NOT duplicate information already contained in
 // the original transaction.
 type CreateAccountOutput struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// A newly created account identifier.<br/>
-	// This is the account identifier for the account created as part of
-	// any transaction that creates a new account.<br/>
-	// This value is necessary due to the difficulty of otherwise identifying
-	// created accounts versus the other account updates necessary for every
-	// transaction (e.g. fee payment).
-	// <p>
-	// This value SHALL be set for every account creation.
-	// This value SHALL NOT be set if no account is created.
-	CreatedAccountId *common.AccountID `protobuf:"bytes,1,opt,name=created_account_id,json=createdAccountId,proto3" json:"created_account_id,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateAccountOutput) Reset() {
@@ -171,13 +159,6 @@ func (x *CreateAccountOutput) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateAccountOutput.ProtoReflect.Descriptor instead.
 func (*CreateAccountOutput) Descriptor() ([]byte, []int) {
 	return file_stream_output_crypto_service_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *CreateAccountOutput) GetCreatedAccountId() *common.AccountID {
-	if x != nil {
-		return x.CreatedAccountId
-	}
-	return nil
 }
 
 // *
@@ -227,9 +208,14 @@ func (*DeleteAccountOutput) Descriptor() ([]byte, []int) {
 // This message SHALL NOT duplicate information already contained in
 // the original transaction.
 type CryptoTransferOutput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// *
+	// Custom fees assessed during a CryptoTransfer.
+	// <p>
+	// These fees SHALL be present in the full transfer list for the transaction.
+	AssessedCustomFees []*services.AssessedCustomFee `protobuf:"bytes,1,rep,name=assessed_custom_fees,json=assessedCustomFees,proto3" json:"assessed_custom_fees,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *CryptoTransferOutput) Reset() {
@@ -260,6 +246,13 @@ func (x *CryptoTransferOutput) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CryptoTransferOutput.ProtoReflect.Descriptor instead.
 func (*CryptoTransferOutput) Descriptor() ([]byte, []int) {
 	return file_stream_output_crypto_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CryptoTransferOutput) GetAssessedCustomFees() []*services.AssessedCustomFee {
+	if x != nil {
+		return x.AssessedCustomFees
+	}
+	return nil
 }
 
 // *
@@ -307,13 +300,13 @@ var File_stream_output_crypto_service_proto protoreflect.FileDescriptor
 
 const file_stream_output_crypto_service_proto_rawDesc = "" +
 	"\n" +
-	"\"stream/output/crypto_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11custom_fees.proto\x1a\x11basic_types.proto\"\x18\n" +
+	"\"stream/output/crypto_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11custom_fees.proto\"\x18\n" +
 	"\x16ApproveAllowanceOutput\"\x17\n" +
-	"\x15DeleteAllowanceOutput\"U\n" +
-	"\x13CreateAccountOutput\x12>\n" +
-	"\x12created_account_id\x18\x01 \x01(\v2\x10.proto.AccountIDR\x10createdAccountId\"\x15\n" +
-	"\x13DeleteAccountOutput\"\x16\n" +
-	"\x14CryptoTransferOutput\"\x15\n" +
+	"\x15DeleteAllowanceOutput\"\x15\n" +
+	"\x13CreateAccountOutput\"\x15\n" +
+	"\x13DeleteAccountOutput\"b\n" +
+	"\x14CryptoTransferOutput\x12J\n" +
+	"\x14assessed_custom_fees\x18\x01 \x03(\v2\x18.proto.AssessedCustomFeeR\x12assessedCustomFees\"\x15\n" +
 	"\x13UpdateAccountOutputBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
@@ -331,16 +324,16 @@ func file_stream_output_crypto_service_proto_rawDescGZIP() []byte {
 
 var file_stream_output_crypto_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_stream_output_crypto_service_proto_goTypes = []any{
-	(*ApproveAllowanceOutput)(nil), // 0: com.hedera.hapi.block.stream.output.ApproveAllowanceOutput
-	(*DeleteAllowanceOutput)(nil),  // 1: com.hedera.hapi.block.stream.output.DeleteAllowanceOutput
-	(*CreateAccountOutput)(nil),    // 2: com.hedera.hapi.block.stream.output.CreateAccountOutput
-	(*DeleteAccountOutput)(nil),    // 3: com.hedera.hapi.block.stream.output.DeleteAccountOutput
-	(*CryptoTransferOutput)(nil),   // 4: com.hedera.hapi.block.stream.output.CryptoTransferOutput
-	(*UpdateAccountOutput)(nil),    // 5: com.hedera.hapi.block.stream.output.UpdateAccountOutput
-	(*common.AccountID)(nil),       // 6: proto.AccountID
+	(*ApproveAllowanceOutput)(nil),     // 0: com.hedera.hapi.block.stream.output.ApproveAllowanceOutput
+	(*DeleteAllowanceOutput)(nil),      // 1: com.hedera.hapi.block.stream.output.DeleteAllowanceOutput
+	(*CreateAccountOutput)(nil),        // 2: com.hedera.hapi.block.stream.output.CreateAccountOutput
+	(*DeleteAccountOutput)(nil),        // 3: com.hedera.hapi.block.stream.output.DeleteAccountOutput
+	(*CryptoTransferOutput)(nil),       // 4: com.hedera.hapi.block.stream.output.CryptoTransferOutput
+	(*UpdateAccountOutput)(nil),        // 5: com.hedera.hapi.block.stream.output.UpdateAccountOutput
+	(*services.AssessedCustomFee)(nil), // 6: proto.AssessedCustomFee
 }
 var file_stream_output_crypto_service_proto_depIdxs = []int32{
-	6, // 0: com.hedera.hapi.block.stream.output.CreateAccountOutput.created_account_id:type_name -> proto.AccountID
+	6, // 0: com.hedera.hapi.block.stream.output.CryptoTransferOutput.assessed_custom_fees:type_name -> proto.AssessedCustomFee
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

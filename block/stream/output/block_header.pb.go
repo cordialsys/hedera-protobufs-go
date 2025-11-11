@@ -70,35 +70,86 @@ type BlockHeader struct {
 	// encountered data loss, data corruption, or unauthorized modification.
 	Number uint64 `protobuf:"varint,3,opt,name=number,proto3" json:"number,omitempty"`
 	// *
-	// The timestamp for this block.<br/>
-	// The block timestamp is the consensus time stamp of the first round
-	// in the block.
+	// A block root hash for the previous block.
 	// <p>
-	// This SHALL be a timestamp for the block, determined as follows:<br/>
-	// Given the first round within a block
+	// This value MUST match the block merkle tree root hash of the previous
+	// block in the block stream.<br/>
+	// This value SHALL be empty for the genesis block, and SHALL NOT be empty
+	// for any other block.<br/>
+	// Client systems SHOULD optimistically reject any block with a
+	// `previous_block_proof_hash` that does not match the block hash of the
+	// previous block and MAY assume the block stream has encountered data
+	// loss, data corruption, or unauthorized modification.
+	// <p>
+	// The process for computing a block hash is somewhat complex, and involves
+	// creating a "virtual" merkle tree to obtain the root merkle hash of
+	// that virtual tree.<br/>
+	// The merkle tree SHALL have a 4 part structure with 2 internal nodes,
+	// structured in a strictly binary tree.
 	// <ul>
 	//
-	//	<li>If the round contains events and transactions, the
-	//	     timestamp SHALL be the timestamp of the last transaction in
-	//	     the round.</li>
-	//	<li>If the round has events but no transactions the timestamp
-	//	    SHALL be the timestamp of the last event in the round.</li>
-	//	<li>If the round contains no events or transactions, the
-	//	    timestamp SHALL be the timestamp of the previous round plus
-	//	    1000 nanoseconds.</li>
-	//	<li>If the round contains no events or transactions and there
-	//	    is no previous round, the timestamp SHALL be the median of
-	//	    the judge created timestamps for this round.</li>
+	//	<li>The merkle tree root SHALL be the parent of both
+	//	    internal nodes.
+	//	  <ol>
+	//	    <li>The first "internal" node SHALL be the parent of the
+	//	        two "left-most" nodes.
+	//	      <ol>
+	//	        <li>The first leaf MUST be the previous block hash, and is a
+	//	            single 48-byte value.</li>
+	//	        <li>The second leaf MUST be the root of a, strictly binary,
+	//	            merkle tree composed of all "input" block items in
+	//	            the block.<br/>
+	//	            Input items SHALL be transactions, system transactions,
+	//	            and events.<br/>
+	//	            Leaf nodes in this subtree SHALL be ordered in the
+	//	            same order that the block items are encountered
+	//	            in the stream.</li>
+	//	      </ol>
+	//	    </li>
+	//	    <li>The second "internal" node SHALL be the parent of the
+	//	        two "right-most" nodes.
+	//	      <ol>
+	//	        <li>The third leaf MUST be the root of a, strictly binary,
+	//	            merkle tree composed of all "output" block items in
+	//	            the block.<br/>
+	//	            Output items SHALL be transaction result, transaction
+	//	            output, and state changes.<br/>
+	//	            Leaf nodes in this subtree SHALL be ordered in the
+	//	            same order that the block items are encountered
+	//	            in the stream.</li>
+	//	        <li>The fourth leaf MUST be the merkle tree root hash for
+	//	            network state at the end of the block, and is a single
+	//	            48-byte value.</li>
+	//	      </ol>
+	//	    </li>
+	//	  </ol>
+	//	</li>
+	//	<li>The block hash SHALL be the SHA-384 hash calculated for the root
+	//	    of this merkle tree.</li>
 	//
 	// </ul>
-	BlockTimestamp *common.Timestamp `protobuf:"bytes,4,opt,name=block_timestamp,json=blockTimestamp,proto3" json:"block_timestamp,omitempty"`
+	PreviousBlockHash []byte `protobuf:"bytes,4,opt,name=previous_block_hash,json=previousBlockHash,proto3" json:"previous_block_hash,omitempty"`
+	// *
+	// A consensus timestamp for the start of this block.
+	// <p>
+	// This SHALL be the timestamp assigned by the hashgraph consensus
+	// algorithm to the first transaction of this block.
+	FirstTransactionConsensusTime *common.Timestamp `protobuf:"bytes,5,opt,name=first_transaction_consensus_time,json=firstTransactionConsensusTime,proto3" json:"first_transaction_consensus_time,omitempty"`
 	// *
 	// A hash algorithm used for this block, including the block proof.
 	// <p>
 	// This SHOULD always be `SHA2_384`, currently.
-	HashAlgorithm common.BlockHashAlgorithm `protobuf:"varint,5,opt,name=hash_algorithm,json=hashAlgorithm,proto3,enum=proto.BlockHashAlgorithm" json:"hash_algorithm,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	HashAlgorithm common.BlockHashAlgorithm `protobuf:"varint,6,opt,name=hash_algorithm,json=hashAlgorithm,proto3,enum=proto.BlockHashAlgorithm" json:"hash_algorithm,omitempty"`
+	// *
+	// A version for the network address book.<br/>
+	// The address book version is needed to determine the correct public
+	// key(s) to use to validate block signatures and state proofs.
+	// <p>
+	// This MUST be the version of the address book that signed this
+	// block.
+	AddressBookVersion *common.SemanticVersion `protobuf:"bytes,7,opt,name=address_book_version,json=addressBookVersion,proto3" json:"address_book_version,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *BlockHeader) Reset() {
@@ -152,9 +203,16 @@ func (x *BlockHeader) GetNumber() uint64 {
 	return 0
 }
 
-func (x *BlockHeader) GetBlockTimestamp() *common.Timestamp {
+func (x *BlockHeader) GetPreviousBlockHash() []byte {
 	if x != nil {
-		return x.BlockTimestamp
+		return x.PreviousBlockHash
+	}
+	return nil
+}
+
+func (x *BlockHeader) GetFirstTransactionConsensusTime() *common.Timestamp {
+	if x != nil {
+		return x.FirstTransactionConsensusTime
 	}
 	return nil
 }
@@ -166,17 +224,26 @@ func (x *BlockHeader) GetHashAlgorithm() common.BlockHashAlgorithm {
 	return common.BlockHashAlgorithm(0)
 }
 
+func (x *BlockHeader) GetAddressBookVersion() *common.SemanticVersion {
+	if x != nil {
+		return x.AddressBookVersion
+	}
+	return nil
+}
+
 var File_stream_output_block_header_proto protoreflect.FileDescriptor
 
 const file_stream_output_block_header_proto_rawDesc = "" +
 	"\n" +
-	" stream/output/block_header.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\"\xab\x02\n" +
+	" stream/output/block_header.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\"\xc5\x03\n" +
 	"\vBlockHeader\x12D\n" +
 	"\x12hapi_proto_version\x18\x01 \x01(\v2\x16.proto.SemanticVersionR\x10hapiProtoVersion\x12A\n" +
 	"\x10software_version\x18\x02 \x01(\v2\x16.proto.SemanticVersionR\x0fsoftwareVersion\x12\x16\n" +
-	"\x06number\x18\x03 \x01(\x04R\x06number\x129\n" +
-	"\x0fblock_timestamp\x18\x04 \x01(\v2\x10.proto.TimestampR\x0eblockTimestamp\x12@\n" +
-	"\x0ehash_algorithm\x18\x05 \x01(\x0e2\x19.proto.BlockHashAlgorithmR\rhashAlgorithmBm\n" +
+	"\x06number\x18\x03 \x01(\x04R\x06number\x12.\n" +
+	"\x13previous_block_hash\x18\x04 \x01(\fR\x11previousBlockHash\x12Y\n" +
+	" first_transaction_consensus_time\x18\x05 \x01(\v2\x10.proto.TimestampR\x1dfirstTransactionConsensusTime\x12@\n" +
+	"\x0ehash_algorithm\x18\x06 \x01(\x0e2\x19.proto.BlockHashAlgorithmR\rhashAlgorithm\x12H\n" +
+	"\x14address_book_version\x18\a \x01(\v2\x16.proto.SemanticVersionR\x12addressBookVersionBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
@@ -201,13 +268,14 @@ var file_stream_output_block_header_proto_goTypes = []any{
 var file_stream_output_block_header_proto_depIdxs = []int32{
 	1, // 0: com.hedera.hapi.block.stream.output.BlockHeader.hapi_proto_version:type_name -> proto.SemanticVersion
 	1, // 1: com.hedera.hapi.block.stream.output.BlockHeader.software_version:type_name -> proto.SemanticVersion
-	2, // 2: com.hedera.hapi.block.stream.output.BlockHeader.block_timestamp:type_name -> proto.Timestamp
+	2, // 2: com.hedera.hapi.block.stream.output.BlockHeader.first_transaction_consensus_time:type_name -> proto.Timestamp
 	3, // 3: com.hedera.hapi.block.stream.output.BlockHeader.hash_algorithm:type_name -> proto.BlockHashAlgorithm
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	1, // 4: com.hedera.hapi.block.stream.output.BlockHeader.address_book_version:type_name -> proto.SemanticVersion
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_stream_output_block_header_proto_init() }

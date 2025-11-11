@@ -58,10 +58,6 @@ type EventCore struct {
 	// The list of parents SHALL include zero or one self parents, and zero or more other parents.<br/>
 	// The first element of the list SHALL be the self parent, if one exists.<br/>
 	// The list of parents SHALL NOT include more than one parent from the same creator.
-	// <p>
-	// This field is deprecated and can be removed in release 0.62
-	//
-	// Deprecated: Marked as deprecated in event/event_core.proto.
 	Parents []*EventDescriptor `protobuf:"bytes,4,rep,name=parents,proto3" json:"parents,omitempty"`
 	// *
 	// The event specification version.<br/>
@@ -124,7 +120,6 @@ func (x *EventCore) GetTimeCreated() *common.Timestamp {
 	return nil
 }
 
-// Deprecated: Marked as deprecated in event/event_core.proto.
 func (x *EventCore) GetParents() []*EventDescriptor {
 	if x != nil {
 		return x.Parents
@@ -143,13 +138,13 @@ var File_event_event_core_proto protoreflect.FileDescriptor
 
 const file_event_event_core_proto_rawDesc = "" +
 	"\n" +
-	"\x16event/event_core.proto\x12\x1ecom.hedera.hapi.platform.event\x1a\x11basic_types.proto\x1a\x1cevent/event_descriptor.proto\x1a\x0ftimestamp.proto\"\x8a\x02\n" +
+	"\x16event/event_core.proto\x12\x1ecom.hedera.hapi.platform.event\x1a\x11basic_types.proto\x1a\x1cevent/event_descriptor.proto\x1a\x0ftimestamp.proto\"\x86\x02\n" +
 	"\tEventCore\x12&\n" +
 	"\x0fcreator_node_id\x18\x01 \x01(\x03R\rcreatorNodeId\x12\x1f\n" +
 	"\vbirth_round\x18\x02 \x01(\x03R\n" +
 	"birthRound\x123\n" +
-	"\ftime_created\x18\x03 \x01(\v2\x10.proto.TimestampR\vtimeCreated\x12M\n" +
-	"\aparents\x18\x04 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorB\x02\x18\x01R\aparents\x120\n" +
+	"\ftime_created\x18\x03 \x01(\v2\x10.proto.TimestampR\vtimeCreated\x12I\n" +
+	"\aparents\x18\x04 \x03(\v2/.com.hedera.hapi.platform.event.EventDescriptorR\aparents\x120\n" +
 	"\aversion\x18\x11 \x01(\v2\x16.proto.SemanticVersionR\aversionBc\n" +
 	"%com.hedera.hapi.platform.event.legacyP\x01Z8github.com/cordialsys/hedera-protobufs-go/platform/eventb\x06proto3"
 

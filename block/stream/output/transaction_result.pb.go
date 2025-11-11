@@ -70,6 +70,12 @@ type TransactionResult struct {
 	// part of completing a user-submitted transaction.
 	ParentConsensusTimestamp *common.Timestamp `protobuf:"bytes,3,opt,name=parent_consensus_timestamp,json=parentConsensusTimestamp,proto3" json:"parent_consensus_timestamp,omitempty"`
 	// *
+	// An exchange rate set.
+	// <p>
+	// This field SHALL describe the exchange rates in effect when this
+	// transaction reached consensus.
+	ExchangeRate *services.ExchangeRateSet `protobuf:"bytes,4,opt,name=exchange_rate,json=exchangeRate,proto3" json:"exchange_rate,omitempty"`
+	// *
 	// A schedule that executed this transaction, if this transaction
 	// was scheduled.
 	// <p>
@@ -138,13 +144,8 @@ type TransactionResult struct {
 	// This SHALL be the multiplier that is applied to the transaction
 	// fees charged for this transaction.
 	CongestionPricingMultiplier uint64 `protobuf:"varint,11,opt,name=congestion_pricing_multiplier,json=congestionPricingMultiplier,proto3" json:"congestion_pricing_multiplier,omitempty"`
-	// *
-	// Custom fees assessed during a transaction execution.
-	// <p>
-	// These fees SHALL be present in the full transfer list for the transaction.
-	AssessedCustomFees []*services.AssessedCustomFee `protobuf:"bytes,12,rep,name=assessed_custom_fees,json=assessedCustomFees,proto3" json:"assessed_custom_fees,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *TransactionResult) Reset() {
@@ -198,6 +199,13 @@ func (x *TransactionResult) GetParentConsensusTimestamp() *common.Timestamp {
 	return nil
 }
 
+func (x *TransactionResult) GetExchangeRate() *services.ExchangeRateSet {
+	if x != nil {
+		return x.ExchangeRate
+	}
+	return nil
+}
+
 func (x *TransactionResult) GetScheduleRef() *common.ScheduleID {
 	if x != nil {
 		return x.ScheduleRef
@@ -247,22 +255,16 @@ func (x *TransactionResult) GetCongestionPricingMultiplier() uint64 {
 	return 0
 }
 
-func (x *TransactionResult) GetAssessedCustomFees() []*services.AssessedCustomFee {
-	if x != nil {
-		return x.AssessedCustomFees
-	}
-	return nil
-}
-
 var File_stream_output_transaction_result_proto protoreflect.FileDescriptor
 
 const file_stream_output_transaction_result_proto_rawDesc = "" +
 	"\n" +
-	"&stream/output/transaction_result.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\x1a\x11custom_fees.proto\x1a\x13response_code.proto\x1a\x0ftimestamp.proto\"\xfe\x05\n" +
+	"&stream/output/transaction_result.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11basic_types.proto\x1a\x13exchange_rate.proto\x1a\x13response_code.proto\x1a\x0ftimestamp.proto\"\xef\x05\n" +
 	"\x11TransactionResult\x12/\n" +
 	"\x06status\x18\x01 \x01(\x0e2\x17.proto.ResponseCodeEnumR\x06status\x12A\n" +
 	"\x13consensus_timestamp\x18\x02 \x01(\v2\x10.proto.TimestampR\x12consensusTimestamp\x12N\n" +
-	"\x1aparent_consensus_timestamp\x18\x03 \x01(\v2\x10.proto.TimestampR\x18parentConsensusTimestamp\x124\n" +
+	"\x1aparent_consensus_timestamp\x18\x03 \x01(\v2\x10.proto.TimestampR\x18parentConsensusTimestamp\x12;\n" +
+	"\rexchange_rate\x18\x04 \x01(\v2\x16.proto.ExchangeRateSetR\fexchangeRate\x124\n" +
 	"\fschedule_ref\x18\x05 \x01(\v2\x11.proto.ScheduleIDR\vscheduleRef\x126\n" +
 	"\x17transaction_fee_charged\x18\x06 \x01(\x04R\x15transactionFeeCharged\x128\n" +
 	"\rtransfer_list\x18\a \x01(\v2\x13.proto.TransferListR\ftransferList\x12J\n" +
@@ -270,8 +272,7 @@ const file_stream_output_transaction_result_proto_rawDesc = "" +
 	"\x1cautomatic_token_associations\x18\t \x03(\v2\x17.proto.TokenAssociationR\x1aautomaticTokenAssociations\x12F\n" +
 	"\x14paid_staking_rewards\x18\n" +
 	" \x03(\v2\x14.proto.AccountAmountR\x12paidStakingRewards\x12B\n" +
-	"\x1dcongestion_pricing_multiplier\x18\v \x01(\x04R\x1bcongestionPricingMultiplier\x12J\n" +
-	"\x14assessed_custom_fees\x18\f \x03(\v2\x18.proto.AssessedCustomFeeR\x12assessedCustomFeesBm\n" +
+	"\x1dcongestion_pricing_multiplier\x18\v \x01(\x04R\x1bcongestionPricingMultiplierBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
@@ -288,26 +289,26 @@ func file_stream_output_transaction_result_proto_rawDescGZIP() []byte {
 
 var file_stream_output_transaction_result_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_stream_output_transaction_result_proto_goTypes = []any{
-	(*TransactionResult)(nil),          // 0: com.hedera.hapi.block.stream.output.TransactionResult
-	(services.ResponseCodeEnum)(0),     // 1: proto.ResponseCodeEnum
-	(*common.Timestamp)(nil),           // 2: proto.Timestamp
-	(*common.ScheduleID)(nil),          // 3: proto.ScheduleID
-	(*common.TransferList)(nil),        // 4: proto.TransferList
-	(*common.TokenTransferList)(nil),   // 5: proto.TokenTransferList
-	(*common.TokenAssociation)(nil),    // 6: proto.TokenAssociation
-	(*common.AccountAmount)(nil),       // 7: proto.AccountAmount
-	(*services.AssessedCustomFee)(nil), // 8: proto.AssessedCustomFee
+	(*TransactionResult)(nil),        // 0: com.hedera.hapi.block.stream.output.TransactionResult
+	(services.ResponseCodeEnum)(0),   // 1: proto.ResponseCodeEnum
+	(*common.Timestamp)(nil),         // 2: proto.Timestamp
+	(*services.ExchangeRateSet)(nil), // 3: proto.ExchangeRateSet
+	(*common.ScheduleID)(nil),        // 4: proto.ScheduleID
+	(*common.TransferList)(nil),      // 5: proto.TransferList
+	(*common.TokenTransferList)(nil), // 6: proto.TokenTransferList
+	(*common.TokenAssociation)(nil),  // 7: proto.TokenAssociation
+	(*common.AccountAmount)(nil),     // 8: proto.AccountAmount
 }
 var file_stream_output_transaction_result_proto_depIdxs = []int32{
 	1, // 0: com.hedera.hapi.block.stream.output.TransactionResult.status:type_name -> proto.ResponseCodeEnum
 	2, // 1: com.hedera.hapi.block.stream.output.TransactionResult.consensus_timestamp:type_name -> proto.Timestamp
 	2, // 2: com.hedera.hapi.block.stream.output.TransactionResult.parent_consensus_timestamp:type_name -> proto.Timestamp
-	3, // 3: com.hedera.hapi.block.stream.output.TransactionResult.schedule_ref:type_name -> proto.ScheduleID
-	4, // 4: com.hedera.hapi.block.stream.output.TransactionResult.transfer_list:type_name -> proto.TransferList
-	5, // 5: com.hedera.hapi.block.stream.output.TransactionResult.token_transfer_lists:type_name -> proto.TokenTransferList
-	6, // 6: com.hedera.hapi.block.stream.output.TransactionResult.automatic_token_associations:type_name -> proto.TokenAssociation
-	7, // 7: com.hedera.hapi.block.stream.output.TransactionResult.paid_staking_rewards:type_name -> proto.AccountAmount
-	8, // 8: com.hedera.hapi.block.stream.output.TransactionResult.assessed_custom_fees:type_name -> proto.AssessedCustomFee
+	3, // 3: com.hedera.hapi.block.stream.output.TransactionResult.exchange_rate:type_name -> proto.ExchangeRateSet
+	4, // 4: com.hedera.hapi.block.stream.output.TransactionResult.schedule_ref:type_name -> proto.ScheduleID
+	5, // 5: com.hedera.hapi.block.stream.output.TransactionResult.transfer_list:type_name -> proto.TransferList
+	6, // 6: com.hedera.hapi.block.stream.output.TransactionResult.token_transfer_lists:type_name -> proto.TokenTransferList
+	7, // 7: com.hedera.hapi.block.stream.output.TransactionResult.automatic_token_associations:type_name -> proto.TokenAssociation
+	8, // 8: com.hedera.hapi.block.stream.output.TransactionResult.paid_staking_rewards:type_name -> proto.AccountAmount
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	9, // [9:9] is the sub-list for extension type_name

@@ -21,7 +21,6 @@ package stream
 
 import (
 	common "github.com/cordialsys/hedera-protobufs-go/common"
-	streams "github.com/cordialsys/hedera-protobufs-go/streams"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -46,42 +45,50 @@ const (
 // historical and current data; eliminating the need to search two sources for
 // block and block chain data.<br/>
 // Any block containing this item requires special handling.
-// - The block SHALL have a `BlockHeader`.
-//   - Some fields in the `BlockHeader` may be interpreted differently, and
-//     may depend on when the original record file was created.
+//   - The block SHALL NOT have a `BlockHeader`.
 //   - The block SHALL NOT have a `BlockProof`.
-//   - The block SHALL end with an `AddressBookProof`, which is only used for
-//     `RecordFileItem` blocks.
 //   - The block SHALL contain _exactly one_ `RecordFileItem`.
-//   - The block SHALL NOT contain any content item other than a `RecordFileItem`.
+//   - The block SHALL NOT contain any item other than a `RecordFileItem`.
 //   - The content of the `RecordFileItem` MUST be validated using the
 //     signature data and content provided herein according to the
 //     process used for Record Files prior to the creation of Block Stream.
 //   - This block item only replaces the requirement to read several
 //     individual files from cloud storage services.
-//   - The address book relevant to a particular record file SHALL be available
-//     separately as an `AddressBookProof` item.
 type RecordFileItem struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
+	// The block number of this block.
+	// <p>
+	// This value MUST be exactly `1` more than the previous block.<br/>
+	// Client systems SHOULD optimistically reject any block with a gap or
+	// reverse in `number` sequence, and MAY assume the block stream has
+	// encountered data loss, data corruption, or unauthorized modification.
+	Number uint64 `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
+	// *
 	// The consensus time the record file was produced for.<br/>
 	// This comes from the record file name.
-	CreationTime *common.Timestamp `protobuf:"bytes,1,opt,name=creation_time,json=creationTime,proto3" json:"creation_time,omitempty"`
+	CreationTime *common.Timestamp `protobuf:"bytes,2,opt,name=creation_time,json=creationTime,proto3" json:"creation_time,omitempty"`
 	// *
 	// The contents of a record file.<br/>
 	// The first 4 bytes are a 32bit int little endian version number.
 	// The versions that existed are 2,3,5 and 6.
-	RecordFileContents []byte `protobuf:"bytes,2,opt,name=record_file_contents,json=recordFileContents,proto3" json:"record_file_contents,omitempty"`
+	RecordFileContents []byte `protobuf:"bytes,3,opt,name=record_file_contents,json=recordFileContents,proto3" json:"record_file_contents,omitempty"`
 	// *
 	// The contents of sidecar files for this block.<br/>
 	// Each block can have zero or more sidecar files.
-	SidecarFileContents []*streams.SidecarFile `protobuf:"bytes,3,rep,name=sidecar_file_contents,json=sidecarFileContents,proto3" json:"sidecar_file_contents,omitempty"`
+	SidecarFileContents [][]byte `protobuf:"bytes,4,rep,name=sidecar_file_contents,json=sidecarFileContents,proto3" json:"sidecar_file_contents,omitempty"`
+	// *
+	// A hash algorithm.<br/>
+	// This is the algorithm used to hash the block.
+	// <p>
+	// This SHOULD always be `SHA2_384`.
+	HashAlgorithm common.BlockHashAlgorithm `protobuf:"varint,5,opt,name=hash_algorithm,json=hashAlgorithm,proto3,enum=proto.BlockHashAlgorithm" json:"hash_algorithm,omitempty"`
 	// *
 	// A collection of RSA signatures from consensus nodes.<br/>
 	// These signatures validate the hash of the record_file_contents field.
-	RecordFileSignatures []*RecordFileSignature `protobuf:"bytes,4,rep,name=record_file_signatures,json=recordFileSignatures,proto3" json:"record_file_signatures,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	RecordFileHashSignatures [][]byte `protobuf:"bytes,6,rep,name=record_file_hash_signatures,json=recordFileHashSignatures,proto3" json:"record_file_hash_signatures,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *RecordFileItem) Reset() {
@@ -114,6 +121,13 @@ func (*RecordFileItem) Descriptor() ([]byte, []int) {
 	return file_stream_record_file_item_proto_rawDescGZIP(), []int{0}
 }
 
+func (x *RecordFileItem) GetNumber() uint64 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
 func (x *RecordFileItem) GetCreationTime() *common.Timestamp {
 	if x != nil {
 		return x.CreationTime
@@ -128,94 +142,39 @@ func (x *RecordFileItem) GetRecordFileContents() []byte {
 	return nil
 }
 
-func (x *RecordFileItem) GetSidecarFileContents() []*streams.SidecarFile {
+func (x *RecordFileItem) GetSidecarFileContents() [][]byte {
 	if x != nil {
 		return x.SidecarFileContents
 	}
 	return nil
 }
 
-func (x *RecordFileItem) GetRecordFileSignatures() []*RecordFileSignature {
+func (x *RecordFileItem) GetHashAlgorithm() common.BlockHashAlgorithm {
 	if x != nil {
-		return x.RecordFileSignatures
+		return x.HashAlgorithm
+	}
+	return common.BlockHashAlgorithm(0)
+}
+
+func (x *RecordFileItem) GetRecordFileHashSignatures() [][]byte {
+	if x != nil {
+		return x.RecordFileHashSignatures
 	}
 	return nil
-}
-
-// *
-// A signature by a node on the SHA384 hash of the record file.
-type RecordFileSignature struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// A single RSA signature.<br/>
-	// This is the RSA signature of the node on the SHA384 hash of
-	// the record file
-	SignaturesBytes []byte `protobuf:"bytes,1,opt,name=signatures_bytes,json=signaturesBytes,proto3" json:"signatures_bytes,omitempty"`
-	// *
-	// A unique node identifier.<br/>
-	// This is the node id of the consensus node that created this signature.
-	NodeId        int32 `protobuf:"varint,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RecordFileSignature) Reset() {
-	*x = RecordFileSignature{}
-	mi := &file_stream_record_file_item_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RecordFileSignature) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RecordFileSignature) ProtoMessage() {}
-
-func (x *RecordFileSignature) ProtoReflect() protoreflect.Message {
-	mi := &file_stream_record_file_item_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RecordFileSignature.ProtoReflect.Descriptor instead.
-func (*RecordFileSignature) Descriptor() ([]byte, []int) {
-	return file_stream_record_file_item_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *RecordFileSignature) GetSignaturesBytes() []byte {
-	if x != nil {
-		return x.SignaturesBytes
-	}
-	return nil
-}
-
-func (x *RecordFileSignature) GetNodeId() int32 {
-	if x != nil {
-		return x.NodeId
-	}
-	return 0
 }
 
 var File_stream_record_file_item_proto protoreflect.FileDescriptor
 
 const file_stream_record_file_item_proto_rawDesc = "" +
 	"\n" +
-	"\x1dstream/record_file_item.proto\x12\x1ccom.hedera.hapi.block.stream\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\x1a\x12sidecar_file.proto\"\xaa\x02\n" +
-	"\x0eRecordFileItem\x125\n" +
-	"\rcreation_time\x18\x01 \x01(\v2\x10.proto.TimestampR\fcreationTime\x120\n" +
-	"\x14record_file_contents\x18\x02 \x01(\fR\x12recordFileContents\x12F\n" +
-	"\x15sidecar_file_contents\x18\x03 \x03(\v2\x12.proto.SidecarFileR\x13sidecarFileContents\x12g\n" +
-	"\x16record_file_signatures\x18\x04 \x03(\v21.com.hedera.hapi.block.stream.RecordFileSignatureR\x14recordFileSignatures\"Y\n" +
-	"\x13RecordFileSignature\x12)\n" +
-	"\x10signatures_bytes\x18\x01 \x01(\fR\x0fsignaturesBytes\x12\x17\n" +
-	"\anode_id\x18\x02 \x01(\x05R\x06nodeIdB_\n" +
+	"\x1dstream/record_file_item.proto\x12\x1ccom.hedera.hapi.block.stream\x1a\x11basic_types.proto\x1a\x0ftimestamp.proto\"\xc6\x02\n" +
+	"\x0eRecordFileItem\x12\x16\n" +
+	"\x06number\x18\x01 \x01(\x04R\x06number\x125\n" +
+	"\rcreation_time\x18\x02 \x01(\v2\x10.proto.TimestampR\fcreationTime\x120\n" +
+	"\x14record_file_contents\x18\x03 \x01(\fR\x12recordFileContents\x122\n" +
+	"\x15sidecar_file_contents\x18\x04 \x03(\fR\x13sidecarFileContents\x12@\n" +
+	"\x0ehash_algorithm\x18\x05 \x01(\x0e2\x19.proto.BlockHashAlgorithmR\rhashAlgorithm\x12=\n" +
+	"\x1brecord_file_hash_signatures\x18\x06 \x03(\fR\x18recordFileHashSignaturesB_\n" +
 	"#com.hedera.hapi.block.stream.protocP\x01Z6github.com/cordialsys/hedera-protobufs-go/block/streamb\x06proto3"
 
 var (
@@ -230,22 +189,20 @@ func file_stream_record_file_item_proto_rawDescGZIP() []byte {
 	return file_stream_record_file_item_proto_rawDescData
 }
 
-var file_stream_record_file_item_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_stream_record_file_item_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_stream_record_file_item_proto_goTypes = []any{
-	(*RecordFileItem)(nil),      // 0: com.hedera.hapi.block.stream.RecordFileItem
-	(*RecordFileSignature)(nil), // 1: com.hedera.hapi.block.stream.RecordFileSignature
-	(*common.Timestamp)(nil),    // 2: proto.Timestamp
-	(*streams.SidecarFile)(nil), // 3: proto.SidecarFile
+	(*RecordFileItem)(nil),         // 0: com.hedera.hapi.block.stream.RecordFileItem
+	(*common.Timestamp)(nil),       // 1: proto.Timestamp
+	(common.BlockHashAlgorithm)(0), // 2: proto.BlockHashAlgorithm
 }
 var file_stream_record_file_item_proto_depIdxs = []int32{
-	2, // 0: com.hedera.hapi.block.stream.RecordFileItem.creation_time:type_name -> proto.Timestamp
-	3, // 1: com.hedera.hapi.block.stream.RecordFileItem.sidecar_file_contents:type_name -> proto.SidecarFile
-	1, // 2: com.hedera.hapi.block.stream.RecordFileItem.record_file_signatures:type_name -> com.hedera.hapi.block.stream.RecordFileSignature
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1, // 0: com.hedera.hapi.block.stream.RecordFileItem.creation_time:type_name -> proto.Timestamp
+	2, // 1: com.hedera.hapi.block.stream.RecordFileItem.hash_algorithm:type_name -> proto.BlockHashAlgorithm
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_stream_record_file_item_proto_init() }
@@ -259,7 +216,7 @@ func file_stream_record_file_item_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stream_record_file_item_proto_rawDesc), len(file_stream_record_file_item_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

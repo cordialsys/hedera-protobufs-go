@@ -44,11 +44,15 @@ const (
 // >> Only a few transactions produce output that is not in the transaction
 // >> and also not reflected in state changes. All other transaction types
 // >> are _currently_ not included here. We have, however, allocated names
-// >> for those transaction types to preserve consistency if we
+// >> and indexes for those transaction types to preserve consistency if we
 // >> add them later.
 //
 // <!--
 // Reserved definitions:
+// import "stream/output/consensus_service.proto";
+//
+//	SubmitMessageOutput submit_message;
+//
 // import "stream/smart_contract_service.proto";
 //
 //	UpdateContractOutput contract_update;
@@ -69,10 +73,10 @@ const (
 //
 // import "stream/crypto_service.proto";
 //
-//	CryptoTransferOutput crypto_transfer;
 //	UpdateNodeStakeOutput update_node_stake;
 //	ApproveAllowanceOutput approve_allowance;
 //	DeleteAllowanceOutput delete_allowance;
+//	CreateAccountOutput create_account;
 //	UpdateAccountOutput update_account;
 //	DeleteAccountOutput delete_account;
 //
@@ -94,12 +98,10 @@ const (
 //	UpdateTokenFeeScheduleOutput update_token_fee_schedule;
 //	PauseTokenOutput pause_token;
 //	UnpauseTokenOutput unpause_token;
-//	TokenAirdropOutput token_airdrop;
 //
 // import "stream/consensus_service.proto";
 //
 //	DeleteTopicOutput delete_topic;
-//	SubmitMessageOutput submit_message;
 //
 // import "stream/schedule_service.proto";
 //
@@ -114,13 +116,13 @@ type TransactionOutput struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Transaction:
 	//
+	//	*TransactionOutput_CryptoTransfer
 	//	*TransactionOutput_UtilPrng
 	//	*TransactionOutput_ContractCall
 	//	*TransactionOutput_EthereumCall
 	//	*TransactionOutput_ContractCreate
 	//	*TransactionOutput_CreateSchedule
 	//	*TransactionOutput_SignSchedule
-	//	*TransactionOutput_AccountCreate
 	Transaction   isTransactionOutput_Transaction `protobuf_oneof:"transaction"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -159,6 +161,15 @@ func (*TransactionOutput) Descriptor() ([]byte, []int) {
 func (x *TransactionOutput) GetTransaction() isTransactionOutput_Transaction {
 	if x != nil {
 		return x.Transaction
+	}
+	return nil
+}
+
+func (x *TransactionOutput) GetCryptoTransfer() *CryptoTransferOutput {
+	if x != nil {
+		if x, ok := x.Transaction.(*TransactionOutput_CryptoTransfer); ok {
+			return x.CryptoTransfer
+		}
 	}
 	return nil
 }
@@ -217,64 +228,56 @@ func (x *TransactionOutput) GetSignSchedule() *SignScheduleOutput {
 	return nil
 }
 
-func (x *TransactionOutput) GetAccountCreate() *CreateAccountOutput {
-	if x != nil {
-		if x, ok := x.Transaction.(*TransactionOutput_AccountCreate); ok {
-			return x.AccountCreate
-		}
-	}
-	return nil
-}
-
 type isTransactionOutput_Transaction interface {
 	isTransactionOutput_Transaction()
+}
+
+type TransactionOutput_CryptoTransfer struct {
+	// *
+	// Output from a crypto transfer transaction.
+	CryptoTransfer *CryptoTransferOutput `protobuf:"bytes,1,opt,name=crypto_transfer,json=cryptoTransfer,proto3,oneof"`
 }
 
 type TransactionOutput_UtilPrng struct {
 	// *
 	// Output from a utilPrng transaction to request a
 	// deterministic pseudo-random number.
-	UtilPrng *UtilPrngOutput `protobuf:"bytes,1,opt,name=util_prng,json=utilPrng,proto3,oneof"`
+	UtilPrng *UtilPrngOutput `protobuf:"bytes,2,opt,name=util_prng,json=utilPrng,proto3,oneof"`
 }
 
 type TransactionOutput_ContractCall struct {
 	// *
 	// Output from a contract call transaction.
-	ContractCall *CallContractOutput `protobuf:"bytes,2,opt,name=contract_call,json=contractCall,proto3,oneof"`
+	ContractCall *CallContractOutput `protobuf:"bytes,3,opt,name=contract_call,json=contractCall,proto3,oneof"`
 }
 
 type TransactionOutput_EthereumCall struct {
 	// *
 	// Output from an ethereum call transaction.
-	EthereumCall *EthereumOutput `protobuf:"bytes,3,opt,name=ethereum_call,json=ethereumCall,proto3,oneof"`
+	EthereumCall *EthereumOutput `protobuf:"bytes,4,opt,name=ethereum_call,json=ethereumCall,proto3,oneof"`
 }
 
 type TransactionOutput_ContractCreate struct {
 	// *
 	// Output from a contract create transaction.
-	ContractCreate *CreateContractOutput `protobuf:"bytes,4,opt,name=contract_create,json=contractCreate,proto3,oneof"`
+	ContractCreate *CreateContractOutput `protobuf:"bytes,5,opt,name=contract_create,json=contractCreate,proto3,oneof"`
 }
 
 type TransactionOutput_CreateSchedule struct {
 	// *
 	// Output from a schedule create transaction that executed
 	// immediately on creation.
-	CreateSchedule *CreateScheduleOutput `protobuf:"bytes,5,opt,name=create_schedule,json=createSchedule,proto3,oneof"`
+	CreateSchedule *CreateScheduleOutput `protobuf:"bytes,6,opt,name=create_schedule,json=createSchedule,proto3,oneof"`
 }
 
 type TransactionOutput_SignSchedule struct {
 	// *
 	// Output from a schedule sign transaction that resulted in
 	// executing the scheduled transaction.
-	SignSchedule *SignScheduleOutput `protobuf:"bytes,6,opt,name=sign_schedule,json=signSchedule,proto3,oneof"`
+	SignSchedule *SignScheduleOutput `protobuf:"bytes,7,opt,name=sign_schedule,json=signSchedule,proto3,oneof"`
 }
 
-type TransactionOutput_AccountCreate struct {
-	// *
-	// Output from a transaction that includes the creation of a new
-	// CryptoService Account.
-	AccountCreate *CreateAccountOutput `protobuf:"bytes,7,opt,name=account_create,json=accountCreate,proto3,oneof"`
-}
+func (*TransactionOutput_CryptoTransfer) isTransactionOutput_Transaction() {}
 
 func (*TransactionOutput_UtilPrng) isTransactionOutput_Transaction() {}
 
@@ -288,21 +291,19 @@ func (*TransactionOutput_CreateSchedule) isTransactionOutput_Transaction() {}
 
 func (*TransactionOutput_SignSchedule) isTransactionOutput_Transaction() {}
 
-func (*TransactionOutput_AccountCreate) isTransactionOutput_Transaction() {}
-
 var File_stream_output_transaction_output_proto protoreflect.FileDescriptor
 
 const file_stream_output_transaction_output_proto_rawDesc = "" +
 	"\n" +
-	"&stream/output/transaction_output.proto\x12#com.hedera.hapi.block.stream.output\x1a$stream/output/schedule_service.proto\x1a stream/output/util_service.proto\x1a\"stream/output/crypto_service.proto\x1a!stream/output/token_service.proto\x1a*stream/output/smart_contract_service.proto\x1a%stream/output/consensus_service.proto\"\xc1\x05\n" +
-	"\x11TransactionOutput\x12R\n" +
-	"\tutil_prng\x18\x01 \x01(\v23.com.hedera.hapi.block.stream.output.UtilPrngOutputH\x00R\butilPrng\x12^\n" +
-	"\rcontract_call\x18\x02 \x01(\v27.com.hedera.hapi.block.stream.output.CallContractOutputH\x00R\fcontractCall\x12Z\n" +
-	"\rethereum_call\x18\x03 \x01(\v23.com.hedera.hapi.block.stream.output.EthereumOutputH\x00R\fethereumCall\x12d\n" +
-	"\x0fcontract_create\x18\x04 \x01(\v29.com.hedera.hapi.block.stream.output.CreateContractOutputH\x00R\x0econtractCreate\x12d\n" +
-	"\x0fcreate_schedule\x18\x05 \x01(\v29.com.hedera.hapi.block.stream.output.CreateScheduleOutputH\x00R\x0ecreateSchedule\x12^\n" +
-	"\rsign_schedule\x18\x06 \x01(\v27.com.hedera.hapi.block.stream.output.SignScheduleOutputH\x00R\fsignSchedule\x12a\n" +
-	"\x0eaccount_create\x18\a \x01(\v28.com.hedera.hapi.block.stream.output.CreateAccountOutputH\x00R\raccountCreateB\r\n" +
+	"&stream/output/transaction_output.proto\x12#com.hedera.hapi.block.stream.output\x1a$stream/output/schedule_service.proto\x1a stream/output/util_service.proto\x1a\"stream/output/crypto_service.proto\x1a*stream/output/smart_contract_service.proto\"\xc4\x05\n" +
+	"\x11TransactionOutput\x12d\n" +
+	"\x0fcrypto_transfer\x18\x01 \x01(\v29.com.hedera.hapi.block.stream.output.CryptoTransferOutputH\x00R\x0ecryptoTransfer\x12R\n" +
+	"\tutil_prng\x18\x02 \x01(\v23.com.hedera.hapi.block.stream.output.UtilPrngOutputH\x00R\butilPrng\x12^\n" +
+	"\rcontract_call\x18\x03 \x01(\v27.com.hedera.hapi.block.stream.output.CallContractOutputH\x00R\fcontractCall\x12Z\n" +
+	"\rethereum_call\x18\x04 \x01(\v23.com.hedera.hapi.block.stream.output.EthereumOutputH\x00R\fethereumCall\x12d\n" +
+	"\x0fcontract_create\x18\x05 \x01(\v29.com.hedera.hapi.block.stream.output.CreateContractOutputH\x00R\x0econtractCreate\x12d\n" +
+	"\x0fcreate_schedule\x18\x06 \x01(\v29.com.hedera.hapi.block.stream.output.CreateScheduleOutputH\x00R\x0ecreateSchedule\x12^\n" +
+	"\rsign_schedule\x18\a \x01(\v27.com.hedera.hapi.block.stream.output.SignScheduleOutputH\x00R\fsignScheduleB\r\n" +
 	"\vtransactionBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
@@ -321,22 +322,22 @@ func file_stream_output_transaction_output_proto_rawDescGZIP() []byte {
 var file_stream_output_transaction_output_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_stream_output_transaction_output_proto_goTypes = []any{
 	(*TransactionOutput)(nil),    // 0: com.hedera.hapi.block.stream.output.TransactionOutput
-	(*UtilPrngOutput)(nil),       // 1: com.hedera.hapi.block.stream.output.UtilPrngOutput
-	(*CallContractOutput)(nil),   // 2: com.hedera.hapi.block.stream.output.CallContractOutput
-	(*EthereumOutput)(nil),       // 3: com.hedera.hapi.block.stream.output.EthereumOutput
-	(*CreateContractOutput)(nil), // 4: com.hedera.hapi.block.stream.output.CreateContractOutput
-	(*CreateScheduleOutput)(nil), // 5: com.hedera.hapi.block.stream.output.CreateScheduleOutput
-	(*SignScheduleOutput)(nil),   // 6: com.hedera.hapi.block.stream.output.SignScheduleOutput
-	(*CreateAccountOutput)(nil),  // 7: com.hedera.hapi.block.stream.output.CreateAccountOutput
+	(*CryptoTransferOutput)(nil), // 1: com.hedera.hapi.block.stream.output.CryptoTransferOutput
+	(*UtilPrngOutput)(nil),       // 2: com.hedera.hapi.block.stream.output.UtilPrngOutput
+	(*CallContractOutput)(nil),   // 3: com.hedera.hapi.block.stream.output.CallContractOutput
+	(*EthereumOutput)(nil),       // 4: com.hedera.hapi.block.stream.output.EthereumOutput
+	(*CreateContractOutput)(nil), // 5: com.hedera.hapi.block.stream.output.CreateContractOutput
+	(*CreateScheduleOutput)(nil), // 6: com.hedera.hapi.block.stream.output.CreateScheduleOutput
+	(*SignScheduleOutput)(nil),   // 7: com.hedera.hapi.block.stream.output.SignScheduleOutput
 }
 var file_stream_output_transaction_output_proto_depIdxs = []int32{
-	1, // 0: com.hedera.hapi.block.stream.output.TransactionOutput.util_prng:type_name -> com.hedera.hapi.block.stream.output.UtilPrngOutput
-	2, // 1: com.hedera.hapi.block.stream.output.TransactionOutput.contract_call:type_name -> com.hedera.hapi.block.stream.output.CallContractOutput
-	3, // 2: com.hedera.hapi.block.stream.output.TransactionOutput.ethereum_call:type_name -> com.hedera.hapi.block.stream.output.EthereumOutput
-	4, // 3: com.hedera.hapi.block.stream.output.TransactionOutput.contract_create:type_name -> com.hedera.hapi.block.stream.output.CreateContractOutput
-	5, // 4: com.hedera.hapi.block.stream.output.TransactionOutput.create_schedule:type_name -> com.hedera.hapi.block.stream.output.CreateScheduleOutput
-	6, // 5: com.hedera.hapi.block.stream.output.TransactionOutput.sign_schedule:type_name -> com.hedera.hapi.block.stream.output.SignScheduleOutput
-	7, // 6: com.hedera.hapi.block.stream.output.TransactionOutput.account_create:type_name -> com.hedera.hapi.block.stream.output.CreateAccountOutput
+	1, // 0: com.hedera.hapi.block.stream.output.TransactionOutput.crypto_transfer:type_name -> com.hedera.hapi.block.stream.output.CryptoTransferOutput
+	2, // 1: com.hedera.hapi.block.stream.output.TransactionOutput.util_prng:type_name -> com.hedera.hapi.block.stream.output.UtilPrngOutput
+	3, // 2: com.hedera.hapi.block.stream.output.TransactionOutput.contract_call:type_name -> com.hedera.hapi.block.stream.output.CallContractOutput
+	4, // 3: com.hedera.hapi.block.stream.output.TransactionOutput.ethereum_call:type_name -> com.hedera.hapi.block.stream.output.EthereumOutput
+	5, // 4: com.hedera.hapi.block.stream.output.TransactionOutput.contract_create:type_name -> com.hedera.hapi.block.stream.output.CreateContractOutput
+	6, // 5: com.hedera.hapi.block.stream.output.TransactionOutput.create_schedule:type_name -> com.hedera.hapi.block.stream.output.CreateScheduleOutput
+	7, // 6: com.hedera.hapi.block.stream.output.TransactionOutput.sign_schedule:type_name -> com.hedera.hapi.block.stream.output.SignScheduleOutput
 	7, // [7:7] is the sub-list for method output_type
 	7, // [7:7] is the sub-list for method input_type
 	7, // [7:7] is the sub-list for extension type_name
@@ -352,17 +353,15 @@ func file_stream_output_transaction_output_proto_init() {
 	file_stream_output_schedule_service_proto_init()
 	file_stream_output_util_service_proto_init()
 	file_stream_output_crypto_service_proto_init()
-	file_stream_output_token_service_proto_init()
 	file_stream_output_smart_contract_service_proto_init()
-	file_stream_output_consensus_service_proto_init()
 	file_stream_output_transaction_output_proto_msgTypes[0].OneofWrappers = []any{
+		(*TransactionOutput_CryptoTransfer)(nil),
 		(*TransactionOutput_UtilPrng)(nil),
 		(*TransactionOutput_ContractCall)(nil),
 		(*TransactionOutput_EthereumCall)(nil),
 		(*TransactionOutput_ContractCreate)(nil),
 		(*TransactionOutput_CreateSchedule)(nil),
 		(*TransactionOutput_SignSchedule)(nil),
-		(*TransactionOutput_AccountCreate)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

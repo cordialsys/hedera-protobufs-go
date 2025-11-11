@@ -24,9 +24,9 @@ const (
 // *
 // A transaction body to delete a node from the network address book.
 //
-//   - A `NodeDeleteTransactionBody` MUST be signed by one of those keys:
-//     adminKey, treasure account (2) key, systemAdmin(50) key, or
-//     addressBookAdmin(55) key.
+// This transaction body SHALL be considered a "privileged transaction".
+//
+//   - A `NodeDeleteTransactionBody` MUST be signed by the governing council.
 //   - Upon success, the address book entry SHALL enter a "pending delete"
 //     state.
 //   - All address book entries pending deletion SHALL be removed from the
@@ -35,8 +35,9 @@ const (
 //   - A deleted address book node SHALL be removed entirely from network state.
 //   - A deleted address book node identifier SHALL NOT be reused.
 //
-// ### Block Stream Effects
-// None.
+// ### Record Stream Effects
+// Upon completion the "deleted" `node_id` SHALL be in the transaction
+// receipt.
 type NodeDeleteTransactionBody struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *

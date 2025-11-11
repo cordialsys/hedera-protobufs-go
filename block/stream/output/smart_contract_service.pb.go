@@ -1,7 +1,7 @@
 //*
 // #  Service
 // Block stream messages that report the results of transactions handled
-// by the `smart contract` service.
+// by the `` service.
 //
 // > REVIEW NOTE
 // >> The use of sidecar records is a bit odd here. We may find it more
@@ -47,16 +47,7 @@ const (
 // This message SHALL NOT duplicate information already contained in
 // the original transaction.
 type CallContractOutput struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// A list of additional outputs.
-	// <p>
-	// This field MAY record one or more additional outputs and smart
-	// contract state changes produced during the ethereum call
-	// transaction handling.<br/>
-	// This field SHALL NOT be set if the transaction handling did not
-	// produce additional outputs.<br/>
-	// This field is not settled and MAY be removed or modified.
+	state    protoimpl.MessageState              `protogen:"open.v1"`
 	Sidecars []*streams.TransactionSidecarRecord `protobuf:"bytes,1,rep,name=sidecars,proto3" json:"sidecars,omitempty"`
 	// *
 	// An EVM contract call result.
@@ -118,16 +109,7 @@ func (x *CallContractOutput) GetContractCallResult() *services.ContractFunctionR
 // This message SHALL NOT duplicate information already contained in
 // the original transaction.
 type CreateContractOutput struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// A list of additional outputs.
-	// <p>
-	// This field MAY record one or more additional outputs and smart
-	// contract state changes produced during the ethereum call
-	// transaction handling.<br/>
-	// This field SHALL NOT be set if the transaction handling did not
-	// produce additional outputs.<br/>
-	// This field is not settled and MAY be removed or modified.
+	state    protoimpl.MessageState              `protogen:"open.v1"`
 	Sidecars []*streams.TransactionSidecarRecord `protobuf:"bytes,1,rep,name=sidecars,proto3" json:"sidecars,omitempty"`
 	// *
 	// An EVM contract call result.
@@ -368,12 +350,7 @@ type EthereumOutput struct {
 	// An ethereum hash value.
 	// <p>
 	// This SHALL be a keccak256 hash of the ethereumData.
-	EthereumHash []byte `protobuf:"bytes,2,opt,name=ethereum_hash,json=ethereumHash,proto3" json:"ethereum_hash,omitempty"`
-	// Types that are valid to be assigned to EthResult:
-	//
-	//	*EthereumOutput_EthereumCallResult
-	//	*EthereumOutput_EthereumCreateResult
-	EthResult     isEthereumOutput_EthResult `protobuf_oneof:"eth_result"`
+	EthereumHash  []byte `protobuf:"bytes,2,opt,name=ethereum_hash,json=ethereumHash,proto3" json:"ethereum_hash,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -422,62 +399,11 @@ func (x *EthereumOutput) GetEthereumHash() []byte {
 	return nil
 }
 
-func (x *EthereumOutput) GetEthResult() isEthereumOutput_EthResult {
-	if x != nil {
-		return x.EthResult
-	}
-	return nil
-}
-
-func (x *EthereumOutput) GetEthereumCallResult() *services.ContractFunctionResult {
-	if x != nil {
-		if x, ok := x.EthResult.(*EthereumOutput_EthereumCallResult); ok {
-			return x.EthereumCallResult
-		}
-	}
-	return nil
-}
-
-func (x *EthereumOutput) GetEthereumCreateResult() *services.ContractFunctionResult {
-	if x != nil {
-		if x, ok := x.EthResult.(*EthereumOutput_EthereumCreateResult); ok {
-			return x.EthereumCreateResult
-		}
-	}
-	return nil
-}
-
-type isEthereumOutput_EthResult interface {
-	isEthereumOutput_EthResult()
-}
-
-type EthereumOutput_EthereumCallResult struct {
-	// *
-	// A result for an Ethereum Transaction executed as a call.
-	// <p>
-	// This field SHALL contain all of the data produced by the contract
-	// call transaction as well as basic accounting results.
-	EthereumCallResult *services.ContractFunctionResult `protobuf:"bytes,3,opt,name=ethereum_call_result,json=ethereumCallResult,proto3,oneof"`
-}
-
-type EthereumOutput_EthereumCreateResult struct {
-	// *
-	// A result for an Ethereum Transaction executed as a create.
-	// <p>
-	// This field SHALL contain all of the data produced by the contract
-	// create transaction as well as basic accounting results.
-	EthereumCreateResult *services.ContractFunctionResult `protobuf:"bytes,4,opt,name=ethereum_create_result,json=ethereumCreateResult,proto3,oneof"`
-}
-
-func (*EthereumOutput_EthereumCallResult) isEthereumOutput_EthResult() {}
-
-func (*EthereumOutput_EthereumCreateResult) isEthereumOutput_EthResult() {}
-
 var File_stream_output_smart_contract_service_proto protoreflect.FileDescriptor
 
 const file_stream_output_smart_contract_service_proto_rawDesc = "" +
 	"\n" +
-	"*stream/output/smart_contract_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x14contract_types.proto\x1a\x12sidecar_file.proto\"\xa2\x01\n" +
+	"*stream/output/smart_contract_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x19contract_call_local.proto\x1a\x12sidecar_file.proto\"\xa2\x01\n" +
 	"\x12CallContractOutput\x12;\n" +
 	"\bsidecars\x18\x01 \x03(\v2\x1f.proto.TransactionSidecarRecordR\bsidecars\x12O\n" +
 	"\x14contract_call_result\x18\x02 \x01(\v2\x1d.proto.ContractFunctionResultR\x12contractCallResult\"\xa8\x01\n" +
@@ -487,14 +413,10 @@ const file_stream_output_smart_contract_service_proto_rawDesc = "" +
 	"\x14UpdateContractOutput\"\x16\n" +
 	"\x14DeleteContractOutput\"\x1e\n" +
 	"\x1cSystemUnDeleteContractOutput\"\x1c\n" +
-	"\x1aSystemDeleteContractOutput\"\xaa\x02\n" +
+	"\x1aSystemDeleteContractOutput\"r\n" +
 	"\x0eEthereumOutput\x12;\n" +
 	"\bsidecars\x18\x01 \x03(\v2\x1f.proto.TransactionSidecarRecordR\bsidecars\x12#\n" +
-	"\rethereum_hash\x18\x02 \x01(\fR\fethereumHash\x12Q\n" +
-	"\x14ethereum_call_result\x18\x03 \x01(\v2\x1d.proto.ContractFunctionResultH\x00R\x12ethereumCallResult\x12U\n" +
-	"\x16ethereum_create_result\x18\x04 \x01(\v2\x1d.proto.ContractFunctionResultH\x00R\x14ethereumCreateResultB\f\n" +
-	"\n" +
-	"eth_resultBm\n" +
+	"\rethereum_hash\x18\x02 \x01(\fR\fethereumHashBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
@@ -527,23 +449,17 @@ var file_stream_output_smart_contract_service_proto_depIdxs = []int32{
 	7, // 2: com.hedera.hapi.block.stream.output.CreateContractOutput.sidecars:type_name -> proto.TransactionSidecarRecord
 	8, // 3: com.hedera.hapi.block.stream.output.CreateContractOutput.contract_create_result:type_name -> proto.ContractFunctionResult
 	7, // 4: com.hedera.hapi.block.stream.output.EthereumOutput.sidecars:type_name -> proto.TransactionSidecarRecord
-	8, // 5: com.hedera.hapi.block.stream.output.EthereumOutput.ethereum_call_result:type_name -> proto.ContractFunctionResult
-	8, // 6: com.hedera.hapi.block.stream.output.EthereumOutput.ethereum_create_result:type_name -> proto.ContractFunctionResult
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_stream_output_smart_contract_service_proto_init() }
 func file_stream_output_smart_contract_service_proto_init() {
 	if File_stream_output_smart_contract_service_proto != nil {
 		return
-	}
-	file_stream_output_smart_contract_service_proto_msgTypes[6].OneofWrappers = []any{
-		(*EthereumOutput_EthereumCallResult)(nil),
-		(*EthereumOutput_EthereumCreateResult)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

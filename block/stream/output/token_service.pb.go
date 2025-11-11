@@ -19,7 +19,6 @@
 package output
 
 import (
-	_ "github.com/cordialsys/hedera-protobufs-go/services"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -690,52 +689,11 @@ func (*UpdateTokenNftsOutput) Descriptor() ([]byte, []int) {
 	return file_stream_output_token_service_proto_rawDescGZIP(), []int{15}
 }
 
-// *
-// Block Stream data for a `tokenAirdrop` transaction.
-//
-// This message SHALL NOT duplicate information already contained in
-// the original transaction.
-type TokenAirdropOutput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TokenAirdropOutput) Reset() {
-	*x = TokenAirdropOutput{}
-	mi := &file_stream_output_token_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TokenAirdropOutput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TokenAirdropOutput) ProtoMessage() {}
-
-func (x *TokenAirdropOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_stream_output_token_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TokenAirdropOutput.ProtoReflect.Descriptor instead.
-func (*TokenAirdropOutput) Descriptor() ([]byte, []int) {
-	return file_stream_output_token_service_proto_rawDescGZIP(), []int{16}
-}
-
 var File_stream_output_token_service_proto protoreflect.FileDescriptor
 
 const file_stream_output_token_service_proto_rawDesc = "" +
 	"\n" +
-	"!stream/output/token_service.proto\x12#com.hedera.hapi.block.stream.output\x1a\x11custom_fees.proto\"\x13\n" +
+	"!stream/output/token_service.proto\x12#com.hedera.hapi.block.stream.output\"\x13\n" +
 	"\x11CreateTokenOutput\"\x1a\n" +
 	"\x18FreezeTokenAccountOutput\"\x1c\n" +
 	"\x1aUnfreezeTokenAccountOutput\"\x15\n" +
@@ -751,8 +709,7 @@ const file_stream_output_token_service_proto_rawDesc = "" +
 	"\x1cUpdateTokenFeeScheduleOutput\"\x12\n" +
 	"\x10PauseTokenOutput\"\x14\n" +
 	"\x12UnpauseTokenOutput\"\x17\n" +
-	"\x15UpdateTokenNftsOutput\"\x14\n" +
-	"\x12TokenAirdropOutputBm\n" +
+	"\x15UpdateTokenNftsOutputBm\n" +
 	"*com.hedera.hapi.block.stream.output.protocP\x01Z=github.com/cordialsys/hedera-protobufs-go/block/stream/outputb\x06proto3"
 
 var (
@@ -767,7 +724,7 @@ func file_stream_output_token_service_proto_rawDescGZIP() []byte {
 	return file_stream_output_token_service_proto_rawDescData
 }
 
-var file_stream_output_token_service_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_stream_output_token_service_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_stream_output_token_service_proto_goTypes = []any{
 	(*CreateTokenOutput)(nil),            // 0: com.hedera.hapi.block.stream.output.CreateTokenOutput
 	(*FreezeTokenAccountOutput)(nil),     // 1: com.hedera.hapi.block.stream.output.FreezeTokenAccountOutput
@@ -785,7 +742,6 @@ var file_stream_output_token_service_proto_goTypes = []any{
 	(*PauseTokenOutput)(nil),             // 13: com.hedera.hapi.block.stream.output.PauseTokenOutput
 	(*UnpauseTokenOutput)(nil),           // 14: com.hedera.hapi.block.stream.output.UnpauseTokenOutput
 	(*UpdateTokenNftsOutput)(nil),        // 15: com.hedera.hapi.block.stream.output.UpdateTokenNftsOutput
-	(*TokenAirdropOutput)(nil),           // 16: com.hedera.hapi.block.stream.output.TokenAirdropOutput
 }
 var file_stream_output_token_service_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -806,7 +762,7 @@ func file_stream_output_token_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_stream_output_token_service_proto_rawDesc), len(file_stream_output_token_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

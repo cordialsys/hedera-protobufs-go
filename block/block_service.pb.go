@@ -2,6 +2,39 @@
 // # Block Service
 // The Service API exposed by the Block Nodes.
 //
+// ## Workarounds
+// > There are incorrect elements in this file to work around bugs in the
+// > PBJ Compiler.
+// >> Issues 262, 263, 240, 218, 217, and 216 are related.
+// >
+// > Issue 263
+// >> A number of fields reference child messages, these _should_ specify
+// >> the parent message (i.e. `Parent.child field = #;`) but do not do
+// >> so due to issue 263.
+// >
+// > Issue 262
+// >> Some fields reference messages defined in other packages that share
+// >> a common prefix (e.g. `com.hedera.hapi.block.stream`). These fields
+// >> specify the entire package instead of the shorter and clearer suffix
+// >> due to issue 262
+// >
+// > Issue 240
+// >> These files currently cause PBJ integration tests to fail if included
+// >> due to issue 240.
+// >
+// > Issue 218
+// >> These files have the same value for package and java_package. Ideally
+// >> we would not specify `java_package` or the pbj comment in that situation,
+// >> but Issue 218 prevents eliding the unnecessary directives.
+// >
+// > Issue 217
+// >> These files may cause PBJ to fail compilation due to comments preceeding
+// >> the `syntax` keyword.
+// >
+// > Issue 216
+// >> These files would do well with validation support, but cannot make
+// >> use of validation, even as an advisory element, due to Issue 216.
+//
 // ### Keywords
 // The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 // "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
@@ -35,105 +68,9 @@ const (
 )
 
 // *
-// An enumeration indicating why a Publisher ended a stream.
-//
-// This enumeration describes the reason a block stream
-// (sent via `publishBlockStream`) was ended by the Publisher.
-type PublishStreamEndCode int32
-
-const (
-	// *
-	// An "unset value" flag, this value SHALL NOT be used.<br/>
-	// This status indicates the server software failed to set a
-	// status, and SHALL be considered a software defect.
-	PublishStreamEndCode_STREAM_END_UNKNOWN PublishStreamEndCode = 0
-	// *
-	// The Publisher reached a reset point.<br/>
-	// No errors occurred and the source Block-Node orderly ended the stream.
-	//
-	// Publishers SHOULD use this code to end a stream and restart
-	// occasionally. Occasionally resetting the stream increases stability and
-	// allows for routine network configuration changes.
-	PublishStreamEndCode_STREAM_END_RESET PublishStreamEndCode = 1
-	// *
-	// The delay between items was too long.<br/>
-	// The destination system did not timely acknowledge a block.
-	// <p>
-	// The source SHALL start a new stream before the failed block.
-	PublishStreamEndCode_STREAM_END_TIMEOUT PublishStreamEndCode = 2
-	// *
-	// The Publisher encountered an error.<br/>
-	// The Publisher encountered an internal error and must try again later.
-	// <p>
-	// Publishers that encounter internal logic errors, find themselves
-	// "behind" the network, or otherwise detect an unexpected situation MUST
-	// send this code and restart the stream before the failed block.
-	PublishStreamEndCode_STREAM_END_ERROR PublishStreamEndCode = 3
-	// *
-	// The Block-Node is too far behind to catch up directly.<br/>
-	// The Block-Node responded to a block header with "BEHIND" and is
-	// too far behind the Publisher.
-	// <p>
-	// The Block-Node MUST recover and "catch up" from another trustworthy
-	// Block-Node.<br/>
-	// The Publisher MAY stream items to a different Block-Node.<br/>
-	// The Publisher MAY resume streaming to this Block-Node later.<br/>
-	// The `EndOfStream` message MUST include the earliest and latest blocks
-	// currently available from the Publisher.<br/>
-	// The Block-Node SHOULD attempt to "catch up" to the _latest_ block
-	// available from the Publisher.
-	PublishStreamEndCode_STREAM_END_TOO_FAR_BEHIND PublishStreamEndCode = 4
-)
-
-// Enum value maps for PublishStreamEndCode.
-var (
-	PublishStreamEndCode_name = map[int32]string{
-		0: "STREAM_END_UNKNOWN",
-		1: "STREAM_END_RESET",
-		2: "STREAM_END_TIMEOUT",
-		3: "STREAM_END_ERROR",
-		4: "STREAM_END_TOO_FAR_BEHIND",
-	}
-	PublishStreamEndCode_value = map[string]int32{
-		"STREAM_END_UNKNOWN":        0,
-		"STREAM_END_RESET":          1,
-		"STREAM_END_TIMEOUT":        2,
-		"STREAM_END_ERROR":          3,
-		"STREAM_END_TOO_FAR_BEHIND": 4,
-	}
-)
-
-func (x PublishStreamEndCode) Enum() *PublishStreamEndCode {
-	p := new(PublishStreamEndCode)
-	*p = x
-	return p
-}
-
-func (x PublishStreamEndCode) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (PublishStreamEndCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_block_service_proto_enumTypes[0].Descriptor()
-}
-
-func (PublishStreamEndCode) Type() protoreflect.EnumType {
-	return &file_block_service_proto_enumTypes[0]
-}
-
-func (x PublishStreamEndCode) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use PublishStreamEndCode.Descriptor instead.
-func (PublishStreamEndCode) EnumDescriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{0}
-}
-
-// *
 // An enumeration indicating the status of this request.
 //
-// This enumeration SHALL describe the reason a block stream
+// This enumeration describes the reason a block stream
 // (sent via `publishBlockStream`) ended.
 type PublishStreamResponseCode int32
 
@@ -145,19 +82,14 @@ const (
 	PublishStreamResponseCode_STREAM_ITEMS_UNKNOWN PublishStreamResponseCode = 0
 	// *
 	// The request succeeded.<br/>
-	// No errors occurred and the receiving Block-Node orderly ended the stream.
-	// <p>
-	// The Publisher MAY start a new stream beginning with the next block.
+	// No errors occurred and the source node orderly ended the stream.
 	PublishStreamResponseCode_STREAM_ITEMS_SUCCESS PublishStreamResponseCode = 1
 	// *
-	// The delay between items was too long.
-	// <p>
+	// The delay between items was too long.<br/>
 	// The source MUST start a new stream before the failed block.
 	PublishStreamResponseCode_STREAM_ITEMS_TIMEOUT PublishStreamResponseCode = 2
 	// *
 	// An item was received out-of-order.<br/>
-	// This might be two headers without a proof between them, or similar.
-	// <p>
 	// The source MUST start a new stream before the failed block.
 	PublishStreamResponseCode_STREAM_ITEMS_OUT_OF_ORDER PublishStreamResponseCode = 3
 	// *
@@ -165,28 +97,16 @@ const (
 	// The source MUST start a new stream before the failed block.
 	PublishStreamResponseCode_STREAM_ITEMS_BAD_STATE_PROOF PublishStreamResponseCode = 4
 	// *
-	// The Block-Node is "behind" the Publisher.<br/>
-	// Ths Publisher has sent a block later than this Block-Node
-	// can process. The Publisher may retry by sending blocks immediately
-	// following the `block_number` returned, or may connect
-	// to another Block-Node.
+	// The block node is "behind" the publisher.<br/>
+	// Ths consensus node has sent a block later than this block node
+	// can process. The publisher may retry by sending blocks immediately
+	// following the `block_number` returned, or may end the stream and
+	// try again later.
 	// <p>
-	// Block-Nodes that are "behind" SHOULD attempt to "catch up" by requesting
-	// blocks from another Block-Node or other source of recent historical
+	// Block nodes that are "behind" SHOULD attempt to "catch up" by requesting
+	// blocks from another block node or other source of recent historical
 	// block stream data.
 	PublishStreamResponseCode_STREAM_ITEMS_BEHIND PublishStreamResponseCode = 5
-	// *
-	// The Block-Node had an internal error and cannot continue processing.<br/>
-	// The Publisher may retry again later.
-	PublishStreamResponseCode_STREAM_ITEMS_INTERNAL_ERROR PublishStreamResponseCode = 6
-	// *
-	// The Block-Node failed to store the block persistently.
-	// <p>
-	// The Publisher SHOULD start a new stream to send the block to
-	// this Block-Node, or any other reliable Block-Node.
-	// The Publisher MUST NOT discard the block until it is successfully
-	// persisted and verified (and acknowledged) by at least one Block-Node.
-	PublishStreamResponseCode_STREAM_ITEMS_PERSISTENCE_FAILED PublishStreamResponseCode = 7
 )
 
 // Enum value maps for PublishStreamResponseCode.
@@ -198,18 +118,14 @@ var (
 		3: "STREAM_ITEMS_OUT_OF_ORDER",
 		4: "STREAM_ITEMS_BAD_STATE_PROOF",
 		5: "STREAM_ITEMS_BEHIND",
-		6: "STREAM_ITEMS_INTERNAL_ERROR",
-		7: "STREAM_ITEMS_PERSISTENCE_FAILED",
 	}
 	PublishStreamResponseCode_value = map[string]int32{
-		"STREAM_ITEMS_UNKNOWN":            0,
-		"STREAM_ITEMS_SUCCESS":            1,
-		"STREAM_ITEMS_TIMEOUT":            2,
-		"STREAM_ITEMS_OUT_OF_ORDER":       3,
-		"STREAM_ITEMS_BAD_STATE_PROOF":    4,
-		"STREAM_ITEMS_BEHIND":             5,
-		"STREAM_ITEMS_INTERNAL_ERROR":     6,
-		"STREAM_ITEMS_PERSISTENCE_FAILED": 7,
+		"STREAM_ITEMS_UNKNOWN":         0,
+		"STREAM_ITEMS_SUCCESS":         1,
+		"STREAM_ITEMS_TIMEOUT":         2,
+		"STREAM_ITEMS_OUT_OF_ORDER":    3,
+		"STREAM_ITEMS_BAD_STATE_PROOF": 4,
+		"STREAM_ITEMS_BEHIND":          5,
 	}
 )
 
@@ -224,11 +140,11 @@ func (x PublishStreamResponseCode) String() string {
 }
 
 func (PublishStreamResponseCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_block_service_proto_enumTypes[1].Descriptor()
+	return file_block_service_proto_enumTypes[0].Descriptor()
 }
 
 func (PublishStreamResponseCode) Type() protoreflect.EnumType {
-	return &file_block_service_proto_enumTypes[1]
+	return &file_block_service_proto_enumTypes[0]
 }
 
 func (x PublishStreamResponseCode) Number() protoreflect.EnumNumber {
@@ -237,7 +153,7 @@ func (x PublishStreamResponseCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PublishStreamResponseCode.Descriptor instead.
 func (PublishStreamResponseCode) EnumDescriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{1}
+	return file_block_service_proto_rawDescGZIP(), []int{0}
 }
 
 // *
@@ -254,7 +170,7 @@ const (
 	// The requesting client account lacks sufficient HBAR to pay the
 	// service fee for this request.<br/>
 	// The client MAY retry the request, but MUST increase the client
-	// account balance with this Block-Node before doing so.
+	// account balance with this block node server before doing so.
 	SingleBlockResponseCode_READ_BLOCK_INSUFFICIENT_BALANCE SingleBlockResponseCode = 1
 	// *
 	// The request succeeded.<br/>
@@ -262,28 +178,26 @@ const (
 	SingleBlockResponseCode_READ_BLOCK_SUCCESS SingleBlockResponseCode = 2
 	// *
 	// The requested block was not found.<br/>
-	// Something failed and a block that should be available was
-	// not found.
-	// <p>
+	// Something failed and a block that SHOULD be available was
+	// not found.<br/>
 	// The client MAY retry the request; if this result is repeated the
-	// request SHOULD be directed to a different Block-Node.
+	// request SHOULD be directed to a different block node server.
 	SingleBlockResponseCode_READ_BLOCK_NOT_FOUND SingleBlockResponseCode = 3
 	// *
-	// The requested block is not available on this Block-Node.
-	// <p>
+	// The requested block is not available on this block node server.<br/>
 	// The client SHOULD send a `serverStatus` request to determine the
-	// lowest and highest block numbers available at this Block-Node.
+	// lowest and highest block numbers available at this block node server.
 	SingleBlockResponseCode_READ_BLOCK_NOT_AVAILABLE SingleBlockResponseCode = 4
 	// *
 	// The request for a verified block cannot be fulfilled.<br/>
-	// The client requested a verified block from a Block-Node that does not
+	// The client requested a verified block from a block node that does not
 	// offer verified blocks.
 	// <p>
 	// The client MAY retry the request with the `allow_unverified` flag set.
 	SingleBlockResponseCode_ALLOW_UNVERIFIED_REQUIRED SingleBlockResponseCode = 5
 	// *
 	// The request for a verified block cannot be fulfilled.<br/>
-	// The client requested a verified block from a Block-Node but the
+	// The client requested a verified block from a block node but the
 	// requested block is not yet verified.
 	// <p>
 	// The client MAY retry the request after a short delay
@@ -324,11 +238,11 @@ func (x SingleBlockResponseCode) String() string {
 }
 
 func (SingleBlockResponseCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_block_service_proto_enumTypes[2].Descriptor()
+	return file_block_service_proto_enumTypes[1].Descriptor()
 }
 
 func (SingleBlockResponseCode) Type() protoreflect.EnumType {
-	return &file_block_service_proto_enumTypes[2]
+	return &file_block_service_proto_enumTypes[1]
 }
 
 func (x SingleBlockResponseCode) Number() protoreflect.EnumNumber {
@@ -337,7 +251,7 @@ func (x SingleBlockResponseCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SingleBlockResponseCode.Descriptor instead.
 func (SingleBlockResponseCode) EnumDescriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2}
+	return file_block_service_proto_rawDescGZIP(), []int{1}
 }
 
 // *
@@ -355,10 +269,9 @@ const (
 	SubscribeStreamResponseCode_READ_STREAM_UNKNOWN SubscribeStreamResponseCode = 0
 	// *
 	// The requesting client account lacks sufficient HBAR to pay the
-	// service fee for this request.
-	// <p>
+	// service fee for this request.<br/>
 	// The client MAY retry the request, but MUST increase the client
-	// account balance with this Block-Node before doing so.
+	// account balance with this block node server before doing so.
 	SubscribeStreamResponseCode_READ_STREAM_INSUFFICIENT_BALANCE SubscribeStreamResponseCode = 1
 	// *
 	// The request succeeded.
@@ -380,10 +293,6 @@ const (
 	// The client MAY retry this request, but MUST change the
 	// `end_block_number` field to a valid end block.
 	SubscribeStreamResponseCode_READ_STREAM_INVALID_END_BLOCK_NUMBER SubscribeStreamResponseCode = 4
-	// *
-	// The requested stream is not available.<br/>
-	// The client MAY retry again later.
-	SubscribeStreamResponseCode_READ_STREAM_NOT_AVAILABLE SubscribeStreamResponseCode = 5
 )
 
 // Enum value maps for SubscribeStreamResponseCode.
@@ -394,7 +303,6 @@ var (
 		2: "READ_STREAM_SUCCESS",
 		3: "READ_STREAM_INVALID_START_BLOCK_NUMBER",
 		4: "READ_STREAM_INVALID_END_BLOCK_NUMBER",
-		5: "READ_STREAM_NOT_AVAILABLE",
 	}
 	SubscribeStreamResponseCode_value = map[string]int32{
 		"READ_STREAM_UNKNOWN":                    0,
@@ -402,7 +310,6 @@ var (
 		"READ_STREAM_SUCCESS":                    2,
 		"READ_STREAM_INVALID_START_BLOCK_NUMBER": 3,
 		"READ_STREAM_INVALID_END_BLOCK_NUMBER":   4,
-		"READ_STREAM_NOT_AVAILABLE":              5,
 	}
 )
 
@@ -417,11 +324,11 @@ func (x SubscribeStreamResponseCode) String() string {
 }
 
 func (SubscribeStreamResponseCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_block_service_proto_enumTypes[3].Descriptor()
+	return file_block_service_proto_enumTypes[2].Descriptor()
 }
 
 func (SubscribeStreamResponseCode) Type() protoreflect.EnumType {
-	return &file_block_service_proto_enumTypes[3]
+	return &file_block_service_proto_enumTypes[2]
 }
 
 func (x SubscribeStreamResponseCode) Number() protoreflect.EnumNumber {
@@ -430,7 +337,7 @@ func (x SubscribeStreamResponseCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SubscribeStreamResponseCode.Descriptor instead.
 func (SubscribeStreamResponseCode) EnumDescriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{3}
+	return file_block_service_proto_rawDescGZIP(), []int{2}
 }
 
 // *
@@ -445,14 +352,12 @@ const (
 	StateSnapshotResponseCode_STATE_SNAPSHOT_UNKNOWN StateSnapshotResponseCode = 0
 	// *
 	// The requesting client account lacks sufficient HBAR to pay the
-	// service fee for this request.
-	// <p>
+	// service fee for this request.<br/>
 	// The client MAY retry the request, but MUST increase the client
-	// account balance with this Block-Node before doing so.
+	// account balance with this block node server before doing so.
 	StateSnapshotResponseCode_STATE_SNAPSHOT_INSUFFICIENT_BALANCE StateSnapshotResponseCode = 1
 	// *
-	// The request succeeded.
-	// <p>
+	// The request succeeded.<br/>
 	// The full snapshot data MAY be read via the endpoint provided in the
 	// `snapshot_reference` field for the duration specified.
 	StateSnapshotResponseCode_STATE_SNAPSHOT_SUCCESS StateSnapshotResponseCode = 2
@@ -483,11 +388,11 @@ func (x StateSnapshotResponseCode) String() string {
 }
 
 func (StateSnapshotResponseCode) Descriptor() protoreflect.EnumDescriptor {
-	return file_block_service_proto_enumTypes[4].Descriptor()
+	return file_block_service_proto_enumTypes[3].Descriptor()
 }
 
 func (StateSnapshotResponseCode) Type() protoreflect.EnumType {
-	return &file_block_service_proto_enumTypes[4]
+	return &file_block_service_proto_enumTypes[3]
 }
 
 func (x StateSnapshotResponseCode) Number() protoreflect.EnumNumber {
@@ -496,34 +401,26 @@ func (x StateSnapshotResponseCode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use StateSnapshotResponseCode.Descriptor instead.
 func (StateSnapshotResponseCode) EnumDescriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{4}
+	return file_block_service_proto_rawDescGZIP(), []int{3}
 }
 
 // *
-// Publish a stream of block items.
+// Publish a stream of blocks.
 //
-// Each request in the stream MUST contain at least one `BlockItem`.<br/>
-// Each request MAY contain more than one `BlockItem`.<br/>
-// A single request MUST NOT contain `BlockItem`s from more than one block.<br/>
-// Each request MAY contain a variable number of `BlockItem`s.<br/>
+// Each item in the stream MUST contain one `BlockItem`.<br/>
 // Each Block MUST begin with a single `BlockHeader` block item.<br/>
-// If a `BlockHeader` is present in a request, it MUST be the first `BlockItem`
-// in the `block_items` list.<br/>
-// The Block-Node SHALL append each `BlockItem` to an internal structure
+// The block node SHALL append each `BlockItem` to an internal structure
 // to reconstruct full blocks.<br/>
-// The Block-Node MUST verify the block proof for each block before sending a
+// The block node MUST verify the block proof for each block before sending a
 // response message acknowledging that block.<br/>
-// Each Block MUST end with a single `BlockProof` block item.<br/>
-// If a `BlockProof` is present in a request, it MUST be the last `BlockItem`
-// in the `block_items` list.<br/>
-// The Block-Node MUST verify each Block using the `BlockProof` to
-// ensure all data was received and processed correctly.
+// Each Block MUST end with a single `BlockStateProof` block item.<br/>
+// The block node MUST verify the Block using the `BlockStateProof` to
+// ensure all data was received and processed correctly.<br/>
 type PublishStreamRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Request:
-	//
-	//	*PublishStreamRequest_BlockItems
-	Request       isPublishStreamRequest_Request `protobuf_oneof:"request"`
+	// *
+	// A single item written to the block stream.
+	BlockItem     *stream.BlockItem `protobuf:"bytes,1,opt,name=block_item,json=blockItem,proto3" json:"block_item,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -558,94 +455,9 @@ func (*PublishStreamRequest) Descriptor() ([]byte, []int) {
 	return file_block_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *PublishStreamRequest) GetRequest() isPublishStreamRequest_Request {
+func (x *PublishStreamRequest) GetBlockItem() *stream.BlockItem {
 	if x != nil {
-		return x.Request
-	}
-	return nil
-}
-
-func (x *PublishStreamRequest) GetBlockItems() *BlockItemSet {
-	if x != nil {
-		if x, ok := x.Request.(*PublishStreamRequest_BlockItems); ok {
-			return x.BlockItems
-		}
-	}
-	return nil
-}
-
-type isPublishStreamRequest_Request interface {
-	isPublishStreamRequest_Request()
-}
-
-type PublishStreamRequest_BlockItems struct {
-	// *
-	// A stream item containing one or more `BlockItem`s.
-	// <p>
-	// The full stream SHALL consist of many `block_items` messages
-	// followed by a single `status` message.
-	BlockItems *BlockItemSet `protobuf:"bytes,1,opt,name=block_items,json=blockItems,proto3,oneof"`
-}
-
-func (*PublishStreamRequest_BlockItems) isPublishStreamRequest_Request() {}
-
-// *
-// A wrapper around a repeated BlockItem.<br/>
-// This message is required so that we can include ordered lists of block
-// items as `oneof` alternatives in streams.
-//
-// Each `BlockItemSet` MUST contain at least one `BlockItem`,
-// and MAY contain up to one full block.<br/>
-// A single `BlockItemSet` SHALL NOT contain block items from
-// more than one block.<br/>
-// If a `BlockHeader` is present in a `BlockItemSet`, that item
-// MUST be the first item in the list.<br/>
-// If a `BlockProof` is present in a `BlockItemSet`, that item
-// MUST be the last item in the list.
-type BlockItemSet struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// An ordered list of `BlockItem`s.<br/>
-	// This list supports sending block items to subscribers in batches
-	// for greater channel efficiency.
-	BlockItems    []*stream.BlockItem `protobuf:"bytes,1,rep,name=block_items,json=blockItems,proto3" json:"block_items,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BlockItemSet) Reset() {
-	*x = BlockItemSet{}
-	mi := &file_block_service_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BlockItemSet) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BlockItemSet) ProtoMessage() {}
-
-func (x *BlockItemSet) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BlockItemSet.ProtoReflect.Descriptor instead.
-func (*BlockItemSet) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *BlockItemSet) GetBlockItems() []*stream.BlockItem {
-	if x != nil {
-		return x.BlockItems
+		return x.BlockItem
 	}
 	return nil
 }
@@ -654,20 +466,15 @@ func (x *BlockItemSet) GetBlockItems() []*stream.BlockItem {
 // A response to writing a block stream.
 //
 // This message is sent in response to each Block in a block stream sent
-// to a Block-Node. The block stream is sent as a stream of messages, and each
+// to a block node. The block stream is sent as a stream of messages, and each
 // message MAY be acknowledged with a message of this type.<br/>
 // Each `BlockItem` MAY be acknowledged with an `Acknowledgement`
 // response. Item acknowledgement is an OPTIONAL feature.<br/>
 // Each completed block SHALL be acknowledged with an `Acknowledgement`
 // response. Block acknowledgement is a REQUIRED feature.<br/>
 // A final response SHALL be sent with an `EndOfStream` status result after
-// the last block stream item is received, or when the Block-Node must end the
-// stream for any reason.<br/>
-// At any time, a Block-Node MAY send a `SkipBlock` response to request that
-// the Publisher skip the current block and resume with the next. When a
-// Block-Node sends a `SkipBlock`, that Block-Node SHALL subsequently send
-// an `Acknowledgement` for the same block, or SHALL send a `ResendBlock`
-// message.
+// the last block stream item is received, or when the receiving system
+// must end the stream for any reason.<br/>
 // If a failure is detected (which may include a block or block item that
 // fails validation) an `EndOfStream` response SHALL be sent with a
 // relevant error status.
@@ -676,9 +483,7 @@ type PublishStreamResponse struct {
 	// Types that are valid to be assigned to Response:
 	//
 	//	*PublishStreamResponse_Acknowledgement_
-	//	*PublishStreamResponse_EndStream
-	//	*PublishStreamResponse_SkipBlock_
-	//	*PublishStreamResponse_ResendBlock_
+	//	*PublishStreamResponse_Status
 	Response      isPublishStreamResponse_Response `protobuf_oneof:"response"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -686,7 +491,7 @@ type PublishStreamResponse struct {
 
 func (x *PublishStreamResponse) Reset() {
 	*x = PublishStreamResponse{}
-	mi := &file_block_service_proto_msgTypes[2]
+	mi := &file_block_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -698,7 +503,7 @@ func (x *PublishStreamResponse) String() string {
 func (*PublishStreamResponse) ProtoMessage() {}
 
 func (x *PublishStreamResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[2]
+	mi := &file_block_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -711,7 +516,7 @@ func (x *PublishStreamResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PublishStreamResponse.ProtoReflect.Descriptor instead.
 func (*PublishStreamResponse) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2}
+	return file_block_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *PublishStreamResponse) GetResponse() isPublishStreamResponse_Response {
@@ -730,28 +535,10 @@ func (x *PublishStreamResponse) GetAcknowledgement() *PublishStreamResponse_Ackn
 	return nil
 }
 
-func (x *PublishStreamResponse) GetEndStream() *PublishStreamResponse_EndOfStream {
+func (x *PublishStreamResponse) GetStatus() *PublishStreamResponse_EndOfStream {
 	if x != nil {
-		if x, ok := x.Response.(*PublishStreamResponse_EndStream); ok {
-			return x.EndStream
-		}
-	}
-	return nil
-}
-
-func (x *PublishStreamResponse) GetSkipBlock() *PublishStreamResponse_SkipBlock {
-	if x != nil {
-		if x, ok := x.Response.(*PublishStreamResponse_SkipBlock_); ok {
-			return x.SkipBlock
-		}
-	}
-	return nil
-}
-
-func (x *PublishStreamResponse) GetResendBlock() *PublishStreamResponse_ResendBlock {
-	if x != nil {
-		if x, ok := x.Response.(*PublishStreamResponse_ResendBlock_); ok {
-			return x.ResendBlock
+		if x, ok := x.Response.(*PublishStreamResponse_Status); ok {
+			return x.Status
 		}
 	}
 	return nil
@@ -763,35 +550,19 @@ type isPublishStreamResponse_Response interface {
 
 type PublishStreamResponse_Acknowledgement_ struct {
 	// *
-	// A response sent to acknowledge successful receipt of a block.
+	// A response sent for each block, and optionally for each item.
 	Acknowledgement *PublishStreamResponse_Acknowledgement `protobuf:"bytes,1,opt,name=acknowledgement,proto3,oneof"`
 }
 
-type PublishStreamResponse_EndStream struct {
+type PublishStreamResponse_Status struct {
 	// *
-	// A response sent to request the Publisher end the current stream.
-	EndStream *PublishStreamResponse_EndOfStream `protobuf:"bytes,2,opt,name=end_stream,json=endStream,proto3,oneof"`
-}
-
-type PublishStreamResponse_SkipBlock_ struct {
-	// *
-	// A response sent to request the Publisher skip the current block.
-	SkipBlock *PublishStreamResponse_SkipBlock `protobuf:"bytes,3,opt,name=skip_block,json=skipBlock,proto3,oneof"`
-}
-
-type PublishStreamResponse_ResendBlock_ struct {
-	// *
-	// A response sent to request the Publisher resend a skipped block.
-	ResendBlock *PublishStreamResponse_ResendBlock `protobuf:"bytes,4,opt,name=resend_block,json=resendBlock,proto3,oneof"`
+	// A response sent when a stream ends.
+	Status *PublishStreamResponse_EndOfStream `protobuf:"bytes,2,opt,name=status,proto3,oneof"`
 }
 
 func (*PublishStreamResponse_Acknowledgement_) isPublishStreamResponse_Response() {}
 
-func (*PublishStreamResponse_EndStream) isPublishStreamResponse_Response() {}
-
-func (*PublishStreamResponse_SkipBlock_) isPublishStreamResponse_Response() {}
-
-func (*PublishStreamResponse_ResendBlock_) isPublishStreamResponse_Response() {}
+func (*PublishStreamResponse_Status) isPublishStreamResponse_Response() {}
 
 // *
 // A request to read a single block.
@@ -799,10 +570,10 @@ func (*PublishStreamResponse_ResendBlock_) isPublishStreamResponse_Response() {}
 // A client system SHALL send this message to request a single block,
 // including the block state proof.<br/>
 // A client MAY request that the block be sent without verification.
-// A compliant Block-Node MAY respond to requests that allow unverified
+// A compliant Block Node MAY respond to requests that allow unverified
 // responses by returning the full requested block before verifying
 // the included block proof.<br/>
-// A compliant Block-Node MAY support _only_ requests that allow unverified
+// A compliant Block Node MAY support _only_ requests that allow unverified
 // blocks, but MUST clearly document that limitation, and MUST respond to
 // a request that does not allow unverified blocks with the
 // `ALLOW_UNVERIFIED_REQUIRED` response code.
@@ -811,7 +582,7 @@ type SingleBlockRequest struct {
 	// *
 	// The block number of a block to retrieve.
 	// <p>
-	// The requested block MUST exist on the Block-Node.<br/>
+	// The requested block MUST exist on the block node.<br/>
 	// This value MUST NOT be set if `retrieve_latest` is set `true`.<br/>
 	// This value MUST be set to a valid block number if `retrieve_latest` is
 	// unset or is set `false`.
@@ -822,9 +593,9 @@ type SingleBlockRequest struct {
 	// This might be set by a client that expects to perform its own
 	// verification and wishes lower latency or, potentially, lower cost.
 	// <p>
-	// If this value is set, then the responding Block-Node MAY respond with a
+	// If this value is set, then the responding Block Node MAY respond with a
 	// block that has not completed verification of its `BlockProof`.<br/>
-	// If this is _not_ set then the Block-Node MUST respond with either a
+	// If this is _not_ set then the Block Node MUST respond with either a
 	// fully verified and validated block, or `VERIFIED_BLOCK_UNAVAILABLE` if
 	// the requested block is not yet verified.<br/>
 	// The default value is _not set_.
@@ -842,7 +613,7 @@ type SingleBlockRequest struct {
 
 func (x *SingleBlockRequest) Reset() {
 	*x = SingleBlockRequest{}
-	mi := &file_block_service_proto_msgTypes[3]
+	mi := &file_block_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -854,7 +625,7 @@ func (x *SingleBlockRequest) String() string {
 func (*SingleBlockRequest) ProtoMessage() {}
 
 func (x *SingleBlockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[3]
+	mi := &file_block_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -867,7 +638,7 @@ func (x *SingleBlockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SingleBlockRequest.ProtoReflect.Descriptor instead.
 func (*SingleBlockRequest) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{3}
+	return file_block_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SingleBlockRequest) GetBlockNumber() uint64 {
@@ -926,7 +697,7 @@ type SingleBlockResponse struct {
 
 func (x *SingleBlockResponse) Reset() {
 	*x = SingleBlockResponse{}
-	mi := &file_block_service_proto_msgTypes[4]
+	mi := &file_block_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -938,7 +709,7 @@ func (x *SingleBlockResponse) String() string {
 func (*SingleBlockResponse) ProtoMessage() {}
 
 func (x *SingleBlockResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[4]
+	mi := &file_block_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -951,7 +722,7 @@ func (x *SingleBlockResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SingleBlockResponse.ProtoReflect.Descriptor instead.
 func (*SingleBlockResponse) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{4}
+	return file_block_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SingleBlockResponse) GetStatus() SingleBlockResponseCode {
@@ -969,17 +740,17 @@ func (x *SingleBlockResponse) GetBlock() *stream.Block {
 }
 
 // *
-// A request to stream block items from Block-Node to a client.
+// A request to stream block items from block node to a client.
 //
-// The Block-Node SHALL respond to this request with a stream of
+// The block node SHALL respond to this request with a stream of
 // `SubscribeStreamResponse` messages.<br/>
-// The Block-Node SHALL stream the full contents of the blocks requested.<br/>
+// The block node SHALL stream the full contents of the blocks requested.<br/>
 // The block items SHALL be streamed in order originally produced within
 // a block.<br/>
 // The blocks SHALL be streamed in ascending order by `block_number`.<br/>
-// The Block-Node SHALL end the stream when the last requested block has
+// The block node SHALL end the stream when the last requested block has
 // been sent.<br/>
-// The Block-Node SHALL end the stream with a response code status of SUCCESS
+// The block node SHALL end the stream with a response code status of SUCCESS
 // when the stream is complete.<br/>
 // The client SHOULD call the `serverStatus` rpc prior to constructing this
 // request to determine the available start and end blocks.
@@ -1004,13 +775,13 @@ type SubscribeStreamRequest struct {
 	//	<li>This value SHALL be the number of the last block returned.</li>
 	//	<li>This field MUST NOT be less than `start_block_number`.</li>
 	//	<li>This SHOULD be a block number that is immediately available
-	//	    from the Block-Node.</li>
-	//	<li>A Block-Node SHALL continue to stream blocks until the last
+	//	    from the block node.</li>
+	//	<li>A block node SHALL continue to stream blocks until the last
 	//	    requested block is transmitted.</li>
-	//	<li>A Block-Node MAY reject a request for a block
+	//	<li>A block node implementation MAY reject a request for a block
 	//	    that is not yet available.</li>
-	//	<li>A Block-Node MAY accept future block numbers.</li>
-	//	<li>Block-Node implementations MAY charge increased fees for such
+	//	<li>A block node implementation MAY accept future block numbers.</li>
+	//	<li>Block node implementations MAY charge increased fees for such
 	//	    "future" streams.</li>
 	//
 	// </ul>
@@ -1021,11 +792,11 @@ type SubscribeStreamRequest struct {
 	// This might be set by a client that expects to perform its own
 	// verification and wishes lower latency or, potentially, lower cost.
 	// <p>
-	// If this value is set, then the responding Block-Node MAY respond with
+	// If this value is set, then the responding Block Node MAY respond with
 	// blocks that have not (yet) completed block proof verification.<br/>
-	// If this is _not set_ then the Block-Node MUST respond with only
+	// If this is _not set_ then the Block Node MUST respond with only
 	// fully verified and validated block(s).<br/>
-	// If this is _set_, then a Block-Node MAY stream items from
+	// If this is _set_, then a Block Node MAY stream items from
 	// blocks that have not yet been verified or do not yet have
 	// a block proof available.<br/>
 	// The default value is _not set_.
@@ -1036,7 +807,7 @@ type SubscribeStreamRequest struct {
 
 func (x *SubscribeStreamRequest) Reset() {
 	*x = SubscribeStreamRequest{}
-	mi := &file_block_service_proto_msgTypes[5]
+	mi := &file_block_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1048,7 +819,7 @@ func (x *SubscribeStreamRequest) String() string {
 func (*SubscribeStreamRequest) ProtoMessage() {}
 
 func (x *SubscribeStreamRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[5]
+	mi := &file_block_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1061,7 +832,7 @@ func (x *SubscribeStreamRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeStreamRequest.ProtoReflect.Descriptor instead.
 func (*SubscribeStreamRequest) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{5}
+	return file_block_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SubscribeStreamRequest) GetStartBlockNumber() uint64 {
@@ -1088,23 +859,23 @@ func (x *SubscribeStreamRequest) GetAllowUnverified() bool {
 // *
 // One item in a stream of `subscribeBlockStream` responses.
 //
-// The Block-Node SHALL respond to a `subscribeBlockStream` request with a
+// The block node SHALL respond to a `subscribeBlockStream` request with a
 // stream of `SubscribeStreamResponse` messages.<br/>
-// The Block-Node SHALL stream the full contents of the blocks requested.<br/>
+// The block node SHALL stream the full contents of the blocks requested.<br/>
 // The block items SHALL be streamed in order originally produced within
 // a block.<br/>
 // The blocks SHALL be streamed in ascending order by `block_number`.<br/>
-// The Block-Node SHALL end the stream when the last requested block has
+// The block node SHALL end the stream when the last requested block has
 // been sent.<br/>
-// The Block-Node SHALL end the stream with a response code status of SUCCESS
+// The block node SHALL end the stream with a response code status of SUCCESS
 // when the stream is complete.<br/>
-// The Block-Node SHALL end the stream with a response code status of
+// The block node SHALL end the stream with a response code status of
 // `READ_STREAM_INVALID_START_BLOCK_NUMBER` if the start block number is
 // greater than the end block number.<br/>
-// The Block-Node SHALL end the stream with a response code status of
+// The block node SHALL end the stream with a response code status of
 // `READ_STREAM_INSUFFICIENT_BALANCE` if insufficient balance remains to
 // complete the requested stream.
-// The Block-Node SHALL make every reasonable effort to fulfill as much of the
+// The block node SHALL make every reasonable effort to fulfill as much of the
 // request as available balance supports, in the event balance is not
 // sufficient to complete the request.
 type SubscribeStreamResponse struct {
@@ -1112,7 +883,7 @@ type SubscribeStreamResponse struct {
 	// Types that are valid to be assigned to Response:
 	//
 	//	*SubscribeStreamResponse_Status
-	//	*SubscribeStreamResponse_BlockItems
+	//	*SubscribeStreamResponse_BlockItem
 	Response      isSubscribeStreamResponse_Response `protobuf_oneof:"response"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1120,7 +891,7 @@ type SubscribeStreamResponse struct {
 
 func (x *SubscribeStreamResponse) Reset() {
 	*x = SubscribeStreamResponse{}
-	mi := &file_block_service_proto_msgTypes[6]
+	mi := &file_block_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1132,7 +903,7 @@ func (x *SubscribeStreamResponse) String() string {
 func (*SubscribeStreamResponse) ProtoMessage() {}
 
 func (x *SubscribeStreamResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[6]
+	mi := &file_block_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1145,7 +916,7 @@ func (x *SubscribeStreamResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeStreamResponse.ProtoReflect.Descriptor instead.
 func (*SubscribeStreamResponse) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{6}
+	return file_block_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SubscribeStreamResponse) GetResponse() isSubscribeStreamResponse_Response {
@@ -1164,10 +935,10 @@ func (x *SubscribeStreamResponse) GetStatus() SubscribeStreamResponseCode {
 	return SubscribeStreamResponseCode_READ_STREAM_UNKNOWN
 }
 
-func (x *SubscribeStreamResponse) GetBlockItems() *BlockItemSet {
+func (x *SubscribeStreamResponse) GetBlockItem() *stream.BlockItem {
 	if x != nil {
-		if x, ok := x.Response.(*SubscribeStreamResponse_BlockItems); ok {
-			return x.BlockItems
+		if x, ok := x.Response.(*SubscribeStreamResponse_BlockItem); ok {
+			return x.BlockItem
 		}
 	}
 	return nil
@@ -1181,22 +952,22 @@ type SubscribeStreamResponse_Status struct {
 	// *
 	// A final response item describing the terminal status of this stream.
 	// <p>
-	// The Block-Node SHALL end the stream following this message.
+	// The block node server SHALL end the stream following this message.
 	Status SubscribeStreamResponseCode `protobuf:"varint,1,opt,name=status,proto3,enum=com.hedera.hapi.block.SubscribeStreamResponseCode,oneof"`
 }
 
-type SubscribeStreamResponse_BlockItems struct {
+type SubscribeStreamResponse_BlockItem struct {
 	// *
-	// A stream response item containing one or more `BlockItem`s.
+	// A stream response item containing a single `BlockItem`.
 	// <p>
-	// The full stream SHALL consist of many `block_items` messages
+	// The full response SHALL consist of many `block_item` messages
 	// followed by a single `status` message.
-	BlockItems *BlockItemSet `protobuf:"bytes,2,opt,name=block_items,json=blockItems,proto3,oneof"`
+	BlockItem *stream.BlockItem `protobuf:"bytes,2,opt,name=block_item,json=blockItem,proto3,oneof"`
 }
 
 func (*SubscribeStreamResponse_Status) isSubscribeStreamResponse_Response() {}
 
-func (*SubscribeStreamResponse_BlockItems) isSubscribeStreamResponse_Response() {}
+func (*SubscribeStreamResponse_BlockItem) isSubscribeStreamResponse_Response() {}
 
 // *
 // A request to read a state snapshot.
@@ -1204,11 +975,11 @@ func (*SubscribeStreamResponse_BlockItems) isSubscribeStreamResponse_Response() 
 // A state snapshot is a full copy of the network state at the completion of a
 // particular block.
 //
-// This request MUST contain a block number that has already reached this
-// Block-Node and completed verification, or request the "latest" snapshot.<br/>
-// This request MAY specify the "latest" snapshot, and the Block-Node SHALL
+// This request MUST contain a block number that has already reached this block
+// node and completed verification, or request the "latest" snapshot.<br/>
+// This request MAY specify the "latest" snapshot, and the block node SHALL
 // respond with a reference to a snapshot containing the most recent contents
-// of the network state known to that Block-Node.
+// of the network state known to that block node.
 type StateSnapshotRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
@@ -1218,7 +989,7 @@ type StateSnapshotRequest struct {
 	// returned.<br/>
 	// If `retrieve_latest` is set `true` this field SHOULD NOT be set
 	// and SHALL be ignored.<br/>
-	// A Block-Node MAY reject any request with a non-default
+	// A block node implementation MAY reject any request with a non-default
 	// value for this field, but MUST clearly document that behavior.
 	LastBlockNumber uint64 `protobuf:"varint,2,opt,name=last_block_number,json=lastBlockNumber,proto3" json:"last_block_number,omitempty"`
 	// *
@@ -1228,7 +999,7 @@ type StateSnapshotRequest struct {
 	// available.<br/>
 	// If this value is set to `true` then `last_block_number` SHOULD NOT be
 	// set and SHALL be ignored.<br/>
-	// A Block-Node MAY reject any request with that does _not_
+	// A block node implementation MAY reject any request with that does _not_
 	// set this field `true`, but MUST clearly document that behavior.
 	RetrieveLatest bool `protobuf:"varint,3,opt,name=retrieve_latest,json=retrieveLatest,proto3" json:"retrieve_latest,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -1237,7 +1008,7 @@ type StateSnapshotRequest struct {
 
 func (x *StateSnapshotRequest) Reset() {
 	*x = StateSnapshotRequest{}
-	mi := &file_block_service_proto_msgTypes[7]
+	mi := &file_block_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1249,7 +1020,7 @@ func (x *StateSnapshotRequest) String() string {
 func (*StateSnapshotRequest) ProtoMessage() {}
 
 func (x *StateSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[7]
+	mi := &file_block_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1262,7 +1033,7 @@ func (x *StateSnapshotRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateSnapshotRequest.ProtoReflect.Descriptor instead.
 func (*StateSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{7}
+	return file_block_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *StateSnapshotRequest) GetLastBlockNumber() uint64 {
@@ -1306,9 +1077,8 @@ type StateSnapshotResponse struct {
 	// <blockquote>REVIEW NOTE<blockquote>
 	// This is TEMPORARY.  We have not yet designed how state snapshots may
 	// be sent. One idea is to use `Any` and let implementations decide;
-	// another is to use a time limited URL (with the same login as the
-	// Block-Node server); another is to use a customer-pays cloud
-	// storage bucket.
+	// another is to use a time limited URL (with the same login as the block
+	// node server); another is to use a customer-pays cloud storage bucket.
 	// </blockquote></blockquote>
 	SnapshotReference string `protobuf:"bytes,3,opt,name=snapshot_reference,json=snapshotReference,proto3" json:"snapshot_reference,omitempty"`
 	unknownFields     protoimpl.UnknownFields
@@ -1317,7 +1087,7 @@ type StateSnapshotResponse struct {
 
 func (x *StateSnapshotResponse) Reset() {
 	*x = StateSnapshotResponse{}
-	mi := &file_block_service_proto_msgTypes[8]
+	mi := &file_block_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1329,7 +1099,7 @@ func (x *StateSnapshotResponse) String() string {
 func (*StateSnapshotResponse) ProtoMessage() {}
 
 func (x *StateSnapshotResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[8]
+	mi := &file_block_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1342,7 +1112,7 @@ func (x *StateSnapshotResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateSnapshotResponse.ProtoReflect.Descriptor instead.
 func (*StateSnapshotResponse) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{8}
+	return file_block_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *StateSnapshotResponse) GetStatus() StateSnapshotResponseCode {
@@ -1367,7 +1137,7 @@ func (x *StateSnapshotResponse) GetSnapshotReference() string {
 }
 
 // *
-// A request for the status of a Block-Node.
+// A request for the status of a block node server.
 type ServerStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -1376,7 +1146,7 @@ type ServerStatusRequest struct {
 
 func (x *ServerStatusRequest) Reset() {
 	*x = ServerStatusRequest{}
-	mi := &file_block_service_proto_msgTypes[9]
+	mi := &file_block_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1388,7 +1158,7 @@ func (x *ServerStatusRequest) String() string {
 func (*ServerStatusRequest) ProtoMessage() {}
 
 func (x *ServerStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[9]
+	mi := &file_block_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1401,14 +1171,14 @@ func (x *ServerStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServerStatusRequest.ProtoReflect.Descriptor instead.
 func (*ServerStatusRequest) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{9}
+	return file_block_service_proto_rawDescGZIP(), []int{8}
 }
 
 // *
 // A response to a server status request.
 //
 // This message SHALL provide a client with information needed to successfully
-// query this Block-Node for a block, stream of blocks, or
+// query this block node server for a block, stream of blocks, or
 // state snapshot.<br/>
 // A request for blocks between `first_available_block` and
 // `last_available_block`, inclusive, SHOULD succeed. Any request for blocks
@@ -1416,27 +1186,27 @@ func (*ServerStatusRequest) Descriptor() ([]byte, []int) {
 type ServerStatusResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
-	// The lowest numbered block available on this Block-Node.
+	// The lowest numbered block available on this block node server.
 	// <p>
 	// Any request for a block with lower number than this value SHALL fail
 	// with a status value indicating and invalid start block number.
 	FirstAvailableBlock uint64 `protobuf:"varint,1,opt,name=first_available_block,json=firstAvailableBlock,proto3" json:"first_available_block,omitempty"`
 	// *
-	// The greatest block number available from this Block-Node.
+	// The greatest block number available from this block node server.
 	// <p>
 	// Any request for a block with a block number higher than this
 	// value MAY fail.
 	LastAvailableBlock uint64 `protobuf:"varint,2,opt,name=last_available_block,json=lastAvailableBlock,proto3" json:"last_available_block,omitempty"`
 	// *
-	// A flag indicating this Block-Node only offers the latest state snapshot.
+	// A flag indicating this block node only offers the latest state snapshot.
 	// <p>
 	// If this value is `true` the client MUST set `retrieve_latest` `true`
-	// in any `StateSnapshotRequest` sent to this Block-Node.
+	// in any `StateSnapshotRequest` sent to this block node.
 	OnlyLatestState bool `protobuf:"varint,3,opt,name=only_latest_state,json=onlyLatestState,proto3" json:"only_latest_state,omitempty"`
 	// *
 	// Version information.<br/>
 	// Versions for the block network address book, block stream protocol
-	// buffer schema, and Block-Node software.
+	// buffer schema, and block node software.
 	VersionInformation *BlockNodeVersions `protobuf:"bytes,4,opt,name=version_information,json=versionInformation,proto3" json:"version_information,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -1444,7 +1214,7 @@ type ServerStatusResponse struct {
 
 func (x *ServerStatusResponse) Reset() {
 	*x = ServerStatusResponse{}
-	mi := &file_block_service_proto_msgTypes[10]
+	mi := &file_block_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1456,7 +1226,7 @@ func (x *ServerStatusResponse) String() string {
 func (*ServerStatusResponse) ProtoMessage() {}
 
 func (x *ServerStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[10]
+	mi := &file_block_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1469,7 +1239,7 @@ func (x *ServerStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServerStatusResponse.ProtoReflect.Descriptor instead.
 func (*ServerStatusResponse) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{10}
+	return file_block_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ServerStatusResponse) GetFirstAvailableBlock() uint64 {
@@ -1501,35 +1271,35 @@ func (x *ServerStatusResponse) GetVersionInformation() *BlockNodeVersions {
 }
 
 // *
-// Version information for a Block-Node.
+// Version information for a block node.
 //
 // The `stream_proto_version` SHOULD be an officially released Block Stream
 // version.
-// The `address_book_version` SHALL be determined by networks of Block-Nodes.
-// The `software_version` SHALL be determined by the implementation of this
-// specification.
+// The `address_book_version` SHALL be defined by networks of block nodes.
+// The `software_version` SHALL be defined by the implementation of the
+// Block Node specification.
 type BlockNodeVersions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
-	// A version of the Block-Node network address book.<br/>
+	// A version of the Block Node network address book.<br/>
 	// The address book version describes what version of address book
-	// this Block-Node holds for discovering and identifying other Block-Nodes.
+	// this block node holds for discovering and identifying other block nodes.
 	// <p>
 	// This version SHALL be specific to each "network" of interconnected
-	// Block-Nodes.
+	// Block Nodes.
 	AddressBookVersion *common.SemanticVersion `protobuf:"bytes,1,opt,name=address_book_version,json=addressBookVersion,proto3" json:"address_book_version,omitempty"`
 	// *
 	// A version of the Block Stream specification.<br/>
-	// This is the Stream version currently supported by this Block-Node.
+	// This is the Stream version currently supported by this Block Node.
 	// <p>
 	// Implementations SHOULD make reasonable effort to ensure the latest
 	// released Block Stream version is supported.<br/>
 	// This version MUST be an officially released Block Stream version if
-	// the responding Block-Node is not private.
+	// the responding block node is not private.
 	StreamProtoVersion *common.SemanticVersion `protobuf:"bytes,2,opt,name=stream_proto_version,json=streamProtoVersion,proto3" json:"stream_proto_version,omitempty"`
 	// *
-	// A version of the Block-Node software.<br/>
-	// This is the software version that this Block-Node is currently
+	// A version of the block node software.<br/>
+	// This is the software version that this block node is currently
 	// running.
 	// <p>
 	// This value is implementation-defined.
@@ -1540,7 +1310,7 @@ type BlockNodeVersions struct {
 
 func (x *BlockNodeVersions) Reset() {
 	*x = BlockNodeVersions{}
-	mi := &file_block_service_proto_msgTypes[11]
+	mi := &file_block_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1552,7 +1322,7 @@ func (x *BlockNodeVersions) String() string {
 func (*BlockNodeVersions) ProtoMessage() {}
 
 func (x *BlockNodeVersions) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[11]
+	mi := &file_block_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1565,7 +1335,7 @@ func (x *BlockNodeVersions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockNodeVersions.ProtoReflect.Descriptor instead.
 func (*BlockNodeVersions) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{11}
+	return file_block_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *BlockNodeVersions) GetAddressBookVersion() *common.SemanticVersion {
@@ -1594,18 +1364,18 @@ func (x *BlockNodeVersions) GetSoftwareVersion() *common.SemanticVersion {
 // or full block.
 type PublishStreamResponse_Acknowledgement struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// A response type to acknowledge a full and complete block.
-	// <p>
-	// All Block-Nodes SHOULD acknowledge each block.
-	BlockAck      *PublishStreamResponse_BlockAcknowledgement `protobuf:"bytes,1,opt,name=block_ack,json=blockAck,proto3" json:"block_ack,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// Types that are valid to be assigned to Acknowledgements:
+	//
+	//	*PublishStreamResponse_Acknowledgement_BlockAck
+	//	*PublishStreamResponse_Acknowledgement_ItemAck
+	Acknowledgements isPublishStreamResponse_Acknowledgement_Acknowledgements `protobuf_oneof:"acknowledgements"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *PublishStreamResponse_Acknowledgement) Reset() {
 	*x = PublishStreamResponse_Acknowledgement{}
-	mi := &file_block_service_proto_msgTypes[12]
+	mi := &file_block_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1617,7 +1387,7 @@ func (x *PublishStreamResponse_Acknowledgement) String() string {
 func (*PublishStreamResponse_Acknowledgement) ProtoMessage() {}
 
 func (x *PublishStreamResponse_Acknowledgement) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[12]
+	mi := &file_block_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1630,12 +1400,115 @@ func (x *PublishStreamResponse_Acknowledgement) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use PublishStreamResponse_Acknowledgement.ProtoReflect.Descriptor instead.
 func (*PublishStreamResponse_Acknowledgement) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2, 0}
+	return file_block_service_proto_rawDescGZIP(), []int{1, 0}
+}
+
+func (x *PublishStreamResponse_Acknowledgement) GetAcknowledgements() isPublishStreamResponse_Acknowledgement_Acknowledgements {
+	if x != nil {
+		return x.Acknowledgements
+	}
+	return nil
 }
 
 func (x *PublishStreamResponse_Acknowledgement) GetBlockAck() *PublishStreamResponse_BlockAcknowledgement {
 	if x != nil {
-		return x.BlockAck
+		if x, ok := x.Acknowledgements.(*PublishStreamResponse_Acknowledgement_BlockAck); ok {
+			return x.BlockAck
+		}
+	}
+	return nil
+}
+
+func (x *PublishStreamResponse_Acknowledgement) GetItemAck() *PublishStreamResponse_ItemAcknowledgement {
+	if x != nil {
+		if x, ok := x.Acknowledgements.(*PublishStreamResponse_Acknowledgement_ItemAck); ok {
+			return x.ItemAck
+		}
+	}
+	return nil
+}
+
+type isPublishStreamResponse_Acknowledgement_Acknowledgements interface {
+	isPublishStreamResponse_Acknowledgement_Acknowledgements()
+}
+
+type PublishStreamResponse_Acknowledgement_BlockAck struct {
+	// *
+	// A response type to acknowledge a full and complete block.
+	// <p>
+	// All block node implementations SHOULD acknowledge each block.
+	BlockAck *PublishStreamResponse_BlockAcknowledgement `protobuf:"bytes,1,opt,name=block_ack,json=blockAck,proto3,oneof"`
+}
+
+type PublishStreamResponse_Acknowledgement_ItemAck struct {
+	// *
+	// A response type to acknowledge a single `BlockItem`.<br/>
+	// This is an OPTIONAL message and implementations MAY choose to
+	// only acknowledge full blocks.
+	ItemAck *PublishStreamResponse_ItemAcknowledgement `protobuf:"bytes,2,opt,name=item_ack,json=itemAck,proto3,oneof"`
+}
+
+func (*PublishStreamResponse_Acknowledgement_BlockAck) isPublishStreamResponse_Acknowledgement_Acknowledgements() {
+}
+
+func (*PublishStreamResponse_Acknowledgement_ItemAck) isPublishStreamResponse_Acknowledgement_Acknowledgements() {
+}
+
+// *
+// Acknowledgement for a single `BlockItem`.<br/>
+// Most nodes are expected to implement this acknowledgement only for
+// debugging and development purposes.
+//
+// If a node implements single item acknowledgement, the block node SHALL
+// send one `ItemAcknowledgement` for each `BlockItem` received
+// and verified.
+type PublishStreamResponse_ItemAcknowledgement struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// *
+	// A SHA2-384 hash of the `BlockItem` received.
+	// <p>
+	// This field is REQUIRED.<br/>
+	// A source system MUST verify that this value matches its own internal
+	// calculated hash value, and MUST end the stream if the values do not
+	// match.
+	ItemHash      []byte `protobuf:"bytes,1,opt,name=item_hash,json=itemHash,proto3" json:"item_hash,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublishStreamResponse_ItemAcknowledgement) Reset() {
+	*x = PublishStreamResponse_ItemAcknowledgement{}
+	mi := &file_block_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublishStreamResponse_ItemAcknowledgement) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishStreamResponse_ItemAcknowledgement) ProtoMessage() {}
+
+func (x *PublishStreamResponse_ItemAcknowledgement) ProtoReflect() protoreflect.Message {
+	mi := &file_block_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishStreamResponse_ItemAcknowledgement.ProtoReflect.Descriptor instead.
+func (*PublishStreamResponse_ItemAcknowledgement) Descriptor() ([]byte, []int) {
+	return file_block_service_proto_rawDescGZIP(), []int{1, 1}
+}
+
+func (x *PublishStreamResponse_ItemAcknowledgement) GetItemHash() []byte {
+	if x != nil {
+		return x.ItemHash
 	}
 	return nil
 }
@@ -1646,19 +1519,22 @@ func (x *PublishStreamResponse_Acknowledgement) GetBlockAck() *PublishStreamResp
 //
 // This response SHALL be sent after a block state proof item is
 // received and verified.<br/>
-// The Block-Node SHALL send exactly one `BlockAcknowledgement` for
-// each successful block.
+// The block node SHALL send exactly one `BlockAcknowledgement` for
+// each successful block.<br/>
+// The `BlockAcknowledgement` response MAY be sent after sending an
+// `ItemAcknowledgement` response for the `BlockStateProof` item
+// at the end of the block, if item acknowledgement is enabled.
 type PublishStreamResponse_BlockAcknowledgement struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// *
 	// A block number number of the acknowledged block.
 	// <p>
-	// A Publisher SHOULD verify that this value matches the block sent.
+	// A source system SHOULD verify that this value matches the block sent.
 	BlockNumber uint64 `protobuf:"varint,1,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
 	// *
 	// A hash of the virtual merkle root for the block.
 	// <p>
-	// This SHALL be the hash calculated by the Block-Node for the
+	// This SHALL be the hash calculated by the block node for the
 	// root node of the virtual merkle tree that is signed by the source
 	// system to validate the block.
 	BlockRootHash []byte `protobuf:"bytes,2,opt,name=block_root_hash,json=blockRootHash,proto3" json:"block_root_hash,omitempty"`
@@ -1666,12 +1542,11 @@ type PublishStreamResponse_BlockAcknowledgement struct {
 	// A flag indicating that the received block duplicates an
 	// existing block.
 	// <p>
-	// If a Publisher receives acknowledgement with this flag set
-	// true the Publisher MAY end the stream.<br/>
-	// The `block_number` returned SHALL be the last block known and
-	// verified by the Block-Node.<br/>
-	// The Publisher MAY resume publishing immediately after the indicated
-	// block.
+	// If a source system receives acknowledgement with this flag set
+	// true the source system SHOULD end the stream. The `block_number`
+	// returned SHALL be the last block known and verified by the receiving
+	// system, and the source system MAY resume publishing immediately
+	// after that block.
 	BlockAlreadyExists bool `protobuf:"varint,3,opt,name=block_already_exists,json=blockAlreadyExists,proto3" json:"block_already_exists,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -1704,7 +1579,7 @@ func (x *PublishStreamResponse_BlockAcknowledgement) ProtoReflect() protoreflect
 
 // Deprecated: Use PublishStreamResponse_BlockAcknowledgement.ProtoReflect.Descriptor instead.
 func (*PublishStreamResponse_BlockAcknowledgement) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2, 1}
+	return file_block_service_proto_rawDescGZIP(), []int{1, 2}
 }
 
 func (x *PublishStreamResponse_BlockAcknowledgement) GetBlockNumber() uint64 {
@@ -1729,146 +1604,16 @@ func (x *PublishStreamResponse_BlockAcknowledgement) GetBlockAlreadyExists() boo
 }
 
 // *
-// Message indicating the Publisher should skip the current block.
-//
-// Block-Nodes SHOULD only skip a block if that block is currently being
-// received from another source.<br/>
-// Publishers MUST stop sending the current block and resume with
-// the block header for the next block, or else end the stream.<br/>
-// A Publisher that receives this message SHALL subsequently receive an
-// acknowledgement for the skipped block or SHALL receive a `ResendBlock`
-// message.<br/>
-// A Publisher asked to skip a block SHOULD NOT delay any subsequent
-// block, but should send that block as soon as it is available.<br/>
-// A Publisher MAY be asked to skip multiple blocks in succession, but
-// SHOULD interpret that as the presence of another Publisher with a
-// lower latency connection.<br/>
-// A Publisher MAY choose to end the stream and send the block to a
-// different Block-Node, rather than skip sending the block to the
-// current Block-Node.
-type PublishStreamResponse_SkipBlock struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// The number of the _unverified_ block to skip.
-	// <p>
-	// This MUST match the block number of the `BlockHeader` most recently
-	// sent by the Publisher.
-	BlockNumber   uint64 `protobuf:"varint,2,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PublishStreamResponse_SkipBlock) Reset() {
-	*x = PublishStreamResponse_SkipBlock{}
-	mi := &file_block_service_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PublishStreamResponse_SkipBlock) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PublishStreamResponse_SkipBlock) ProtoMessage() {}
-
-func (x *PublishStreamResponse_SkipBlock) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PublishStreamResponse_SkipBlock.ProtoReflect.Descriptor instead.
-func (*PublishStreamResponse_SkipBlock) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2, 2}
-}
-
-func (x *PublishStreamResponse_SkipBlock) GetBlockNumber() uint64 {
-	if x != nil {
-		return x.BlockNumber
-	}
-	return 0
-}
-
-// *
-// Message indicating the Publisher must resend from a specified block.
-// A Publisher might resend the block, if it has that block available,
-// or it might choose to end the stream if it has already received
-// acknowledgement from a different trustworthy Block-Node.
-//
-// On receiving this message, a Publisher MUST resume sending blocks at
-// the block number indicated, or else end the stream.<br/>
-// This message SHALL only be sent following a `SkipBlock` message for a
-// block that has not been acknowledged.<br/>
-// A Block-Node SHALL NOT send a `ResendBlock` message for any block that
-// is already acknowledged.<br/>
-// A Publisher MAY choose to end the stream rather than resend the
-// the requested block.
-type PublishStreamResponse_ResendBlock struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// *
-	// The number of the _unverified_ block to re-send.
-	// <p>
-	// This SHALL be the block number one greater than the last block
-	// this Block-Node has successfully stored and verified.
-	BlockNumber   uint64 `protobuf:"varint,2,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PublishStreamResponse_ResendBlock) Reset() {
-	*x = PublishStreamResponse_ResendBlock{}
-	mi := &file_block_service_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PublishStreamResponse_ResendBlock) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PublishStreamResponse_ResendBlock) ProtoMessage() {}
-
-func (x *PublishStreamResponse_ResendBlock) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PublishStreamResponse_ResendBlock.ProtoReflect.Descriptor instead.
-func (*PublishStreamResponse_ResendBlock) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2, 3}
-}
-
-func (x *PublishStreamResponse_ResendBlock) GetBlockNumber() uint64 {
-	if x != nil {
-		return x.BlockNumber
-	}
-	return 0
-}
-
-// *
 // A message sent to end a stream.
 //
-// This response message SHALL be sent from a Block-Node to a block
-// stream Publisher when a `publishBlockStream` stream ends.<br/>
+// This response message SHALL be sent from a block node to a block
+// stream source system when a `publishBlockStream` stream ends.<br/>
 // This message SHALL be sent exactly once for each `publishBlockStream`
 // call.<br/>
-// The Publisher SHALL cease sending block items upon receiving
+// The source system SHALL cease sending block items upon receiving
 // this response, and MAY determine the ending state of the stream from
 // the `status` enumeration and the `block_number` returned.<br/>
-// A Publisher SHOULD verify that the `block_number` value matches the
+// A source system SHOULD verify that the `block_number` value matches the
 // last block sent, and SHOULD resend one or more blocks if the value
 // here does not match the expected value.
 type PublishStreamResponse_EndOfStream struct {
@@ -1882,9 +1627,9 @@ type PublishStreamResponse_EndOfStream struct {
 	// *
 	// The number of the last completed and _verified_ block.
 	// <p>
-	// Block-Nodes SHOULD only end a stream after a block state proof to avoid
+	// Nodes SHOULD only end a stream after a block state proof to avoid
 	// the need to resend items.<br/>
-	// If status is a failure code, the Publisher MUST start a new
+	// If status is a failure code, the source node MUST start a new
 	// stream at the beginning of the first block _following_ this number
 	// (e.g. if this is 91827362983, then the new stream must start with
 	// the _header_ for block 91827362984).
@@ -1895,7 +1640,7 @@ type PublishStreamResponse_EndOfStream struct {
 
 func (x *PublishStreamResponse_EndOfStream) Reset() {
 	*x = PublishStreamResponse_EndOfStream{}
-	mi := &file_block_service_proto_msgTypes[16]
+	mi := &file_block_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1907,7 +1652,7 @@ func (x *PublishStreamResponse_EndOfStream) String() string {
 func (*PublishStreamResponse_EndOfStream) ProtoMessage() {}
 
 func (x *PublishStreamResponse_EndOfStream) ProtoReflect() protoreflect.Message {
-	mi := &file_block_service_proto_msgTypes[16]
+	mi := &file_block_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1920,7 +1665,7 @@ func (x *PublishStreamResponse_EndOfStream) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use PublishStreamResponse_EndOfStream.ProtoReflect.Descriptor instead.
 func (*PublishStreamResponse_EndOfStream) Descriptor() ([]byte, []int) {
-	return file_block_service_proto_rawDescGZIP(), []int{2, 4}
+	return file_block_service_proto_rawDescGZIP(), []int{1, 3}
 }
 
 func (x *PublishStreamResponse_EndOfStream) GetStatus() PublishStreamResponseCode {
@@ -1941,31 +1686,23 @@ var File_block_service_proto protoreflect.FileDescriptor
 
 const file_block_service_proto_rawDesc = "" +
 	"\n" +
-	"\x13block_service.proto\x12\x15com.hedera.hapi.block\x1a\x11basic_types.proto\x1a\x12stream/block.proto\x1a\x17stream/block_item.proto\"i\n" +
+	"\x13block_service.proto\x12\x15com.hedera.hapi.block\x1a\x11basic_types.proto\x1a\x12stream/block.proto\x1a\x17stream/block_item.proto\"^\n" +
 	"\x14PublishStreamRequest\x12F\n" +
-	"\vblock_items\x18\x01 \x01(\v2#.com.hedera.hapi.block.BlockItemSetH\x00R\n" +
-	"blockItemsB\t\n" +
-	"\arequest\"X\n" +
-	"\fBlockItemSet\x12H\n" +
-	"\vblock_items\x18\x01 \x03(\v2'.com.hedera.hapi.block.stream.BlockItemR\n" +
-	"blockItems\"\x87\a\n" +
+	"\n" +
+	"block_item\x18\x01 \x01(\v2'.com.hedera.hapi.block.stream.BlockItemR\tblockItem\"\x90\x06\n" +
 	"\x15PublishStreamResponse\x12h\n" +
-	"\x0facknowledgement\x18\x01 \x01(\v2<.com.hedera.hapi.block.PublishStreamResponse.AcknowledgementH\x00R\x0facknowledgement\x12Y\n" +
-	"\n" +
-	"end_stream\x18\x02 \x01(\v28.com.hedera.hapi.block.PublishStreamResponse.EndOfStreamH\x00R\tendStream\x12W\n" +
-	"\n" +
-	"skip_block\x18\x03 \x01(\v26.com.hedera.hapi.block.PublishStreamResponse.SkipBlockH\x00R\tskipBlock\x12]\n" +
-	"\fresend_block\x18\x04 \x01(\v28.com.hedera.hapi.block.PublishStreamResponse.ResendBlockH\x00R\vresendBlock\x1aq\n" +
-	"\x0fAcknowledgement\x12^\n" +
-	"\tblock_ack\x18\x01 \x01(\v2A.com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgementR\bblockAck\x1a\x93\x01\n" +
+	"\x0facknowledgement\x18\x01 \x01(\v2<.com.hedera.hapi.block.PublishStreamResponse.AcknowledgementH\x00R\x0facknowledgement\x12R\n" +
+	"\x06status\x18\x02 \x01(\v28.com.hedera.hapi.block.PublishStreamResponse.EndOfStreamH\x00R\x06status\x1a\xe6\x01\n" +
+	"\x0fAcknowledgement\x12`\n" +
+	"\tblock_ack\x18\x01 \x01(\v2A.com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgementH\x00R\bblockAck\x12]\n" +
+	"\bitem_ack\x18\x02 \x01(\v2@.com.hedera.hapi.block.PublishStreamResponse.ItemAcknowledgementH\x00R\aitemAckB\x12\n" +
+	"\x10acknowledgements\x1a2\n" +
+	"\x13ItemAcknowledgement\x12\x1b\n" +
+	"\titem_hash\x18\x01 \x01(\fR\bitemHash\x1a\x93\x01\n" +
 	"\x14BlockAcknowledgement\x12!\n" +
 	"\fblock_number\x18\x01 \x01(\x04R\vblockNumber\x12&\n" +
 	"\x0fblock_root_hash\x18\x02 \x01(\fR\rblockRootHash\x120\n" +
-	"\x14block_already_exists\x18\x03 \x01(\bR\x12blockAlreadyExists\x1a.\n" +
-	"\tSkipBlock\x12!\n" +
-	"\fblock_number\x18\x02 \x01(\x04R\vblockNumber\x1a0\n" +
-	"\vResendBlock\x12!\n" +
-	"\fblock_number\x18\x02 \x01(\x04R\vblockNumber\x1az\n" +
+	"\x14block_already_exists\x18\x03 \x01(\bR\x12blockAlreadyExists\x1az\n" +
 	"\vEndOfStream\x12H\n" +
 	"\x06status\x18\x01 \x01(\x0e20.com.hedera.hapi.block.PublishStreamResponseCodeR\x06status\x12!\n" +
 	"\fblock_number\x18\x02 \x01(\x04R\vblockNumberB\n" +
@@ -1981,11 +1718,11 @@ const file_block_service_proto_rawDesc = "" +
 	"\x16SubscribeStreamRequest\x12,\n" +
 	"\x12start_block_number\x18\x01 \x01(\x04R\x10startBlockNumber\x12(\n" +
 	"\x10end_block_number\x18\x02 \x01(\x04R\x0eendBlockNumber\x12)\n" +
-	"\x10allow_unverified\x18\x03 \x01(\bR\x0fallowUnverified\"\xbb\x01\n" +
+	"\x10allow_unverified\x18\x03 \x01(\bR\x0fallowUnverified\"\xbd\x01\n" +
 	"\x17SubscribeStreamResponse\x12L\n" +
-	"\x06status\x18\x01 \x01(\x0e22.com.hedera.hapi.block.SubscribeStreamResponseCodeH\x00R\x06status\x12F\n" +
-	"\vblock_items\x18\x02 \x01(\v2#.com.hedera.hapi.block.BlockItemSetH\x00R\n" +
-	"blockItemsB\n" +
+	"\x06status\x18\x01 \x01(\x0e22.com.hedera.hapi.block.SubscribeStreamResponseCodeH\x00R\x06status\x12H\n" +
+	"\n" +
+	"block_item\x18\x02 \x01(\v2'.com.hedera.hapi.block.stream.BlockItemH\x00R\tblockItemB\n" +
 	"\n" +
 	"\bresponse\"k\n" +
 	"\x14StateSnapshotRequest\x12*\n" +
@@ -2004,22 +1741,14 @@ const file_block_service_proto_rawDesc = "" +
 	"\x11BlockNodeVersions\x12H\n" +
 	"\x14address_book_version\x18\x01 \x01(\v2\x16.proto.SemanticVersionR\x12addressBookVersion\x12H\n" +
 	"\x14stream_proto_version\x18\x02 \x01(\v2\x16.proto.SemanticVersionR\x12streamProtoVersion\x12A\n" +
-	"\x10software_version\x18\x03 \x01(\v2\x16.proto.SemanticVersionR\x0fsoftwareVersion*\x91\x01\n" +
-	"\x14PublishStreamEndCode\x12\x16\n" +
-	"\x12STREAM_END_UNKNOWN\x10\x00\x12\x14\n" +
-	"\x10STREAM_END_RESET\x10\x01\x12\x16\n" +
-	"\x12STREAM_END_TIMEOUT\x10\x02\x12\x14\n" +
-	"\x10STREAM_END_ERROR\x10\x03\x12\x1d\n" +
-	"\x19STREAM_END_TOO_FAR_BEHIND\x10\x04*\x89\x02\n" +
+	"\x10software_version\x18\x03 \x01(\v2\x16.proto.SemanticVersionR\x0fsoftwareVersion*\xc3\x01\n" +
 	"\x19PublishStreamResponseCode\x12\x18\n" +
 	"\x14STREAM_ITEMS_UNKNOWN\x10\x00\x12\x18\n" +
 	"\x14STREAM_ITEMS_SUCCESS\x10\x01\x12\x18\n" +
 	"\x14STREAM_ITEMS_TIMEOUT\x10\x02\x12\x1d\n" +
 	"\x19STREAM_ITEMS_OUT_OF_ORDER\x10\x03\x12 \n" +
 	"\x1cSTREAM_ITEMS_BAD_STATE_PROOF\x10\x04\x12\x17\n" +
-	"\x13STREAM_ITEMS_BEHIND\x10\x05\x12\x1f\n" +
-	"\x1bSTREAM_ITEMS_INTERNAL_ERROR\x10\x06\x12#\n" +
-	"\x1fSTREAM_ITEMS_PERSISTENCE_FAILED\x10\a*\xe5\x01\n" +
+	"\x13STREAM_ITEMS_BEHIND\x10\x05*\xe5\x01\n" +
 	"\x17SingleBlockResponseCode\x12\x16\n" +
 	"\x12READ_BLOCK_UNKNOWN\x10\x00\x12#\n" +
 	"\x1fREAD_BLOCK_INSUFFICIENT_BALANCE\x10\x01\x12\x16\n" +
@@ -2027,25 +1756,21 @@ const file_block_service_proto_rawDesc = "" +
 	"\x14READ_BLOCK_NOT_FOUND\x10\x03\x12\x1c\n" +
 	"\x18READ_BLOCK_NOT_AVAILABLE\x10\x04\x12\x1d\n" +
 	"\x19ALLOW_UNVERIFIED_REQUIRED\x10\x05\x12\x1e\n" +
-	"\x1aVERIFIED_BLOCK_UNAVAILABLE\x10\x06*\xea\x01\n" +
+	"\x1aVERIFIED_BLOCK_UNAVAILABLE\x10\x06*\xcb\x01\n" +
 	"\x1bSubscribeStreamResponseCode\x12\x17\n" +
 	"\x13READ_STREAM_UNKNOWN\x10\x00\x12$\n" +
 	" READ_STREAM_INSUFFICIENT_BALANCE\x10\x01\x12\x17\n" +
 	"\x13READ_STREAM_SUCCESS\x10\x02\x12*\n" +
 	"&READ_STREAM_INVALID_START_BLOCK_NUMBER\x10\x03\x12(\n" +
-	"$READ_STREAM_INVALID_END_BLOCK_NUMBER\x10\x04\x12\x1d\n" +
-	"\x19READ_STREAM_NOT_AVAILABLE\x10\x05*|\n" +
+	"$READ_STREAM_INVALID_END_BLOCK_NUMBER\x10\x04*|\n" +
 	"\x19StateSnapshotResponseCode\x12\x1a\n" +
 	"\x16STATE_SNAPSHOT_UNKNOWN\x10\x00\x12'\n" +
 	"#STATE_SNAPSHOT_INSUFFICIENT_BALANCE\x10\x01\x12\x1a\n" +
-	"\x16STATE_SNAPSHOT_SUCCESS\x10\x022{\n" +
-	"\x10BlockNodeService\x12g\n" +
-	"\fserverStatus\x12*.com.hedera.hapi.block.ServerStatusRequest\x1a+.com.hedera.hapi.block.ServerStatusResponse2z\n" +
-	"\x12BlockAccessService\x12d\n" +
-	"\vsingleBlock\x12).com.hedera.hapi.block.SingleBlockRequest\x1a*.com.hedera.hapi.block.SingleBlockResponse2z\n" +
-	"\fStateService\x12j\n" +
-	"\rstateSnapshot\x12+.com.hedera.hapi.block.StateSnapshotRequest\x1a,.com.hedera.hapi.block.StateSnapshotResponse2\x82\x02\n" +
-	"\x12BlockStreamService\x12s\n" +
+	"\x16STATE_SNAPSHOT_SUCCESS\x10\x022\xbd\x04\n" +
+	"\x12BlockStreamService\x12g\n" +
+	"\fserverStatus\x12*.com.hedera.hapi.block.ServerStatusRequest\x1a+.com.hedera.hapi.block.ServerStatusResponse\x12d\n" +
+	"\vsingleBlock\x12).com.hedera.hapi.block.SingleBlockRequest\x1a*.com.hedera.hapi.block.SingleBlockResponse\x12j\n" +
+	"\rstateSnapshot\x12+.com.hedera.hapi.block.StateSnapshotRequest\x1a,.com.hedera.hapi.block.StateSnapshotResponse\x12s\n" +
 	"\x12publishBlockStream\x12+.com.hedera.hapi.block.PublishStreamRequest\x1a,.com.hedera.hapi.block.PublishStreamResponse(\x010\x01\x12w\n" +
 	"\x14subscribeBlockStream\x12-.com.hedera.hapi.block.SubscribeStreamRequest\x1a..com.hedera.hapi.block.SubscribeStreamResponse0\x01BQ\n" +
 	"\x1ccom.hedera.hapi.block.protocP\x01Z/github.com/cordialsys/hedera-protobufs-go/blockb\x06proto3"
@@ -2062,68 +1787,63 @@ func file_block_service_proto_rawDescGZIP() []byte {
 	return file_block_service_proto_rawDescData
 }
 
-var file_block_service_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_block_service_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_block_service_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_block_service_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_block_service_proto_goTypes = []any{
-	(PublishStreamEndCode)(0),                          // 0: com.hedera.hapi.block.PublishStreamEndCode
-	(PublishStreamResponseCode)(0),                     // 1: com.hedera.hapi.block.PublishStreamResponseCode
-	(SingleBlockResponseCode)(0),                       // 2: com.hedera.hapi.block.SingleBlockResponseCode
-	(SubscribeStreamResponseCode)(0),                   // 3: com.hedera.hapi.block.SubscribeStreamResponseCode
-	(StateSnapshotResponseCode)(0),                     // 4: com.hedera.hapi.block.StateSnapshotResponseCode
-	(*PublishStreamRequest)(nil),                       // 5: com.hedera.hapi.block.PublishStreamRequest
-	(*BlockItemSet)(nil),                               // 6: com.hedera.hapi.block.BlockItemSet
-	(*PublishStreamResponse)(nil),                      // 7: com.hedera.hapi.block.PublishStreamResponse
-	(*SingleBlockRequest)(nil),                         // 8: com.hedera.hapi.block.SingleBlockRequest
-	(*SingleBlockResponse)(nil),                        // 9: com.hedera.hapi.block.SingleBlockResponse
-	(*SubscribeStreamRequest)(nil),                     // 10: com.hedera.hapi.block.SubscribeStreamRequest
-	(*SubscribeStreamResponse)(nil),                    // 11: com.hedera.hapi.block.SubscribeStreamResponse
-	(*StateSnapshotRequest)(nil),                       // 12: com.hedera.hapi.block.StateSnapshotRequest
-	(*StateSnapshotResponse)(nil),                      // 13: com.hedera.hapi.block.StateSnapshotResponse
-	(*ServerStatusRequest)(nil),                        // 14: com.hedera.hapi.block.ServerStatusRequest
-	(*ServerStatusResponse)(nil),                       // 15: com.hedera.hapi.block.ServerStatusResponse
-	(*BlockNodeVersions)(nil),                          // 16: com.hedera.hapi.block.BlockNodeVersions
-	(*PublishStreamResponse_Acknowledgement)(nil),      // 17: com.hedera.hapi.block.PublishStreamResponse.Acknowledgement
-	(*PublishStreamResponse_BlockAcknowledgement)(nil), // 18: com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgement
-	(*PublishStreamResponse_SkipBlock)(nil),            // 19: com.hedera.hapi.block.PublishStreamResponse.SkipBlock
-	(*PublishStreamResponse_ResendBlock)(nil),          // 20: com.hedera.hapi.block.PublishStreamResponse.ResendBlock
-	(*PublishStreamResponse_EndOfStream)(nil),          // 21: com.hedera.hapi.block.PublishStreamResponse.EndOfStream
-	(*stream.BlockItem)(nil),                           // 22: com.hedera.hapi.block.stream.BlockItem
-	(*stream.Block)(nil),                               // 23: com.hedera.hapi.block.stream.Block
-	(*common.SemanticVersion)(nil),                     // 24: proto.SemanticVersion
+	(PublishStreamResponseCode)(0),                     // 0: com.hedera.hapi.block.PublishStreamResponseCode
+	(SingleBlockResponseCode)(0),                       // 1: com.hedera.hapi.block.SingleBlockResponseCode
+	(SubscribeStreamResponseCode)(0),                   // 2: com.hedera.hapi.block.SubscribeStreamResponseCode
+	(StateSnapshotResponseCode)(0),                     // 3: com.hedera.hapi.block.StateSnapshotResponseCode
+	(*PublishStreamRequest)(nil),                       // 4: com.hedera.hapi.block.PublishStreamRequest
+	(*PublishStreamResponse)(nil),                      // 5: com.hedera.hapi.block.PublishStreamResponse
+	(*SingleBlockRequest)(nil),                         // 6: com.hedera.hapi.block.SingleBlockRequest
+	(*SingleBlockResponse)(nil),                        // 7: com.hedera.hapi.block.SingleBlockResponse
+	(*SubscribeStreamRequest)(nil),                     // 8: com.hedera.hapi.block.SubscribeStreamRequest
+	(*SubscribeStreamResponse)(nil),                    // 9: com.hedera.hapi.block.SubscribeStreamResponse
+	(*StateSnapshotRequest)(nil),                       // 10: com.hedera.hapi.block.StateSnapshotRequest
+	(*StateSnapshotResponse)(nil),                      // 11: com.hedera.hapi.block.StateSnapshotResponse
+	(*ServerStatusRequest)(nil),                        // 12: com.hedera.hapi.block.ServerStatusRequest
+	(*ServerStatusResponse)(nil),                       // 13: com.hedera.hapi.block.ServerStatusResponse
+	(*BlockNodeVersions)(nil),                          // 14: com.hedera.hapi.block.BlockNodeVersions
+	(*PublishStreamResponse_Acknowledgement)(nil),      // 15: com.hedera.hapi.block.PublishStreamResponse.Acknowledgement
+	(*PublishStreamResponse_ItemAcknowledgement)(nil),  // 16: com.hedera.hapi.block.PublishStreamResponse.ItemAcknowledgement
+	(*PublishStreamResponse_BlockAcknowledgement)(nil), // 17: com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgement
+	(*PublishStreamResponse_EndOfStream)(nil),          // 18: com.hedera.hapi.block.PublishStreamResponse.EndOfStream
+	(*stream.BlockItem)(nil),                           // 19: com.hedera.hapi.block.stream.BlockItem
+	(*stream.Block)(nil),                               // 20: com.hedera.hapi.block.stream.Block
+	(*common.SemanticVersion)(nil),                     // 21: proto.SemanticVersion
 }
 var file_block_service_proto_depIdxs = []int32{
-	6,  // 0: com.hedera.hapi.block.PublishStreamRequest.block_items:type_name -> com.hedera.hapi.block.BlockItemSet
-	22, // 1: com.hedera.hapi.block.BlockItemSet.block_items:type_name -> com.hedera.hapi.block.stream.BlockItem
-	17, // 2: com.hedera.hapi.block.PublishStreamResponse.acknowledgement:type_name -> com.hedera.hapi.block.PublishStreamResponse.Acknowledgement
-	21, // 3: com.hedera.hapi.block.PublishStreamResponse.end_stream:type_name -> com.hedera.hapi.block.PublishStreamResponse.EndOfStream
-	19, // 4: com.hedera.hapi.block.PublishStreamResponse.skip_block:type_name -> com.hedera.hapi.block.PublishStreamResponse.SkipBlock
-	20, // 5: com.hedera.hapi.block.PublishStreamResponse.resend_block:type_name -> com.hedera.hapi.block.PublishStreamResponse.ResendBlock
-	2,  // 6: com.hedera.hapi.block.SingleBlockResponse.status:type_name -> com.hedera.hapi.block.SingleBlockResponseCode
-	23, // 7: com.hedera.hapi.block.SingleBlockResponse.block:type_name -> com.hedera.hapi.block.stream.Block
-	3,  // 8: com.hedera.hapi.block.SubscribeStreamResponse.status:type_name -> com.hedera.hapi.block.SubscribeStreamResponseCode
-	6,  // 9: com.hedera.hapi.block.SubscribeStreamResponse.block_items:type_name -> com.hedera.hapi.block.BlockItemSet
-	4,  // 10: com.hedera.hapi.block.StateSnapshotResponse.status:type_name -> com.hedera.hapi.block.StateSnapshotResponseCode
-	16, // 11: com.hedera.hapi.block.ServerStatusResponse.version_information:type_name -> com.hedera.hapi.block.BlockNodeVersions
-	24, // 12: com.hedera.hapi.block.BlockNodeVersions.address_book_version:type_name -> proto.SemanticVersion
-	24, // 13: com.hedera.hapi.block.BlockNodeVersions.stream_proto_version:type_name -> proto.SemanticVersion
-	24, // 14: com.hedera.hapi.block.BlockNodeVersions.software_version:type_name -> proto.SemanticVersion
-	18, // 15: com.hedera.hapi.block.PublishStreamResponse.Acknowledgement.block_ack:type_name -> com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgement
-	1,  // 16: com.hedera.hapi.block.PublishStreamResponse.EndOfStream.status:type_name -> com.hedera.hapi.block.PublishStreamResponseCode
-	14, // 17: com.hedera.hapi.block.BlockNodeService.serverStatus:input_type -> com.hedera.hapi.block.ServerStatusRequest
-	8,  // 18: com.hedera.hapi.block.BlockAccessService.singleBlock:input_type -> com.hedera.hapi.block.SingleBlockRequest
-	12, // 19: com.hedera.hapi.block.StateService.stateSnapshot:input_type -> com.hedera.hapi.block.StateSnapshotRequest
-	5,  // 20: com.hedera.hapi.block.BlockStreamService.publishBlockStream:input_type -> com.hedera.hapi.block.PublishStreamRequest
-	10, // 21: com.hedera.hapi.block.BlockStreamService.subscribeBlockStream:input_type -> com.hedera.hapi.block.SubscribeStreamRequest
-	15, // 22: com.hedera.hapi.block.BlockNodeService.serverStatus:output_type -> com.hedera.hapi.block.ServerStatusResponse
-	9,  // 23: com.hedera.hapi.block.BlockAccessService.singleBlock:output_type -> com.hedera.hapi.block.SingleBlockResponse
-	13, // 24: com.hedera.hapi.block.StateService.stateSnapshot:output_type -> com.hedera.hapi.block.StateSnapshotResponse
-	7,  // 25: com.hedera.hapi.block.BlockStreamService.publishBlockStream:output_type -> com.hedera.hapi.block.PublishStreamResponse
-	11, // 26: com.hedera.hapi.block.BlockStreamService.subscribeBlockStream:output_type -> com.hedera.hapi.block.SubscribeStreamResponse
-	22, // [22:27] is the sub-list for method output_type
-	17, // [17:22] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	19, // 0: com.hedera.hapi.block.PublishStreamRequest.block_item:type_name -> com.hedera.hapi.block.stream.BlockItem
+	15, // 1: com.hedera.hapi.block.PublishStreamResponse.acknowledgement:type_name -> com.hedera.hapi.block.PublishStreamResponse.Acknowledgement
+	18, // 2: com.hedera.hapi.block.PublishStreamResponse.status:type_name -> com.hedera.hapi.block.PublishStreamResponse.EndOfStream
+	1,  // 3: com.hedera.hapi.block.SingleBlockResponse.status:type_name -> com.hedera.hapi.block.SingleBlockResponseCode
+	20, // 4: com.hedera.hapi.block.SingleBlockResponse.block:type_name -> com.hedera.hapi.block.stream.Block
+	2,  // 5: com.hedera.hapi.block.SubscribeStreamResponse.status:type_name -> com.hedera.hapi.block.SubscribeStreamResponseCode
+	19, // 6: com.hedera.hapi.block.SubscribeStreamResponse.block_item:type_name -> com.hedera.hapi.block.stream.BlockItem
+	3,  // 7: com.hedera.hapi.block.StateSnapshotResponse.status:type_name -> com.hedera.hapi.block.StateSnapshotResponseCode
+	14, // 8: com.hedera.hapi.block.ServerStatusResponse.version_information:type_name -> com.hedera.hapi.block.BlockNodeVersions
+	21, // 9: com.hedera.hapi.block.BlockNodeVersions.address_book_version:type_name -> proto.SemanticVersion
+	21, // 10: com.hedera.hapi.block.BlockNodeVersions.stream_proto_version:type_name -> proto.SemanticVersion
+	21, // 11: com.hedera.hapi.block.BlockNodeVersions.software_version:type_name -> proto.SemanticVersion
+	17, // 12: com.hedera.hapi.block.PublishStreamResponse.Acknowledgement.block_ack:type_name -> com.hedera.hapi.block.PublishStreamResponse.BlockAcknowledgement
+	16, // 13: com.hedera.hapi.block.PublishStreamResponse.Acknowledgement.item_ack:type_name -> com.hedera.hapi.block.PublishStreamResponse.ItemAcknowledgement
+	0,  // 14: com.hedera.hapi.block.PublishStreamResponse.EndOfStream.status:type_name -> com.hedera.hapi.block.PublishStreamResponseCode
+	12, // 15: com.hedera.hapi.block.BlockStreamService.serverStatus:input_type -> com.hedera.hapi.block.ServerStatusRequest
+	6,  // 16: com.hedera.hapi.block.BlockStreamService.singleBlock:input_type -> com.hedera.hapi.block.SingleBlockRequest
+	10, // 17: com.hedera.hapi.block.BlockStreamService.stateSnapshot:input_type -> com.hedera.hapi.block.StateSnapshotRequest
+	4,  // 18: com.hedera.hapi.block.BlockStreamService.publishBlockStream:input_type -> com.hedera.hapi.block.PublishStreamRequest
+	8,  // 19: com.hedera.hapi.block.BlockStreamService.subscribeBlockStream:input_type -> com.hedera.hapi.block.SubscribeStreamRequest
+	13, // 20: com.hedera.hapi.block.BlockStreamService.serverStatus:output_type -> com.hedera.hapi.block.ServerStatusResponse
+	7,  // 21: com.hedera.hapi.block.BlockStreamService.singleBlock:output_type -> com.hedera.hapi.block.SingleBlockResponse
+	11, // 22: com.hedera.hapi.block.BlockStreamService.stateSnapshot:output_type -> com.hedera.hapi.block.StateSnapshotResponse
+	5,  // 23: com.hedera.hapi.block.BlockStreamService.publishBlockStream:output_type -> com.hedera.hapi.block.PublishStreamResponse
+	9,  // 24: com.hedera.hapi.block.BlockStreamService.subscribeBlockStream:output_type -> com.hedera.hapi.block.SubscribeStreamResponse
+	20, // [20:25] is the sub-list for method output_type
+	15, // [15:20] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_block_service_proto_init() }
@@ -2131,28 +1851,27 @@ func file_block_service_proto_init() {
 	if File_block_service_proto != nil {
 		return
 	}
-	file_block_service_proto_msgTypes[0].OneofWrappers = []any{
-		(*PublishStreamRequest_BlockItems)(nil),
-	}
-	file_block_service_proto_msgTypes[2].OneofWrappers = []any{
+	file_block_service_proto_msgTypes[1].OneofWrappers = []any{
 		(*PublishStreamResponse_Acknowledgement_)(nil),
-		(*PublishStreamResponse_EndStream)(nil),
-		(*PublishStreamResponse_SkipBlock_)(nil),
-		(*PublishStreamResponse_ResendBlock_)(nil),
+		(*PublishStreamResponse_Status)(nil),
 	}
-	file_block_service_proto_msgTypes[6].OneofWrappers = []any{
+	file_block_service_proto_msgTypes[5].OneofWrappers = []any{
 		(*SubscribeStreamResponse_Status)(nil),
-		(*SubscribeStreamResponse_BlockItems)(nil),
+		(*SubscribeStreamResponse_BlockItem)(nil),
+	}
+	file_block_service_proto_msgTypes[11].OneofWrappers = []any{
+		(*PublishStreamResponse_Acknowledgement_BlockAck)(nil),
+		(*PublishStreamResponse_Acknowledgement_ItemAck)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_block_service_proto_rawDesc), len(file_block_service_proto_rawDesc)),
-			NumEnums:      5,
-			NumMessages:   17,
+			NumEnums:      4,
+			NumMessages:   15,
 			NumExtensions: 0,
-			NumServices:   4,
+			NumServices:   1,
 		},
 		GoTypes:           file_block_service_proto_goTypes,
 		DependencyIndexes: file_block_service_proto_depIdxs,
